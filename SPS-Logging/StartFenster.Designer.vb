@@ -29,6 +29,9 @@ Partial Class StartFenster
         Me.L_CpuConnected = New System.Windows.Forms.Label()
         Me.TV_PVIVars = New System.Windows.Forms.TreeView()
         Me.L_TreeView = New System.Windows.Forms.Label()
+        Me.LB_ChoosenObj = New System.Windows.Forms.ListBox()
+        Me.L_ChosenObj = New System.Windows.Forms.Label()
+        Me.B_LoggerStart = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'L_SPSSuche
@@ -78,7 +81,7 @@ Partial Class StartFenster
         '
         Me.TV_PVIVars.Location = New System.Drawing.Point(27, 159)
         Me.TV_PVIVars.Name = "TV_PVIVars"
-        Me.TV_PVIVars.Size = New System.Drawing.Size(247, 338)
+        Me.TV_PVIVars.Size = New System.Drawing.Size(247, 329)
         Me.TV_PVIVars.TabIndex = 5
         '
         'L_TreeView
@@ -90,11 +93,40 @@ Partial Class StartFenster
         Me.L_TreeView.TabIndex = 6
         Me.L_TreeView.Text = "Gefundene PVI-Ojekte"
         '
+        'LB_ChoosenObj
+        '
+        Me.LB_ChoosenObj.FormattingEnabled = True
+        Me.LB_ChoosenObj.Location = New System.Drawing.Point(306, 159)
+        Me.LB_ChoosenObj.Name = "LB_ChoosenObj"
+        Me.LB_ChoosenObj.Size = New System.Drawing.Size(247, 329)
+        Me.LB_ChoosenObj.TabIndex = 7
+        '
+        'L_ChosenObj
+        '
+        Me.L_ChosenObj.AutoSize = True
+        Me.L_ChosenObj.Location = New System.Drawing.Point(303, 143)
+        Me.L_ChosenObj.Name = "L_ChosenObj"
+        Me.L_ChosenObj.Size = New System.Drawing.Size(128, 13)
+        Me.L_ChosenObj.TabIndex = 8
+        Me.L_ChosenObj.Text = "Ausgewählte PVI-Objekte"
+        '
+        'B_LoggerStart
+        '
+        Me.B_LoggerStart.Location = New System.Drawing.Point(306, 494)
+        Me.B_LoggerStart.Name = "B_LoggerStart"
+        Me.B_LoggerStart.Size = New System.Drawing.Size(247, 23)
+        Me.B_LoggerStart.TabIndex = 9
+        Me.B_LoggerStart.Text = "Logger Starten"
+        Me.B_LoggerStart.UseVisualStyleBackColor = True
+        '
         'StartFenster
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(517, 546)
+        Me.ClientSize = New System.Drawing.Size(627, 546)
+        Me.Controls.Add(Me.B_LoggerStart)
+        Me.Controls.Add(Me.L_ChosenObj)
+        Me.Controls.Add(Me.LB_ChoosenObj)
         Me.Controls.Add(Me.L_TreeView)
         Me.Controls.Add(Me.TV_PVIVars)
         Me.Controls.Add(Me.L_CpuConnected)
@@ -116,4 +148,7 @@ Partial Class StartFenster
     Friend WithEvents L_CpuConnected As Label
     Friend WithEvents TV_PVIVars As TreeView
     Friend WithEvents L_TreeView As Label
+    Friend WithEvents LB_ChoosenObj As ListBox
+    Friend WithEvents L_ChosenObj As Label
+    Friend WithEvents B_LoggerStart As Button
 End Class
