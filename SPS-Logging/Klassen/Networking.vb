@@ -1,36 +1,25 @@
-﻿Imports System.Net.NetworkInformation
-
+﻿Imports System.Configuration
 Module Networking
 
     'Diese Funktion testet alle IP-Addressen von Start-Ip bis End-Ip, ob sie
     'auf einen Ping antworten 
     Function searchForPLCs(StartIp As String, EndIp As String) As List(Of String)
         If Not areIPsValid(StartIp, EndIp) Then Return Nothing
-        Dim StartAddr = Net.IPAddress.Parse(StartIp).GetAddressBytes()
+        Dim CurIp = Net.IPAddress.Parse(StartIp)
+        Dim StartAddr = CurIp.GetAddressBytes()
         Dim EndAddr = Net.IPAddress.Parse(EndIp).GetAddressBytes()
         Dim FoundIps As New List(Of String)
         Dim tasks As New List(Of Threading.Tasks.Task)
         While True
-            Dim CurIp As String = New Net.IPAddress(StartAddr).ToString
-            Dim t As Threading.Tasks.Task = Threading.Tasks.Task.Run(Sub() CheckIP(CurIp, FoundIps))
+            Dim IpString As String = CurIp.ToString
+            Dim t As Threading.Tasks.Task = Threading.Tasks.Task.Run(Sub() CheckIP(IpString, FoundIps))
             tasks.Add(t)
-
-            If CurIp = New Net.IPAddress(EndAddr).ToString Then Exit While
-            StartAddr(3) += 1
-            If StartAddr(3) = 255 Then
-                StartAddr(2) += 1
-                StartAddr(3) = 0
-                If StartAddr(2) = 255 Then
-                    StartAddr(1) += 1
-                    StartAddr(2) = 0
-                    If StartAddr(1) = 255 Then
-                        StartAddr(0) += 1
-                        StartAddr(1) = 0
-                    End If
-                End If
-            End If
+            If CurIp.ToString = New Net.IPAddress(EndAddr).ToString Then Exit While
+            Dim higherIp As UInt32 = BitConverter.ToUInt32(CurIp.GetAddressBytes.Reverse().ToArray(), 0) + 1
+            CurIp = New Net.IPAddress(BitConverter.GetBytes(higherIp).Reverse.ToArray)
         End While
-        Threading.Tasks.Task.WaitAll(tasks.ToArray())
+        Threading.Tasks.Task.WaitAll(tasks.ToArray)
+        SaveIps(FoundIps)
         Return FoundIps
     End Function
 
@@ -53,12 +42,41 @@ Module Networking
     'Diese Funktion prüft ob eine IP-Addresse auf einen Ping antwortet und fügt diese Addresse
     'der beigefügten Liste hinzu
     Sub CheckIP(ByVal ip As String, ByRef FoundIps As List(Of String))
-        Dim erfolg = My.Computer.Network.Ping(ip, 100)
+        Dim erfolg As Boolean
+        Try
+            erfolg = My.Computer.Network.Ping(ip, 100)
+        Catch ex As Exception
+            erfolg = False
+        End Try
+
         Console.WriteLine($"{ip}: {erfolg}")
         If erfolg Then
             Console.WriteLine($"Added {ip}")
             FoundIps.Add(ip)
         End If
     End Sub
+
+    Sub SaveIps(IpAddr As List(Of String))
+        Dim config As Configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None)
+        For i As Integer = 0 To IpAddr.Count - 1
+            config.AppSettings.Settings.Add($"IP-Addresse{i}", IpAddr(i))
+        Next
+        config.Save(ConfigurationSaveMode.Modified)
+        ConfigurationManager.RefreshSection("appSettings")
+
+    End Sub
+
+    Function loadSavedIps() As List(Of String)
+        Dim IpAddr As New List(Of String)
+        Dim IPCounter As Integer = 0
+        While True
+            Dim CurIP As String = ConfigurationManager.AppSettings($"IP-Addresse{IPCounter}")
+            If CurIP Is Nothing Or CurIP = "" Then Exit While
+            IpAddr.Add(CurIP)
+            IPCounter += 1
+        End While
+        Return IpAddr
+    End Function
+
 
 End Module
