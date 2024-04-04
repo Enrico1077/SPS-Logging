@@ -56,8 +56,11 @@ Module Networking
         End If
     End Sub
 
+    'Speichert die gefundenen IP-Addressen in Anwendungskonfigurationen,
+    'welche auch nach einem Neustart der Anwendung noch verfügbar sind
     Sub SaveIps(IpAddr As List(Of String))
         Dim config As Configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None)
+        config.AppSettings.Settings.Clear()
         For i As Integer = 0 To IpAddr.Count - 1
             config.AppSettings.Settings.Add($"IP-Addresse{i}", IpAddr(i))
         Next
@@ -66,6 +69,8 @@ Module Networking
 
     End Sub
 
+    'Die Funktion lädt di IP-Addressen, welche in der Anwendungskonfiguration gespeichert
+    'wurden und gibt sie als String-Liste zurück
     Function loadSavedIps() As List(Of String)
         Dim IpAddr As New List(Of String)
         Dim IPCounter As Integer = 0

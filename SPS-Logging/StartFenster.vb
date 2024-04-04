@@ -2,11 +2,13 @@
 
     Dim PVIC As PVIClient
 
+
     Sub New()
         InitializeComponent()
         CB_IPAddressen.Items.AddRange(loadSavedIps.toArray)
-        If CB_IPAddressen.Items.Count > 1 Then CB_IPAddressen.SelectedIndex = 0
-
+        If CB_IPAddressen.Items.Count > 0 Then CB_IPAddressen.SelectedIndex = 0
+        Dim HomeDir = IO.Directory.GetCurrentDirectory
+        If Not My.Computer.FileSystem.FileExists(HomeDir + ConfigName) Then saveDefaultXML(HomeDir + ConfigName)
     End Sub
 
 #Region "PublicVisualSetter"
@@ -21,7 +23,7 @@
 
 #Region "UserInput"
     Private Sub B_SPSSuche_Click(sender As Object, e As EventArgs) Handles B_SPSSuche.Click
-        CB_IPAddressen.Items.AddRange(searchForPLCs("126.255.255.150", "127.0.0.10").ToArray)
+        CB_IPAddressen.Items.AddRange(searchForPLCs("126.255.255.150", "127.0.0.1").ToArray)
         If CB_IPAddressen.Items.Count > 1 Then CB_IPAddressen.SelectedIndex = 0
     End Sub
 
@@ -31,25 +33,38 @@
     End Sub
 
     Private Sub TV_PVIVars_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles TV_PVIVars.AfterSelect
-        TVtoLV(e.Node)
+        If e.Node.Nodes.Count > 0 Then Exit Sub
+        Dim Name As String = PVIC.TreeNodeToVarName(e.Node)
+        If Not LB_ChoosenObj.Items.Contains(Name) Then LB_ChoosenObj.Items.Add(Name)
     End Sub
 
     Private Sub LB_ChoosenObj_SelectedIndexChanged(sender As Object, e As EventArgs) Handles LB_ChoosenObj.SelectedIndexChanged
         LB_ChoosenObj.Items.Remove(LB_ChoosenObj.SelectedItem)
     End Sub
+
+    Private Sub B_Sort_Click(sender As Object, e As EventArgs) Handles B_Sort.Click
+        TV_PVIVars.BeginUpdate()
+        TV_PVIVars.Sort()
+        TV_PVIVars.EndUpdate()
+    End Sub
+
+    Private Sub TV_PVIVars_BeforeExpand(sender As Object, e As TreeViewCancelEventArgs) Handles TV_PVIVars.BeforeExpand
+        PVIC.ExpandNodeFurther(e.Node)
+    End Sub
+
+    Private Sub B_LoggerStart_Click(sender As Object, e As EventArgs) Handles B_LoggerStart.Click
+        PVIC.StartLogger(CurConfig.DataRecoderName, LB_ChoosenObj.Items)
+    End Sub
+
+    Private Sub B_LoggerStop_Click(sender As Object, e As EventArgs) Handles B_LoggerStop.Click
+        PVIC.StopLogger(CurConfig.DataRecoderName)
+    End Sub
+
+
+
 #End Region
 
-    Private Sub TVtoLV(aktNode As TreeNode)
-        If aktNode.Nodes.Count > 0 Then Exit Sub
-        Dim outString As String = aktNode.Text
-        While True
-            If aktNode.Parent Is Nothing Then Exit While
-            aktNode = aktNode.Parent
-            outString = aktNode.Text + ":" + outString
-        End While
-        If Not LB_ChoosenObj.Items.Contains(outString) Then LB_ChoosenObj.Items.Add(outString)
 
-    End Sub
 
 
 End Class

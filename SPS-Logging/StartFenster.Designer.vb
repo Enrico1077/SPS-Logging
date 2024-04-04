@@ -32,6 +32,8 @@ Partial Class StartFenster
         Me.LB_ChoosenObj = New System.Windows.Forms.ListBox()
         Me.L_ChosenObj = New System.Windows.Forms.Label()
         Me.B_LoggerStart = New System.Windows.Forms.Button()
+        Me.B_Sort = New System.Windows.Forms.Button()
+        Me.B_LoggerStop = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'L_SPSSuche
@@ -55,7 +57,7 @@ Partial Class StartFenster
         '
         Me.B_SPSSuche.Location = New System.Drawing.Point(196, 58)
         Me.B_SPSSuche.Name = "B_SPSSuche"
-        Me.B_SPSSuche.Size = New System.Drawing.Size(75, 23)
+        Me.B_SPSSuche.Size = New System.Drawing.Size(79, 23)
         Me.B_SPSSuche.TabIndex = 2
         Me.B_SPSSuche.Text = "Suchen"
         Me.B_SPSSuche.UseVisualStyleBackColor = True
@@ -64,7 +66,7 @@ Partial Class StartFenster
         '
         Me.B_ConnectCpu.Location = New System.Drawing.Point(24, 87)
         Me.B_ConnectCpu.Name = "B_ConnectCpu"
-        Me.B_ConnectCpu.Size = New System.Drawing.Size(247, 23)
+        Me.B_ConnectCpu.Size = New System.Drawing.Size(251, 23)
         Me.B_ConnectCpu.TabIndex = 3
         Me.B_ConnectCpu.Text = "CPU Verbinden"
         Me.B_ConnectCpu.UseVisualStyleBackColor = True
@@ -114,16 +116,36 @@ Partial Class StartFenster
         '
         Me.B_LoggerStart.Location = New System.Drawing.Point(306, 494)
         Me.B_LoggerStart.Name = "B_LoggerStart"
-        Me.B_LoggerStart.Size = New System.Drawing.Size(247, 23)
+        Me.B_LoggerStart.Size = New System.Drawing.Size(123, 23)
         Me.B_LoggerStart.TabIndex = 9
         Me.B_LoggerStart.Text = "Logger Starten"
         Me.B_LoggerStart.UseVisualStyleBackColor = True
+        '
+        'B_Sort
+        '
+        Me.B_Sort.Location = New System.Drawing.Point(200, 136)
+        Me.B_Sort.Name = "B_Sort"
+        Me.B_Sort.Size = New System.Drawing.Size(75, 23)
+        Me.B_Sort.TabIndex = 10
+        Me.B_Sort.Text = "Sortieren"
+        Me.B_Sort.UseVisualStyleBackColor = True
+        '
+        'B_LoggerStop
+        '
+        Me.B_LoggerStop.Location = New System.Drawing.Point(430, 494)
+        Me.B_LoggerStop.Name = "B_LoggerStop"
+        Me.B_LoggerStop.Size = New System.Drawing.Size(123, 23)
+        Me.B_LoggerStop.TabIndex = 11
+        Me.B_LoggerStop.Text = "Logger Stoppen"
+        Me.B_LoggerStop.UseVisualStyleBackColor = True
         '
         'StartFenster
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(627, 546)
+        Me.Controls.Add(Me.B_LoggerStop)
+        Me.Controls.Add(Me.B_Sort)
         Me.Controls.Add(Me.B_LoggerStart)
         Me.Controls.Add(Me.L_ChosenObj)
         Me.Controls.Add(Me.LB_ChoosenObj)
@@ -151,4 +173,6 @@ Partial Class StartFenster
     Friend WithEvents LB_ChoosenObj As ListBox
     Friend WithEvents L_ChosenObj As Label
     Friend WithEvents B_LoggerStart As Button
+    Friend WithEvents B_Sort As Button
+    Friend WithEvents B_LoggerStop As Button
 End Class
