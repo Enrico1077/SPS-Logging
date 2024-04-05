@@ -79,6 +79,7 @@
     <Compile Include="Klassen\Konfiguration_Handling.vb" />
     <Compile Include="Klassen\Networking.vb" />
     <Compile Include="Klassen\PVIClient.vb" />
+    <Compile Include="Klassen\Resizer.vb" />
     <Compile Include="StartFenster.vb">
       <SubType>Form</SubType>
     </Compile>

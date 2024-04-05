@@ -22,6 +22,8 @@ Partial Class StartFenster
     'Das Bearbeiten mit dem Code-Editor ist nicht möglich.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(StartFenster))
         Me.L_SPSSuche = New System.Windows.Forms.Label()
         Me.CB_IPAddressen = New System.Windows.Forms.ComboBox()
         Me.B_SPSSuche = New System.Windows.Forms.Button()
@@ -34,16 +36,22 @@ Partial Class StartFenster
         Me.B_LoggerStart = New System.Windows.Forms.Button()
         Me.B_Sort = New System.Windows.Forms.Button()
         Me.B_LoggerStop = New System.Windows.Forms.Button()
+        Me.L_LoggerKonfig = New System.Windows.Forms.Label()
+        Me.L_SampTime = New System.Windows.Forms.Label()
+        Me.L_RecMode = New System.Windows.Forms.Label()
+        Me.CB_LogMode = New System.Windows.Forms.ComboBox()
+        Me.TB_SampTime = New System.Windows.Forms.TextBox()
+        Me.IL_TreeView = New System.Windows.Forms.ImageList(Me.components)
         Me.SuspendLayout()
         '
         'L_SPSSuche
         '
         Me.L_SPSSuche.AutoSize = True
-        Me.L_SPSSuche.Location = New System.Drawing.Point(21, 42)
+        Me.L_SPSSuche.Location = New System.Drawing.Point(24, 29)
         Me.L_SPSSuche.Name = "L_SPSSuche"
-        Me.L_SPSSuche.Size = New System.Drawing.Size(300, 13)
+        Me.L_SPSSuche.Size = New System.Drawing.Size(229, 26)
         Me.L_SPSSuche.TabIndex = 0
-        Me.L_SPSSuche.Text = "Bitte die IP-Addresse der Steuerung auswählen oder eintragen"
+        Me.L_SPSSuche.Text = "Bitte die IP-Addresse der Steuerung auswählen" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "oder eintragen"
         '
         'CB_IPAddressen
         '
@@ -81,8 +89,11 @@ Partial Class StartFenster
         '
         'TV_PVIVars
         '
+        Me.TV_PVIVars.ImageIndex = 0
+        Me.TV_PVIVars.ImageList = Me.IL_TreeView
         Me.TV_PVIVars.Location = New System.Drawing.Point(27, 159)
         Me.TV_PVIVars.Name = "TV_PVIVars"
+        Me.TV_PVIVars.SelectedImageIndex = 0
         Me.TV_PVIVars.Size = New System.Drawing.Size(247, 329)
         Me.TV_PVIVars.TabIndex = 5
         '
@@ -139,11 +150,69 @@ Partial Class StartFenster
         Me.B_LoggerStop.Text = "Logger Stoppen"
         Me.B_LoggerStop.UseVisualStyleBackColor = True
         '
+        'L_LoggerKonfig
+        '
+        Me.L_LoggerKonfig.AutoSize = True
+        Me.L_LoggerKonfig.Location = New System.Drawing.Point(373, 29)
+        Me.L_LoggerKonfig.Name = "L_LoggerKonfig"
+        Me.L_LoggerKonfig.Size = New System.Drawing.Size(105, 13)
+        Me.L_LoggerKonfig.TabIndex = 12
+        Me.L_LoggerKonfig.Text = "Logger-Konfiguration" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        '
+        'L_SampTime
+        '
+        Me.L_SampTime.AutoSize = True
+        Me.L_SampTime.Location = New System.Drawing.Point(303, 66)
+        Me.L_SampTime.Name = "L_SampTime"
+        Me.L_SampTime.Size = New System.Drawing.Size(82, 13)
+        Me.L_SampTime.TabIndex = 14
+        Me.L_SampTime.Text = "Abtastrate in ms"
+        '
+        'L_RecMode
+        '
+        Me.L_RecMode.AutoSize = True
+        Me.L_RecMode.Location = New System.Drawing.Point(303, 97)
+        Me.L_RecMode.Name = "L_RecMode"
+        Me.L_RecMode.Size = New System.Drawing.Size(80, 13)
+        Me.L_RecMode.TabIndex = 15
+        Me.L_RecMode.Text = "Logging-Modus"
+        '
+        'CB_LogMode
+        '
+        Me.CB_LogMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.CB_LogMode.FormattingEnabled = True
+        Me.CB_LogMode.Items.AddRange(New Object() {"Modus1", "Modus2"})
+        Me.CB_LogMode.Location = New System.Drawing.Point(391, 94)
+        Me.CB_LogMode.Name = "CB_LogMode"
+        Me.CB_LogMode.Size = New System.Drawing.Size(162, 21)
+        Me.CB_LogMode.TabIndex = 16
+        '
+        'TB_SampTime
+        '
+        Me.TB_SampTime.Location = New System.Drawing.Point(391, 63)
+        Me.TB_SampTime.Name = "TB_SampTime"
+        Me.TB_SampTime.Size = New System.Drawing.Size(162, 20)
+        Me.TB_SampTime.TabIndex = 17
+        Me.TB_SampTime.Text = "100"
+        '
+        'IL_TreeView
+        '
+        Me.IL_TreeView.ImageStream = CType(resources.GetObject("IL_TreeView.ImageStream"), System.Windows.Forms.ImageListStreamer)
+        Me.IL_TreeView.TransparentColor = System.Drawing.Color.Transparent
+        Me.IL_TreeView.Images.SetKeyName(0, "Task.png")
+        Me.IL_TreeView.Images.SetKeyName(1, "Var.png")
+        Me.IL_TreeView.Images.SetKeyName(2, "Global.png")
+        '
         'StartFenster
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(627, 546)
+        Me.Controls.Add(Me.TB_SampTime)
+        Me.Controls.Add(Me.CB_LogMode)
+        Me.Controls.Add(Me.L_RecMode)
+        Me.Controls.Add(Me.L_SampTime)
+        Me.Controls.Add(Me.L_LoggerKonfig)
         Me.Controls.Add(Me.B_LoggerStop)
         Me.Controls.Add(Me.B_Sort)
         Me.Controls.Add(Me.B_LoggerStart)
@@ -175,4 +244,10 @@ Partial Class StartFenster
     Friend WithEvents B_LoggerStart As Button
     Friend WithEvents B_Sort As Button
     Friend WithEvents B_LoggerStop As Button
+    Friend WithEvents L_LoggerKonfig As Label
+    Friend WithEvents L_SampTime As Label
+    Friend WithEvents L_RecMode As Label
+    Friend WithEvents CB_LogMode As ComboBox
+    Friend WithEvents TB_SampTime As TextBox
+    Friend WithEvents IL_TreeView As ImageList
 End Class

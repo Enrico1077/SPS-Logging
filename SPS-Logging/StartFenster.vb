@@ -1,14 +1,17 @@
 ﻿Public Class StartFenster
 
     Dim PVIC As PVIClient
+    Dim rs As Resizer = New Resizer
+    Dim isMaximized = False
 
 
     Sub New()
         InitializeComponent()
         CB_IPAddressen.Items.AddRange(loadSavedIps.toArray)
         If CB_IPAddressen.Items.Count > 0 Then CB_IPAddressen.SelectedIndex = 0
+        If CB_LogMode.Items.Count > 0 Then CB_LogMode.SelectedIndex = 0
         Dim HomeDir = IO.Directory.GetCurrentDirectory
-        If Not My.Computer.FileSystem.FileExists(HomeDir + ConfigName) Then saveDefaultXML(HomeDir + ConfigName)
+        If Not My.Computer.FileSystem.FileExists(HomeDir + configName) Then saveDefaultXML(HomeDir + configName)
     End Sub
 
 #Region "PublicVisualSetter"
@@ -20,6 +23,31 @@
         TV_PVIVars.Nodes.Add(AdderNode)
     End Sub
 #End Region
+
+#Region "Visuals"
+    Private Sub StartFenster_Load(sender As Object, e As EventArgs) Handles Me.Load
+        rs.FindAllControls(Me)
+    End Sub
+
+    Private Sub StartFenster_ResizeEnd(sender As Object, e As EventArgs) Handles Me.ResizeEnd
+        rs.ResizeAllControls(Me)
+    End Sub
+
+    Private Sub StartFenster_Resize(sender As Object, e As EventArgs) Handles Me.Resize
+        If WindowState = FormWindowState.Maximized Then
+            isMaximized = True
+            rs.ResizeAllControls(Me)
+        End If
+
+        If isMaximized AndAlso WindowState = FormWindowState.Normal Then
+            isMaximized = False
+            rs.ResizeAllControls(Me)
+        End If
+    End Sub
+
+#End Region
+
+
 
 #Region "UserInput"
     Private Sub B_SPSSuche_Click(sender As Object, e As EventArgs) Handles B_SPSSuche.Click
@@ -53,12 +81,19 @@
     End Sub
 
     Private Sub B_LoggerStart_Click(sender As Object, e As EventArgs) Handles B_LoggerStart.Click
-        PVIC.StartLogger(CurConfig.DataRecoderName, LB_ChoosenObj.Items)
+        PVIC.StartLogger(CurConfig.DataRecoderName, LB_ChoosenObj.Items, TB_SampTime.Text, CB_LogMode.SelectedIndex)
     End Sub
 
     Private Sub B_LoggerStop_Click(sender As Object, e As EventArgs) Handles B_LoggerStop.Click
         PVIC.StopLogger(CurConfig.DataRecoderName)
     End Sub
+
+
+
+
+
+
+
 
 
 

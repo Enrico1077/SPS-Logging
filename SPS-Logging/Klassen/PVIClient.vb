@@ -64,12 +64,14 @@ Public Class PVIClient
         Dim tmpVariable As Variable = sender
         Dim rootNode = New TreeNode(tmpVariable.Name)
         rootNode.Name = tmpVariable.Name
+        rootNode.ImageIndex = 2
         If tmpVariable.Members IsNot Nothing Then
             For Each child As Variable In tmpVariable.Members.Values
-                rootNode.Nodes.Add(child.Name, child.Name)
+                rootNode.Nodes.Add(child.Name, child.Name, 2)
             Next
         End If
-        'StartFenster.addTreeNode(rootNode)
+        rootNode.ImageIndex = 2
+        StartFenster.addTreeNode(rootNode)
         If Not tmpVariable.Name = Config.DataRecoderName Then tmpVariable.Disconnect()
     End Sub
 
@@ -96,10 +98,11 @@ Public Class PVIClient
     Private Sub Task_Variables_Uploaded(sender As Object, e As PviEventArgs)
         Dim tmpTask As Task = sender.Parent
         Dim tmpTreeNode As TreeNode = New TreeNode(tmpTask.Name)
+        tmpTreeNode.ImageIndex = 0
         tmpTreeNode.Name = tmpTask.Name
         For Each Var As DictionaryEntry In tmpTask.Variables
             Dim tmpVar As Variable = tmpTask.Variables(Var.Key)
-            tmpTreeNode.Nodes.Add(tmpVar.Name, tmpVar.Name)
+            tmpTreeNode.Nodes.Add(tmpVar.Name, tmpVar.Name, 1)
         Next
         StartFenster.addTreeNode(tmpTreeNode)
     End Sub
@@ -109,8 +112,21 @@ Public Class PVIClient
         If rootNode.Nodes.Count = 0 Then Exit Sub
         tmpTreeNode = rootNode
         Dim tmpTask = CurCPU.Tasks(rootNode.Text)
+        Dim tmpGlobal = CurCPU.Variables(getRootNode(rootNode).Text)
 
-        If tmpTask Is Nothing Then
+        If tmpGlobal IsNot Nothing Then                                         'GlobaleVariablen
+            Dim tmpVar As Variable = StringtoVar(TreeNodeToVarName(rootNode))
+            If tmpVar Is Nothing Then Stop
+            For Each childVar As Variable In tmpVar.Members.Values
+                AddHandler childVar.ValueChanged, AddressOf TmpVar_Connected
+                childVar.Active = True
+                childVar.Connect()
+            Next
+            Exit Sub
+        End If
+
+
+        If tmpTask Is Nothing Then                                              'TaskVariablen
             Dim realtmpTask As Task = CurCPU.Tasks(getRootNode(rootNode).Text)
             Dim tmpVar As Variable = StringtoVar(TreeNodeToVarName(rootNode, 1), realtmpTask)
             If tmpVar Is Nothing Then Stop
@@ -122,7 +138,7 @@ Public Class PVIClient
             Exit Sub
         End If
 
-        For Each Var As DictionaryEntry In tmpTask.Variables
+        For Each Var As DictionaryEntry In tmpTask.Variables                      'Tasks
             Dim tmpVar As Variable = tmpTask.Variables(Var.Key)
             AddHandler tmpVar.ValueChanged, AddressOf TmpVar_Connected
             tmpVar.Active = True
@@ -136,7 +152,7 @@ Public Class PVIClient
         If sender.Members Is Nothing Then Exit Sub
         For Each childVar As Variable In sender.Members.Values
             If tmpTreeNode.Nodes(sender.Name) Is Nothing Then Exit Sub
-            tmpTreeNode.Nodes(sender.Name).Nodes.Add(childVar.Name, childVar.Name)
+            tmpTreeNode.Nodes(sender.Name).Nodes.Add(childVar.Name, childVar.Name, 1)
         Next
         sender.Disconnect()
     End Sub
@@ -170,13 +186,13 @@ Public Class PVIClient
     End Function
 
     'Diese Funktion konfiguriert den Logger und startet ihn
-    Public Sub StartLogger(LoggerName As String, ProzzesData As ListBox.ObjectCollection)
+    Public Sub StartLogger(LoggerName As String, ProzzesData As ListBox.ObjectCollection, SampTime As Integer, RecMode As Integer)
         Dim LoggerVar As Variable = CurCPU.Variables(LoggerName)
         If Not LoggerVar.DataValid Then Exit Sub
         LoggerVar.WriteValueAutomatic = False
         LoggerVar.Value("In.AufzeichnungStart") = True
-        LoggerVar.Value("In.AuswahlRecorderMode") = 1       'Konfigurierbar machen 
-        LoggerVar.Value("In.SamplingTime") = 100            'Konfigurierbar machen
+        LoggerVar.Value("In.AuswahlRecorderMode") = RecMode + 1       'Konfigurierbar machen 
+        LoggerVar.Value("In.SamplingTime") = SampTime            'Konfigurierbar machen
 
         For i As Integer = 0 To ProzzesData.Count - 1
             LoggerVar.Value($"In.Variable{i + 1}") = New Value(ProzzesData(i))
@@ -198,9 +214,10 @@ Public Class PVIClient
 
     'Diese Funktion findet zu einer Internen Variablenbezeichnung die Variable im mitgegebenen
     'Task, unabhängig ob die Variable Teil sonstiger komplexer Strukturen ist
-    Private Function StringtoVar(Name As String, Task As Task) As Variable
+    Private Function StringtoVar(Name As String, Optional Task As Task = Nothing) As Variable
         Dim VarNames As String() = Name.Split(":")
-        Dim CurVar As Variable = Task.Variables(VarNames(0))
+        Dim CurVar As Variable = Nothing
+        If Task IsNot Nothing Then CurVar = Task.Variables(VarNames(0)) Else CurVar = CurCPU.Variables(VarNames(0))
         For i As Integer = 1 To VarNames.Length - 1
             If CurVar Is Nothing Then Return Nothing
             For Each Var As Variable In CurVar.Members.Values
