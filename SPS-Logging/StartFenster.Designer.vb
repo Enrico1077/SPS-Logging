@@ -30,6 +30,7 @@ Partial Class StartFenster
         Me.B_ConnectCpu = New System.Windows.Forms.Button()
         Me.L_CpuConnected = New System.Windows.Forms.Label()
         Me.TV_PVIVars = New System.Windows.Forms.TreeView()
+        Me.IL_TreeView = New System.Windows.Forms.ImageList(Me.components)
         Me.L_TreeView = New System.Windows.Forms.Label()
         Me.LB_ChoosenObj = New System.Windows.Forms.ListBox()
         Me.L_ChosenObj = New System.Windows.Forms.Label()
@@ -41,7 +42,8 @@ Partial Class StartFenster
         Me.L_RecMode = New System.Windows.Forms.Label()
         Me.CB_LogMode = New System.Windows.Forms.ComboBox()
         Me.TB_SampTime = New System.Windows.Forms.TextBox()
-        Me.IL_TreeView = New System.Windows.Forms.ImageList(Me.components)
+        Me.b_CpuDisconnect = New System.Windows.Forms.Button()
+        Me.L_VarCount = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'L_SPSSuche
@@ -96,6 +98,14 @@ Partial Class StartFenster
         Me.TV_PVIVars.SelectedImageIndex = 0
         Me.TV_PVIVars.Size = New System.Drawing.Size(247, 329)
         Me.TV_PVIVars.TabIndex = 5
+        '
+        'IL_TreeView
+        '
+        Me.IL_TreeView.ImageStream = CType(resources.GetObject("IL_TreeView.ImageStream"), System.Windows.Forms.ImageListStreamer)
+        Me.IL_TreeView.TransparentColor = System.Drawing.Color.Transparent
+        Me.IL_TreeView.Images.SetKeyName(0, "Task.png")
+        Me.IL_TreeView.Images.SetKeyName(1, "Var.png")
+        Me.IL_TreeView.Images.SetKeyName(2, "Global.png")
         '
         'L_TreeView
         '
@@ -181,7 +191,7 @@ Partial Class StartFenster
         '
         Me.CB_LogMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.CB_LogMode.FormattingEnabled = True
-        Me.CB_LogMode.Items.AddRange(New Object() {"Modus1", "Modus2"})
+        Me.CB_LogMode.Items.AddRange(New Object() {"Zeitlich Bedingt", "Änderungs Bedingt"})
         Me.CB_LogMode.Location = New System.Drawing.Point(391, 94)
         Me.CB_LogMode.Name = "CB_LogMode"
         Me.CB_LogMode.Size = New System.Drawing.Size(162, 21)
@@ -195,19 +205,31 @@ Partial Class StartFenster
         Me.TB_SampTime.TabIndex = 17
         Me.TB_SampTime.Text = "100"
         '
-        'IL_TreeView
+        'b_CpuDisconnect
         '
-        Me.IL_TreeView.ImageStream = CType(resources.GetObject("IL_TreeView.ImageStream"), System.Windows.Forms.ImageListStreamer)
-        Me.IL_TreeView.TransparentColor = System.Drawing.Color.Transparent
-        Me.IL_TreeView.Images.SetKeyName(0, "Task.png")
-        Me.IL_TreeView.Images.SetKeyName(1, "Var.png")
-        Me.IL_TreeView.Images.SetKeyName(2, "Global.png")
+        Me.b_CpuDisconnect.Location = New System.Drawing.Point(27, 494)
+        Me.b_CpuDisconnect.Name = "b_CpuDisconnect"
+        Me.b_CpuDisconnect.Size = New System.Drawing.Size(251, 23)
+        Me.b_CpuDisconnect.TabIndex = 18
+        Me.b_CpuDisconnect.Text = "CPU Trennen"
+        Me.b_CpuDisconnect.UseVisualStyleBackColor = True
+        '
+        'L_VarCount
+        '
+        Me.L_VarCount.AutoSize = True
+        Me.L_VarCount.Location = New System.Drawing.Point(479, 143)
+        Me.L_VarCount.Name = "L_VarCount"
+        Me.L_VarCount.Size = New System.Drawing.Size(62, 13)
+        Me.L_VarCount.TabIndex = 19
+        Me.L_VarCount.Text = "Anzahl: 0/0"
         '
         'StartFenster
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(627, 546)
+        Me.Controls.Add(Me.L_VarCount)
+        Me.Controls.Add(Me.b_CpuDisconnect)
         Me.Controls.Add(Me.TB_SampTime)
         Me.Controls.Add(Me.CB_LogMode)
         Me.Controls.Add(Me.L_RecMode)
@@ -250,4 +272,6 @@ Partial Class StartFenster
     Friend WithEvents CB_LogMode As ComboBox
     Friend WithEvents TB_SampTime As TextBox
     Friend WithEvents IL_TreeView As ImageList
+    Friend WithEvents b_CpuDisconnect As Button
+    Friend WithEvents L_VarCount As Label
 End Class

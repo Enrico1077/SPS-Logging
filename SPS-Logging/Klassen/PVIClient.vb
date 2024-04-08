@@ -11,6 +11,13 @@ Public Class PVIClient
         CpuIP = CIP
     End Sub
 
+    Public Sub DisconnectService()
+        If CurService Is Nothing Then Exit Sub
+        CurService.Remove()
+        CurService = Nothing
+        CurCPU = Nothing
+    End Sub
+
     'Erstellt einen Service und verbindet diesen 
     Sub connectService()
         If CurService Is Nothing Then
@@ -72,7 +79,11 @@ Public Class PVIClient
         End If
         rootNode.ImageIndex = 2
         StartFenster.addTreeNode(rootNode)
-        If Not tmpVariable.Name = Config.DataRecoderName Then tmpVariable.Disconnect()
+        If tmpVariable.Name = Config.DataRecoderName Then
+            StartFenster.setValCountText(MaxNum:=tmpVariable.Value("In.Variable").ArrayData.Length)
+            Exit Sub
+        End If
+        tmpVariable.Disconnect()
     End Sub
 
     'Wenn die Tasks hochgeladen wurden, werden sie verbunden
@@ -161,15 +172,24 @@ Public Class PVIClient
     'diesen zurück
     Public Function TreeNodeToVarName(aktNode As TreeNode, Optional StartLayer As Integer = 0) As String
         Dim NodePuffer As New List(Of String)
+        Dim IsVarPuffer As New List(Of Boolean)
         NodePuffer.Add(aktNode.Text)
+        IsVarPuffer.Add(Convert.ToBoolean(aktNode.ImageIndex))
+
         While aktNode.Parent IsNot Nothing
             aktNode = aktNode.Parent
             NodePuffer.Add(aktNode.Text)
+            IsVarPuffer.Add(Convert.ToBoolean(aktNode.ImageIndex))
         End While
 
         Dim outString As String = NodePuffer(NodePuffer.Count - 1 - StartLayer)
         For i As Integer = NodePuffer.Count - 2 - StartLayer To 0 Step -1
-            outString += $":{NodePuffer(i)}"
+            If IsVarPuffer(i + 1) Then
+                outString += $".{NodePuffer(i)}"
+            Else
+                outString += $":{NodePuffer(i)}"
+            End If
+
         Next
 
         Return outString
@@ -195,7 +215,7 @@ Public Class PVIClient
         LoggerVar.Value("In.SamplingTime") = SampTime            'Konfigurierbar machen
 
         For i As Integer = 0 To ProzzesData.Count - 1
-            LoggerVar.Value($"In.Variable{i + 1}") = New Value(ProzzesData(i))
+            LoggerVar.Value($"In.Variable[{i}]") = New Value(ProzzesData(i))
         Next
         LoggerVar.WriteValue()
         LoggerVar.WriteValueAutomatic = True
@@ -215,7 +235,7 @@ Public Class PVIClient
     'Diese Funktion findet zu einer Internen Variablenbezeichnung die Variable im mitgegebenen
     'Task, unabhängig ob die Variable Teil sonstiger komplexer Strukturen ist
     Private Function StringtoVar(Name As String, Optional Task As Task = Nothing) As Variable
-        Dim VarNames As String() = Name.Split(":")
+        Dim VarNames As String() = Name.Split((New Char() {".", ":"}))
         Dim CurVar As Variable = Nothing
         If Task IsNot Nothing Then CurVar = Task.Variables(VarNames(0)) Else CurVar = CurCPU.Variables(VarNames(0))
         For i As Integer = 1 To VarNames.Length - 1

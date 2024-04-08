@@ -22,6 +22,13 @@
     Sub addTreeNode(ByRef AdderNode As TreeNode)
         TV_PVIVars.Nodes.Add(AdderNode)
     End Sub
+
+    Sub setValCountText(Optional aktNum As Integer = -1, Optional MaxNum As Integer = -1)
+        If Not aktNum = -1 AndAlso Not MaxNum = -1 Then L_VarCount.Text = $"Anzahl: {aktNum}/{MaxNum}" : Exit Sub
+        Dim CountParts As String() = L_VarCount.Text.Split(New Char() {":", "/"})
+        If Not aktNum = -1 Then L_VarCount.Text = $"Anzahl: {aktNum}/{CountParts(2)}" : Exit Sub
+        If Not MaxNum = -1 Then L_VarCount.Text = $"Anzahl: {CountParts(1)}/{MaxNum}"
+    End Sub
 #End Region
 
 #Region "Visuals"
@@ -62,12 +69,16 @@
 
     Private Sub TV_PVIVars_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles TV_PVIVars.AfterSelect
         If e.Node.Nodes.Count > 0 Then Exit Sub
+        Dim CountParts As String() = L_VarCount.Text.Split(New Char() {":", "/"})
+        If CInt(CountParts(2)) = CInt(CountParts(1)) Then Exit Sub
         Dim Name As String = PVIC.TreeNodeToVarName(e.Node)
         If Not LB_ChoosenObj.Items.Contains(Name) Then LB_ChoosenObj.Items.Add(Name)
+        setValCountText(LB_ChoosenObj.Items.Count)
     End Sub
 
     Private Sub LB_ChoosenObj_SelectedIndexChanged(sender As Object, e As EventArgs) Handles LB_ChoosenObj.SelectedIndexChanged
         LB_ChoosenObj.Items.Remove(LB_ChoosenObj.SelectedItem)
+        setValCountText(LB_ChoosenObj.Items.Count)
     End Sub
 
     Private Sub B_Sort_Click(sender As Object, e As EventArgs) Handles B_Sort.Click
@@ -86,6 +97,11 @@
 
     Private Sub B_LoggerStop_Click(sender As Object, e As EventArgs) Handles B_LoggerStop.Click
         PVIC.StopLogger(CurConfig.DataRecoderName)
+    End Sub
+
+    Private Sub b_CpuDisconnect_Click(sender As Object, e As EventArgs) Handles b_CpuDisconnect.Click
+        PVIC.DisconnectService()
+        TV_PVIVars.Nodes.Clear()
     End Sub
 
 
