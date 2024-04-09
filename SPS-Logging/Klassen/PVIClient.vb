@@ -12,6 +12,8 @@ Public Class PVIClient
         CpuIP = CIP
     End Sub
 
+    'Diese Funktion löscht alle Verweise welche durch diese Anwendung in der
+    'PVI-Session angelgt wurden 
     Public Sub DisconnectService()
         If CurService Is Nothing Then Exit Sub
         CurService.Remove()
@@ -228,7 +230,7 @@ Public Class PVIClient
         If Not LoggerVar.DataValid Then Exit Sub
         LoggerVar.WriteValueAutomatic = False
         LoggerVar.Value("In.AufzeichnungStart") = False
-        LoggerVar.Value("In.AuswahlRecorderMode") = 0       'Konfigurierbar machen 
+        LoggerVar.Value("In.AuswahlRecorderMode") = 0
         LoggerVar.WriteValue()
         LoggerVar.WriteValueAutomatic = True
     End Sub
@@ -251,6 +253,8 @@ Public Class PVIClient
         Return CurVar
     End Function
 
+    'Diese Funktion verbindet die Variable welche den aktuellen FileName beinhaltet
+    'Und fügt einen Handler bei Wertänderung der Variable hinzu
     Public Sub LookOnFileName(LoggerName As String)
         Dim LoggerVar As Variable = CurCPU.Variables(LoggerName)
         If Not LoggerVar.DataValid Then Exit Sub
@@ -263,10 +267,13 @@ Public Class PVIClient
 
     End Sub
 
+    'Diese Funktion gibt bei der Änderung des Dateinamens, die Information, dass
+    'der Name geändert wurde an das StartFenster weiter
     Private Sub NewFileName(sender As Variable, e As PviEventArgs)
         StartFenster.NewCsvFile()
     End Sub
 
+    'Diese Funktion löst die Verbindung zu der Variablen welchen den aktuellen DateiNamen beeinhaltet auf
     Public Sub StopLookingOnFileName()
         Try
             CurFileNameVar.Active = False
