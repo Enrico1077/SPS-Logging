@@ -44,6 +44,17 @@ Partial Class StartFenster
         Me.TB_SampTime = New System.Windows.Forms.TextBox()
         Me.b_CpuDisconnect = New System.Windows.Forms.Button()
         Me.L_VarCount = New System.Windows.Forms.Label()
+        Me.L_Ftp = New System.Windows.Forms.Label()
+        Me.L_FTP_Dir = New System.Windows.Forms.Label()
+        Me.TB_DirPath = New System.Windows.Forms.TextBox()
+        Me.B_OpenFBD = New System.Windows.Forms.Button()
+        Me.L_DownloadModus = New System.Windows.Forms.Label()
+        Me.CB_DownloadModi = New System.Windows.Forms.ComboBox()
+        Me.B_FTPStart = New System.Windows.Forms.Button()
+        Me.B_StopFTP = New System.Windows.Forms.Button()
+        Me.L_DownloadTime = New System.Windows.Forms.Label()
+        Me.TB_DownloadTime = New System.Windows.Forms.TextBox()
+        Me.FBD_FTPSave = New System.Windows.Forms.FolderBrowserDialog()
         Me.SuspendLayout()
         '
         'L_SPSSuche
@@ -58,9 +69,9 @@ Partial Class StartFenster
         'CB_IPAddressen
         '
         Me.CB_IPAddressen.FormattingEnabled = True
-        Me.CB_IPAddressen.Location = New System.Drawing.Point(24, 58)
+        Me.CB_IPAddressen.Location = New System.Drawing.Point(27, 58)
         Me.CB_IPAddressen.Name = "CB_IPAddressen"
-        Me.CB_IPAddressen.Size = New System.Drawing.Size(166, 21)
+        Me.CB_IPAddressen.Size = New System.Drawing.Size(163, 21)
         Me.CB_IPAddressen.TabIndex = 1
         '
         'B_SPSSuche
@@ -74,9 +85,9 @@ Partial Class StartFenster
         '
         'B_ConnectCpu
         '
-        Me.B_ConnectCpu.Location = New System.Drawing.Point(24, 87)
+        Me.B_ConnectCpu.Location = New System.Drawing.Point(27, 87)
         Me.B_ConnectCpu.Name = "B_ConnectCpu"
-        Me.B_ConnectCpu.Size = New System.Drawing.Size(251, 23)
+        Me.B_ConnectCpu.Size = New System.Drawing.Size(248, 23)
         Me.B_ConnectCpu.TabIndex = 3
         Me.B_ConnectCpu.Text = "CPU Verbinden"
         Me.B_ConnectCpu.UseVisualStyleBackColor = True
@@ -209,7 +220,7 @@ Partial Class StartFenster
         '
         Me.b_CpuDisconnect.Location = New System.Drawing.Point(27, 494)
         Me.b_CpuDisconnect.Name = "b_CpuDisconnect"
-        Me.b_CpuDisconnect.Size = New System.Drawing.Size(251, 23)
+        Me.b_CpuDisconnect.Size = New System.Drawing.Size(247, 23)
         Me.b_CpuDisconnect.TabIndex = 18
         Me.b_CpuDisconnect.Text = "CPU Trennen"
         Me.b_CpuDisconnect.UseVisualStyleBackColor = True
@@ -223,11 +234,112 @@ Partial Class StartFenster
         Me.L_VarCount.TabIndex = 19
         Me.L_VarCount.Text = "Anzahl: 0/0"
         '
+        'L_Ftp
+        '
+        Me.L_Ftp.AutoSize = True
+        Me.L_Ftp.Location = New System.Drawing.Point(675, 29)
+        Me.L_Ftp.Name = "L_Ftp"
+        Me.L_Ftp.Size = New System.Drawing.Size(92, 13)
+        Me.L_Ftp.TabIndex = 20
+        Me.L_Ftp.Text = "FTP-Konfiguration"
+        '
+        'L_FTP_Dir
+        '
+        Me.L_FTP_Dir.AutoSize = True
+        Me.L_FTP_Dir.Location = New System.Drawing.Point(577, 66)
+        Me.L_FTP_Dir.Name = "L_FTP_Dir"
+        Me.L_FTP_Dir.Size = New System.Drawing.Size(106, 13)
+        Me.L_FTP_Dir.TabIndex = 21
+        Me.L_FTP_Dir.Text = "Speicher Verzeichnis"
+        '
+        'TB_DirPath
+        '
+        Me.TB_DirPath.Location = New System.Drawing.Point(689, 63)
+        Me.TB_DirPath.Name = "TB_DirPath"
+        Me.TB_DirPath.Size = New System.Drawing.Size(157, 20)
+        Me.TB_DirPath.TabIndex = 22
+        Me.TB_DirPath.Text = "C:\Temp\FTPDateien"
+        '
+        'B_OpenFBD
+        '
+        Me.B_OpenFBD.Location = New System.Drawing.Point(852, 63)
+        Me.B_OpenFBD.Name = "B_OpenFBD"
+        Me.B_OpenFBD.Size = New System.Drawing.Size(24, 20)
+        Me.B_OpenFBD.TabIndex = 23
+        Me.B_OpenFBD.Text = "..."
+        Me.B_OpenFBD.UseVisualStyleBackColor = True
+        '
+        'L_DownloadModus
+        '
+        Me.L_DownloadModus.AutoSize = True
+        Me.L_DownloadModus.Location = New System.Drawing.Point(577, 102)
+        Me.L_DownloadModus.Name = "L_DownloadModus"
+        Me.L_DownloadModus.Size = New System.Drawing.Size(90, 13)
+        Me.L_DownloadModus.TabIndex = 24
+        Me.L_DownloadModus.Text = "Download-Modus"
+        '
+        'CB_DownloadModi
+        '
+        Me.CB_DownloadModi.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.CB_DownloadModi.FormattingEnabled = True
+        Me.CB_DownloadModi.Items.AddRange(New Object() {"Download bei neuer Datei", "Download nach X Sekunden"})
+        Me.CB_DownloadModi.Location = New System.Drawing.Point(689, 97)
+        Me.CB_DownloadModi.Name = "CB_DownloadModi"
+        Me.CB_DownloadModi.Size = New System.Drawing.Size(187, 21)
+        Me.CB_DownloadModi.TabIndex = 25
+        '
+        'B_FTPStart
+        '
+        Me.B_FTPStart.Location = New System.Drawing.Point(580, 159)
+        Me.B_FTPStart.Name = "B_FTPStart"
+        Me.B_FTPStart.Size = New System.Drawing.Size(140, 23)
+        Me.B_FTPStart.TabIndex = 26
+        Me.B_FTPStart.Text = "FTP-Downloader starten"
+        Me.B_FTPStart.UseVisualStyleBackColor = True
+        '
+        'B_StopFTP
+        '
+        Me.B_StopFTP.Location = New System.Drawing.Point(736, 159)
+        Me.B_StopFTP.Name = "B_StopFTP"
+        Me.B_StopFTP.Size = New System.Drawing.Size(140, 23)
+        Me.B_StopFTP.TabIndex = 27
+        Me.B_StopFTP.Text = "FTP-Downloader stoppen"
+        Me.B_StopFTP.UseVisualStyleBackColor = True
+        '
+        'L_DownloadTime
+        '
+        Me.L_DownloadTime.AutoSize = True
+        Me.L_DownloadTime.Enabled = False
+        Me.L_DownloadTime.Location = New System.Drawing.Point(577, 136)
+        Me.L_DownloadTime.Name = "L_DownloadTime"
+        Me.L_DownloadTime.Size = New System.Drawing.Size(183, 13)
+        Me.L_DownloadTime.TabIndex = 28
+        Me.L_DownloadTime.Text = "Sekunden zwischen zwei Downloads"
+        '
+        'TB_DownloadTime
+        '
+        Me.TB_DownloadTime.Enabled = False
+        Me.TB_DownloadTime.Location = New System.Drawing.Point(766, 133)
+        Me.TB_DownloadTime.Name = "TB_DownloadTime"
+        Me.TB_DownloadTime.Size = New System.Drawing.Size(110, 20)
+        Me.TB_DownloadTime.TabIndex = 29
+        Me.TB_DownloadTime.Text = "1"
+        '
         'StartFenster
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(627, 546)
+        Me.ClientSize = New System.Drawing.Size(894, 546)
+        Me.Controls.Add(Me.TB_DownloadTime)
+        Me.Controls.Add(Me.L_DownloadTime)
+        Me.Controls.Add(Me.B_StopFTP)
+        Me.Controls.Add(Me.B_FTPStart)
+        Me.Controls.Add(Me.CB_DownloadModi)
+        Me.Controls.Add(Me.L_DownloadModus)
+        Me.Controls.Add(Me.B_OpenFBD)
+        Me.Controls.Add(Me.TB_DirPath)
+        Me.Controls.Add(Me.L_FTP_Dir)
+        Me.Controls.Add(Me.L_Ftp)
         Me.Controls.Add(Me.L_VarCount)
         Me.Controls.Add(Me.b_CpuDisconnect)
         Me.Controls.Add(Me.TB_SampTime)
@@ -274,4 +386,15 @@ Partial Class StartFenster
     Friend WithEvents IL_TreeView As ImageList
     Friend WithEvents b_CpuDisconnect As Button
     Friend WithEvents L_VarCount As Label
+    Friend WithEvents L_Ftp As Label
+    Friend WithEvents L_FTP_Dir As Label
+    Friend WithEvents TB_DirPath As TextBox
+    Friend WithEvents B_OpenFBD As Button
+    Friend WithEvents L_DownloadModus As Label
+    Friend WithEvents CB_DownloadModi As ComboBox
+    Friend WithEvents B_FTPStart As Button
+    Friend WithEvents B_StopFTP As Button
+    Friend WithEvents L_DownloadTime As Label
+    Friend WithEvents TB_DownloadTime As TextBox
+    Friend WithEvents FBD_FTPSave As FolderBrowserDialog
 End Class

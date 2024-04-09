@@ -76,6 +76,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Klassen\FTP_Client.vb" />
     <Compile Include="Klassen\Konfiguration_Handling.vb" />
     <Compile Include="Klassen\Networking.vb" />
     <Compile Include="Klassen\PVIClient.vb" />

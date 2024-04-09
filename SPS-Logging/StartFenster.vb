@@ -1,8 +1,10 @@
 ﻿Public Class StartFenster
 
     Dim PVIC As PVIClient
+    Dim FTPC As FTP_Client
     Dim rs As Resizer = New Resizer
-    Dim isMaximized = False
+    Dim isMaximized As Boolean = False
+    Dim FTPTimer As Timer
 
 
     Sub New()
@@ -10,11 +12,20 @@
         CB_IPAddressen.Items.AddRange(loadSavedIps.toArray)
         If CB_IPAddressen.Items.Count > 0 Then CB_IPAddressen.SelectedIndex = 0
         If CB_LogMode.Items.Count > 0 Then CB_LogMode.SelectedIndex = 0
+        If CB_DownloadModi.Items.Count > 0 Then CB_DownloadModi.SelectedIndex = 0
         Dim HomeDir = IO.Directory.GetCurrentDirectory
         If Not My.Computer.FileSystem.FileExists(HomeDir + configName) Then saveDefaultXML(HomeDir + configName)
+        ReadConfig(HomeDir + configName)
+
+
+
     End Sub
 
-#Region "PublicVisualSetter"
+
+
+
+#Region "PublicSetter"
+
     Sub setLCpuConnectedText(Text As String)
         L_CpuConnected.Text = Text
     End Sub
@@ -54,11 +65,9 @@
 
 #End Region
 
-
-
 #Region "UserInput"
     Private Sub B_SPSSuche_Click(sender As Object, e As EventArgs) Handles B_SPSSuche.Click
-        CB_IPAddressen.Items.AddRange(searchForPLCs("126.255.255.150", "127.0.0.1").ToArray)
+        CB_IPAddressen.Items.AddRange(searchForPLCs("192.168.0.140", "192.168.0.150").ToArray)
         If CB_IPAddressen.Items.Count > 1 Then CB_IPAddressen.SelectedIndex = 0
     End Sub
 
@@ -104,18 +113,51 @@
         TV_PVIVars.Nodes.Clear()
     End Sub
 
+    Private Sub B_FTPStart_Click(sender As Object, e As EventArgs) Handles B_FTPStart.Click
+        If FTPC Is Nothing Then FTPC = New FTP_Client(CurConfig.FTP_IPAdress, CurConfig.FTP_UserName, CurConfig.FTP_Password)
+        If CB_DownloadModi.SelectedIndex = 0 Then
+            PVIC.LookOnFileName(CurConfig.DataRecoderName)
+        Else
+            FTPTimer = New Timer
+            FTPTimer.Interval = CInt(TB_DownloadTime.Text) * 1000
+            AddHandler FTPTimer.Tick, AddressOf NewCsvFile
+            FTPTimer.Start()
+
+        End If
+    End Sub
 
 
 
+    Private Sub B_StopFTP_Click(sender As Object, e As EventArgs) Handles B_StopFTP.Click
+        If CB_DownloadModi.SelectedIndex = 0 Then
+            PVIC.StopLookingOnFileName()
+        Else
+            FTPTimer.Stop()
+        End If
 
+    End Sub
 
+    Private Sub CB_DownloadModi_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CB_DownloadModi.SelectedIndexChanged
+        If CB_DownloadModi.SelectedIndex = 0 Then
+            L_DownloadTime.Enabled = False
+            TB_DownloadTime.Enabled = False
+        Else
+            L_DownloadTime.Enabled = True
+            TB_DownloadTime.Enabled = True
+        End If
+    End Sub
 
-
-
+    Private Sub B_OpenFBD_Click(sender As Object, e As EventArgs) Handles B_OpenFBD.Click
+        FBD_FTPSave.ShowDialog()
+        If FBD_FTPSave.SelectedPath Is Nothing Then Exit Sub
+        TB_DirPath.Text = FBD_FTPSave.SelectedPath
+    End Sub
 
 #End Region
 
-
+    Sub NewCsvFile()
+        FTPC.DownloadFile(FTPC.FindLatestFile(), TB_DirPath.Text)
+    End Sub
 
 
 End Class

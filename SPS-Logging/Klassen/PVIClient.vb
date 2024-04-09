@@ -5,6 +5,7 @@ Public Class PVIClient
     Dim CpuIP As String
     Dim StartFenster As StartFenster
     Dim tmpTreeNode As TreeNode
+    Dim CurFileNameVar As Variable
 
     Sub New(SF As Form, CIP As String)
         StartFenster = SF
@@ -211,8 +212,8 @@ Public Class PVIClient
         If Not LoggerVar.DataValid Then Exit Sub
         LoggerVar.WriteValueAutomatic = False
         LoggerVar.Value("In.AufzeichnungStart") = True
-        LoggerVar.Value("In.AuswahlRecorderMode") = RecMode + 1       'Konfigurierbar machen 
-        LoggerVar.Value("In.SamplingTime") = SampTime            'Konfigurierbar machen
+        LoggerVar.Value("In.AuswahlRecorderMode") = RecMode + 1
+        LoggerVar.Value("In.SamplingTime") = SampTime
 
         For i As Integer = 0 To ProzzesData.Count - 1
             LoggerVar.Value($"In.Variable[{i}]") = New Value(ProzzesData(i))
@@ -249,5 +250,30 @@ Public Class PVIClient
         Next
         Return CurVar
     End Function
+
+    Public Sub LookOnFileName(LoggerName As String)
+        Dim LoggerVar As Variable = CurCPU.Variables(LoggerName)
+        If Not LoggerVar.DataValid Then Exit Sub
+        Dim LoggerOutVar As Variable = LoggerVar.Members.Values(1)          'DataRecorder.Out
+        Dim LoggerFileOutVar As Variable = LoggerOutVar.Members.Values(3)   'DataRecorder.Out.AktuellerDateiname
+        LoggerFileOutVar.Active = True
+        LoggerFileOutVar.Connect()
+        AddHandler LoggerFileOutVar.ValueChanged, AddressOf NewFileName
+        CurFileNameVar = LoggerFileOutVar
+
+    End Sub
+
+    Private Sub NewFileName(sender As Variable, e As PviEventArgs)
+        StartFenster.NewCsvFile()
+    End Sub
+
+    Public Sub StopLookingOnFileName()
+        Try
+            CurFileNameVar.Active = False
+            CurFileNameVar.Disconnect()
+        Catch ex As system.Exception
+            Console.WriteLine("Hier könnte ihr Fehler stehen")
+        End Try
+    End Sub
 
 End Class
