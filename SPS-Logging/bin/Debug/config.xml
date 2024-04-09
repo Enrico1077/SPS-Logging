@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Konfiguration>
+  <SPS-EINSTELLUNGEN>
+    <DataRecorderVariable>DataRecorder</DataRecorderVariable>
+  </SPS-EINSTELLUNGEN>
+  <FTP-Konfigurationen>
+    <IP-Addresse>192.168.0.147</IP-Addresse>
+    <User-Name>ftpuser</User-Name>
+    <Password>4711</Password>
+  </FTP-Konfigurationen>
+</Konfiguration>

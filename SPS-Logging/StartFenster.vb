@@ -31,7 +31,7 @@
         CurCsvFile = CsvFile
     End Sub
 
-    'Diese Funktion zeigt den StatusText im Fenster an 
+    'Diese Funktion zeigt den StatusText im Fenster an
     Sub setLCpuConnectedText(Text As String)
         L_CpuConnected.Text = Text
     End Sub
