@@ -86,6 +86,7 @@ Public Class PVIClient
             StartFenster.setValCountText(MaxNum:=tmpVariable.Value("In.Variable").ArrayData.Length)
             Exit Sub
         End If
+        RemoveHandler tmpVariable.ValueChanged, AddressOf Cpu_Variable_Connected
         tmpVariable.Disconnect()
     End Sub
 
@@ -213,15 +214,31 @@ Public Class PVIClient
         Dim LoggerVar As Variable = CurCPU.Variables(LoggerName)
         If Not LoggerVar.DataValid Then Exit Sub
         LoggerVar.WriteValueAutomatic = False
-        LoggerVar.Value("In.AufzeichnungStart") = True
         LoggerVar.Value("In.AuswahlRecorderMode") = RecMode + 1
         LoggerVar.Value("In.SamplingTime") = SampTime
-
         For i As Integer = 0 To ProzzesData.Count - 1
             LoggerVar.Value($"In.Variable[{i}]") = New Value(ProzzesData(i))
         Next
         LoggerVar.WriteValue()
         LoggerVar.WriteValueAutomatic = True
+        Dim startIn1s As Timer = New Timer
+        startIn1s.Interval = 1000
+        startIn1s.Start()
+        AddHandler startIn1s.Tick, AddressOf LateLoggerStart
+
+
+
+
+    End Sub
+
+    Private Sub LateLoggerStart(sender As Timer, e As EventArgs)
+        Dim LoggerVar As Variable = CurCPU.Variables(CurConfig.DataRecoderName)
+        If Not LoggerVar.DataValid Then Exit Sub
+        LoggerVar.WriteValueAutomatic = False
+        LoggerVar.Value("In.AufzeichnungStart") = True
+        LoggerVar.WriteValue()
+        LoggerVar.WriteValueAutomatic = True
+        sender.Stop()
     End Sub
 
     'Diese Funktion stop den Logger

@@ -28,7 +28,7 @@
 #Region "PublicSetter"
 
     Sub setCurCsvFile(CsvFile As String)
-        CurCsvFile = CsvFile
+        CurCsvFile = cs
     End Sub
 
     'Diese Funktion zeigt den StatusText im Fenster an 
@@ -184,7 +184,7 @@
     End Sub
 
 #End Region
-    'Diese Funktion lässt den FTP-Client die aktuellste CSV-Datei herunterladen
+    'Diese Funktion lässt den FTP-Client die angegebende CSV-Datei herunterladen
     Sub NewCsvFile(csvFile As String)
         FTPC.DownloadFile(CurCsvFile, TB_DirPath.Text)
         CurCsvFile = csvFile
@@ -192,6 +192,8 @@
 
     'Diese Funktion lässt den FTP-Client die aktuellste CSV-Datei herunterladen
     Sub DownloadNewstCsvFile()
+        'ToDo: Es sollte nicht nur die aktuellste Datei runtergeladen werden, sondern 
+        '      beim Dateinwechsel auch noch einmal die voraktuellste
         FTPC.DownloadFile(FTPC.FindLatestFile(), TB_DirPath.Text)
     End Sub
 
