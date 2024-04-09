@@ -52,7 +52,7 @@ Public Class FTP_Client
             Dim LineParts As String() = DirDetailsArray(i).Split(New String() {" "}, StringSplitOptions.RemoveEmptyEntries)
             If LineParts.Length < 8 Then Continue For
             Dim NameParts As String() = LineParts(8).Split("_")
-            Dim FileDate As Date = Date.ParseExact($"{NameParts(1)} {LineParts(5)} {LineParts(6)} {LineParts(7)}", "yyyy MMM dd hh:mm", Globalization.CultureInfo.InvariantCulture)
+            Dim FileDate As Date = Date.ParseExact($"{NameParts(1)} {LineParts(5)} {LineParts(6)} {LineParts(7)}", "yyyy MMM dd HH:mm", New Globalization.CultureInfo("de-DE"))
             If FileDate > newestDate Then
                 newestDate = FileDate
                 newestFile = LineParts(8)
