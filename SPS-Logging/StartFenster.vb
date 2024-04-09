@@ -28,7 +28,7 @@
 #Region "PublicSetter"
 
     Sub setCurCsvFile(CsvFile As String)
-        CurCsvFile = cs
+        CurCsvFile = CsvFile
     End Sub
 
     'Diese Funktion zeigt den StatusText im Fenster an 
