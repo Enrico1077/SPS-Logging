@@ -264,13 +264,13 @@ Public Class PVIClient
         LoggerFileOutVar.Connect()
         AddHandler LoggerFileOutVar.ValueChanged, AddressOf NewFileName
         CurFileNameVar = LoggerFileOutVar
-
+        StartFenster.setCurCsvFile(LoggerFileOutVar.Value)
     End Sub
 
     'Diese Funktion gibt bei der Änderung des Dateinamens, die Information, dass
     'der Name geändert wurde an das StartFenster weiter
     Private Sub NewFileName(sender As Variable, e As PviEventArgs)
-        StartFenster.NewCsvFile()
+        StartFenster.NewCsvFile(CurFileNameVar.Value)
     End Sub
 
     'Diese Funktion löst die Verbindung zu der Variablen welchen den aktuellen DateiNamen beeinhaltet auf

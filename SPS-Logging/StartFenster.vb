@@ -5,6 +5,7 @@
     Dim rs As Resizer = New Resizer
     Dim isMaximized As Boolean = False
     Dim FTPTimer As Timer
+    Dim CurCsvFile As String
 
 
     Sub New()
@@ -25,6 +26,10 @@
 
 
 #Region "PublicSetter"
+
+    Sub setCurCsvFile(CsvFile As String)
+        CurCsvFile = CsvFile
+    End Sub
 
     'Diese Funktion zeigt den StatusText im Fenster an 
     Sub setLCpuConnectedText(Text As String)
@@ -144,7 +149,7 @@
         Else
             FTPTimer = New Timer
             FTPTimer.Interval = CInt(TB_DownloadTime.Text) * 1000
-            AddHandler FTPTimer.Tick, AddressOf NewCsvFile
+            AddHandler FTPTimer.Tick, AddressOf DownloadNewstCsvFile
             FTPTimer.Start()
         End If
     End Sub
@@ -180,9 +185,14 @@
 
 #End Region
     'Diese Funktion lässt den FTP-Client die aktuellste CSV-Datei herunterladen
-    Sub NewCsvFile()
-        FTPC.DownloadFile(FTPC.FindLatestFile(), TB_DirPath.Text)
+    Sub NewCsvFile(csvFile As String)
+        FTPC.DownloadFile(CurCsvFile, TB_DirPath.Text)
+        CurCsvFile = csvFile
     End Sub
 
+    'Diese Funktion lässt den FTP-Client die aktuellste CSV-Datei herunterladen
+    Sub DownloadNewstCsvFile()
+        FTPC.DownloadFile(FTPC.FindLatestFile(), TB_DirPath.Text)
+    End Sub
 
 End Class
