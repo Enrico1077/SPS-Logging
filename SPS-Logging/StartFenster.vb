@@ -17,13 +17,7 @@
         Dim HomeDir = IO.Directory.GetCurrentDirectory
         If Not My.Computer.FileSystem.FileExists(HomeDir + configName) Then saveDefaultXML(HomeDir + configName)
         ReadConfig(HomeDir + configName)
-
-
-
     End Sub
-
-
-
 
 #Region "PublicSetter"
 
@@ -184,6 +178,7 @@
     End Sub
 
 #End Region
+
     'Diese Funktion lässt den FTP-Client die angegebende CSV-Datei herunterladen
     Sub NewCsvFile(csvFile As String)
         FTPC.DownloadFile(CurCsvFile, TB_DirPath.Text)
@@ -197,4 +192,15 @@
         FTPC.DownloadFile(FTPC.FindLatestFile(), TB_DirPath.Text)
     End Sub
 
+    Private Sub B_startUpload_Click(sender As Object, e As EventArgs) Handles B_startUpload.Click
+        Dim InfluxC As InfluxClient = New InfluxClient(
+                        "RIdhMT3ZXRFT8Lk1cHYMpwCpASQyva_fOUUf7nDPJGflYnNAnGmxIR78a68j76Kgof8tnJYJGNdRnfI30q4ccw==",
+                        "http://localhost:8087",
+                        "123",
+                        "Test"
+        )
+        InfluxC.writeCSVToInflux(InfluxC.AnalyseCSV("C:\Temp\FTPDateien\Datalog_2024_04_09_14_13_55.csv"))
+        Console.WriteLine("data has been uploaded")
+
+    End Sub
 End Class
