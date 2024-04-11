@@ -8,4 +8,9 @@
     <User-Name>ftpuser</User-Name>
     <Password>4711</Password>
   </FTP-Konfigurationen>
+  <Influx-Konfiguration>
+    <IP-Address>http://127.0.0.1:8087</IP-Address>
+    <Company>123</Company>
+    <API-Token>RIdhMT3ZXRFT8Lk1cHYMpwCpASQyva_fOUUf7nDPJGflYnNAnGmxIR78a68j76Kgof8tnJYJGNdRnfI30q4ccw==</API-Token>
+  </Influx-Konfiguration>
 </Konfiguration>

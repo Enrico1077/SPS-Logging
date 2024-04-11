@@ -177,6 +177,30 @@
         TB_DirPath.Text = FBD_FTPSave.SelectedPath
     End Sub
 
+    Private Sub B_startUpload_Click(sender As Object, e As EventArgs) Handles B_startUpload.Click
+        If OFD_CsvData.FileNames Is Nothing Then Exit Sub
+        Dim InfluxC As InfluxClient = New InfluxClient(
+                        CurConfig.Influx_API_Tok,
+                        CurConfig.Influx_Address,
+                        CurConfig.Influx_Comp,
+                        TB_Bucket.Text
+        )
+        For Each csvFile In OFD_CsvData.FileNames
+            Dim FullPath = IO.Path.GetFullPath(csvFile)
+            InfluxC.writeCSVToInflux(InfluxC.AnalyseCSV(FullPath))
+        Next
+        Console.WriteLine("data has been uploaded")
+
+    End Sub
+
+    Private Sub B_ChooseCsv_Click(sender As Object, e As EventArgs) Handles B_ChooseCsv.Click
+        If Not TB_DirPath.Text = "" Then OFD_CsvData.InitialDirectory = TB_DirPath.Text
+        OFD_CsvData.ShowDialog()
+        If OFD_CsvData.FileNames IsNot Nothing Then B_startUpload.Enabled = True
+    End Sub
+
+
+
 #End Region
 
     'Diese Funktion lässt den FTP-Client die angegebende CSV-Datei herunterladen
@@ -192,15 +216,5 @@
         FTPC.DownloadFile(FTPC.FindLatestFile(), TB_DirPath.Text)
     End Sub
 
-    Private Sub B_startUpload_Click(sender As Object, e As EventArgs) Handles B_startUpload.Click
-        Dim InfluxC As InfluxClient = New InfluxClient(
-                        "RIdhMT3ZXRFT8Lk1cHYMpwCpASQyva_fOUUf7nDPJGflYnNAnGmxIR78a68j76Kgof8tnJYJGNdRnfI30q4ccw==",
-                        "http://localhost:8087",
-                        "123",
-                        "Test"
-        )
-        InfluxC.writeCSVToInflux(InfluxC.AnalyseCSV("C:\Temp\FTPDateien\Datalog_2024_04_09_14_13_55.csv"))
-        Console.WriteLine("data has been uploaded")
 
-    End Sub
 End Class

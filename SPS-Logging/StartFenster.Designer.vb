@@ -57,43 +57,44 @@ Partial Class StartFenster
         Me.FBD_FTPSave = New System.Windows.Forms.FolderBrowserDialog()
         Me.L_ImportToInflux = New System.Windows.Forms.Label()
         Me.B_startUpload = New System.Windows.Forms.Button()
+        Me.L_CSVFIles = New System.Windows.Forms.Label()
+        Me.B_ChooseCsv = New System.Windows.Forms.Button()
+        Me.L_Bucket = New System.Windows.Forms.Label()
+        Me.TB_Bucket = New System.Windows.Forms.TextBox()
+        Me.OFD_CsvData = New System.Windows.Forms.OpenFileDialog()
         Me.SuspendLayout()
         '
         'L_SPSSuche
         '
         Me.L_SPSSuche.AutoSize = True
-        Me.L_SPSSuche.Location = New System.Drawing.Point(32, 36)
-        Me.L_SPSSuche.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.L_SPSSuche.Location = New System.Drawing.Point(24, 29)
         Me.L_SPSSuche.Name = "L_SPSSuche"
-        Me.L_SPSSuche.Size = New System.Drawing.Size(287, 32)
+        Me.L_SPSSuche.Size = New System.Drawing.Size(229, 26)
         Me.L_SPSSuche.TabIndex = 0
         Me.L_SPSSuche.Text = "Bitte die IP-Addresse der Steuerung auswählen" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "oder eintragen"
         '
         'CB_IPAddressen
         '
         Me.CB_IPAddressen.FormattingEnabled = True
-        Me.CB_IPAddressen.Location = New System.Drawing.Point(36, 71)
-        Me.CB_IPAddressen.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.CB_IPAddressen.Location = New System.Drawing.Point(27, 58)
         Me.CB_IPAddressen.Name = "CB_IPAddressen"
-        Me.CB_IPAddressen.Size = New System.Drawing.Size(216, 24)
+        Me.CB_IPAddressen.Size = New System.Drawing.Size(163, 21)
         Me.CB_IPAddressen.TabIndex = 1
         '
         'B_SPSSuche
         '
-        Me.B_SPSSuche.Location = New System.Drawing.Point(261, 71)
-        Me.B_SPSSuche.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.B_SPSSuche.Location = New System.Drawing.Point(196, 58)
         Me.B_SPSSuche.Name = "B_SPSSuche"
-        Me.B_SPSSuche.Size = New System.Drawing.Size(105, 28)
+        Me.B_SPSSuche.Size = New System.Drawing.Size(79, 23)
         Me.B_SPSSuche.TabIndex = 2
         Me.B_SPSSuche.Text = "Suchen"
         Me.B_SPSSuche.UseVisualStyleBackColor = True
         '
         'B_ConnectCpu
         '
-        Me.B_ConnectCpu.Location = New System.Drawing.Point(36, 107)
-        Me.B_ConnectCpu.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.B_ConnectCpu.Location = New System.Drawing.Point(27, 87)
         Me.B_ConnectCpu.Name = "B_ConnectCpu"
-        Me.B_ConnectCpu.Size = New System.Drawing.Size(331, 28)
+        Me.B_ConnectCpu.Size = New System.Drawing.Size(248, 23)
         Me.B_ConnectCpu.TabIndex = 3
         Me.B_ConnectCpu.Text = "CPU Verbinden"
         Me.B_ConnectCpu.UseVisualStyleBackColor = True
@@ -101,21 +102,19 @@ Partial Class StartFenster
         'L_CpuConnected
         '
         Me.L_CpuConnected.AutoSize = True
-        Me.L_CpuConnected.Location = New System.Drawing.Point(32, 144)
-        Me.L_CpuConnected.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.L_CpuConnected.Location = New System.Drawing.Point(24, 117)
         Me.L_CpuConnected.Name = "L_CpuConnected"
-        Me.L_CpuConnected.Size = New System.Drawing.Size(0, 16)
+        Me.L_CpuConnected.Size = New System.Drawing.Size(0, 13)
         Me.L_CpuConnected.TabIndex = 4
         '
         'TV_PVIVars
         '
         Me.TV_PVIVars.ImageIndex = 0
         Me.TV_PVIVars.ImageList = Me.IL_TreeView
-        Me.TV_PVIVars.Location = New System.Drawing.Point(36, 196)
-        Me.TV_PVIVars.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.TV_PVIVars.Location = New System.Drawing.Point(27, 159)
         Me.TV_PVIVars.Name = "TV_PVIVars"
         Me.TV_PVIVars.SelectedImageIndex = 0
-        Me.TV_PVIVars.Size = New System.Drawing.Size(328, 404)
+        Me.TV_PVIVars.Size = New System.Drawing.Size(247, 329)
         Me.TV_PVIVars.TabIndex = 5
         '
         'IL_TreeView
@@ -129,59 +128,52 @@ Partial Class StartFenster
         'L_TreeView
         '
         Me.L_TreeView.AutoSize = True
-        Me.L_TreeView.Location = New System.Drawing.Point(32, 176)
-        Me.L_TreeView.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.L_TreeView.Location = New System.Drawing.Point(24, 143)
         Me.L_TreeView.Name = "L_TreeView"
-        Me.L_TreeView.Size = New System.Drawing.Size(140, 16)
+        Me.L_TreeView.Size = New System.Drawing.Size(114, 13)
         Me.L_TreeView.TabIndex = 6
         Me.L_TreeView.Text = "Gefundene PVI-Ojekte"
         '
         'LB_ChoosenObj
         '
         Me.LB_ChoosenObj.FormattingEnabled = True
-        Me.LB_ChoosenObj.ItemHeight = 16
-        Me.LB_ChoosenObj.Location = New System.Drawing.Point(408, 196)
-        Me.LB_ChoosenObj.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.LB_ChoosenObj.Location = New System.Drawing.Point(306, 159)
         Me.LB_ChoosenObj.Name = "LB_ChoosenObj"
-        Me.LB_ChoosenObj.Size = New System.Drawing.Size(328, 404)
+        Me.LB_ChoosenObj.Size = New System.Drawing.Size(247, 329)
         Me.LB_ChoosenObj.TabIndex = 7
         '
         'L_ChosenObj
         '
         Me.L_ChosenObj.AutoSize = True
-        Me.L_ChosenObj.Location = New System.Drawing.Point(404, 176)
-        Me.L_ChosenObj.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.L_ChosenObj.Location = New System.Drawing.Point(303, 143)
         Me.L_ChosenObj.Name = "L_ChosenObj"
-        Me.L_ChosenObj.Size = New System.Drawing.Size(159, 16)
+        Me.L_ChosenObj.Size = New System.Drawing.Size(128, 13)
         Me.L_ChosenObj.TabIndex = 8
         Me.L_ChosenObj.Text = "Ausgewählte PVI-Objekte"
         '
         'B_LoggerStart
         '
-        Me.B_LoggerStart.Location = New System.Drawing.Point(408, 608)
-        Me.B_LoggerStart.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.B_LoggerStart.Location = New System.Drawing.Point(306, 494)
         Me.B_LoggerStart.Name = "B_LoggerStart"
-        Me.B_LoggerStart.Size = New System.Drawing.Size(164, 28)
+        Me.B_LoggerStart.Size = New System.Drawing.Size(123, 23)
         Me.B_LoggerStart.TabIndex = 9
         Me.B_LoggerStart.Text = "Logger Starten"
         Me.B_LoggerStart.UseVisualStyleBackColor = True
         '
         'B_Sort
         '
-        Me.B_Sort.Location = New System.Drawing.Point(267, 167)
-        Me.B_Sort.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.B_Sort.Location = New System.Drawing.Point(200, 136)
         Me.B_Sort.Name = "B_Sort"
-        Me.B_Sort.Size = New System.Drawing.Size(100, 28)
+        Me.B_Sort.Size = New System.Drawing.Size(75, 23)
         Me.B_Sort.TabIndex = 10
         Me.B_Sort.Text = "Sortieren"
         Me.B_Sort.UseVisualStyleBackColor = True
         '
         'B_LoggerStop
         '
-        Me.B_LoggerStop.Location = New System.Drawing.Point(573, 608)
-        Me.B_LoggerStop.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.B_LoggerStop.Location = New System.Drawing.Point(430, 494)
         Me.B_LoggerStop.Name = "B_LoggerStop"
-        Me.B_LoggerStop.Size = New System.Drawing.Size(164, 28)
+        Me.B_LoggerStop.Size = New System.Drawing.Size(123, 23)
         Me.B_LoggerStop.TabIndex = 11
         Me.B_LoggerStop.Text = "Logger Stoppen"
         Me.B_LoggerStop.UseVisualStyleBackColor = True
@@ -189,30 +181,27 @@ Partial Class StartFenster
         'L_LoggerKonfig
         '
         Me.L_LoggerKonfig.AutoSize = True
-        Me.L_LoggerKonfig.Location = New System.Drawing.Point(497, 36)
-        Me.L_LoggerKonfig.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.L_LoggerKonfig.Location = New System.Drawing.Point(373, 29)
         Me.L_LoggerKonfig.Name = "L_LoggerKonfig"
-        Me.L_LoggerKonfig.Size = New System.Drawing.Size(131, 16)
+        Me.L_LoggerKonfig.Size = New System.Drawing.Size(105, 13)
         Me.L_LoggerKonfig.TabIndex = 12
         Me.L_LoggerKonfig.Text = "Logger-Konfiguration" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
         '
         'L_SampTime
         '
         Me.L_SampTime.AutoSize = True
-        Me.L_SampTime.Location = New System.Drawing.Point(404, 81)
-        Me.L_SampTime.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.L_SampTime.Location = New System.Drawing.Point(303, 66)
         Me.L_SampTime.Name = "L_SampTime"
-        Me.L_SampTime.Size = New System.Drawing.Size(102, 16)
+        Me.L_SampTime.Size = New System.Drawing.Size(82, 13)
         Me.L_SampTime.TabIndex = 14
         Me.L_SampTime.Text = "Abtastrate in ms"
         '
         'L_RecMode
         '
         Me.L_RecMode.AutoSize = True
-        Me.L_RecMode.Location = New System.Drawing.Point(404, 119)
-        Me.L_RecMode.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.L_RecMode.Location = New System.Drawing.Point(303, 97)
         Me.L_RecMode.Name = "L_RecMode"
-        Me.L_RecMode.Size = New System.Drawing.Size(101, 16)
+        Me.L_RecMode.Size = New System.Drawing.Size(80, 13)
         Me.L_RecMode.TabIndex = 15
         Me.L_RecMode.Text = "Logging-Modus"
         '
@@ -221,27 +210,24 @@ Partial Class StartFenster
         Me.CB_LogMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.CB_LogMode.FormattingEnabled = True
         Me.CB_LogMode.Items.AddRange(New Object() {"Zeitlich Bedingt", "Änderungs Bedingt"})
-        Me.CB_LogMode.Location = New System.Drawing.Point(521, 116)
-        Me.CB_LogMode.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.CB_LogMode.Location = New System.Drawing.Point(391, 94)
         Me.CB_LogMode.Name = "CB_LogMode"
-        Me.CB_LogMode.Size = New System.Drawing.Size(215, 24)
+        Me.CB_LogMode.Size = New System.Drawing.Size(162, 21)
         Me.CB_LogMode.TabIndex = 16
         '
         'TB_SampTime
         '
-        Me.TB_SampTime.Location = New System.Drawing.Point(521, 78)
-        Me.TB_SampTime.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.TB_SampTime.Location = New System.Drawing.Point(391, 63)
         Me.TB_SampTime.Name = "TB_SampTime"
-        Me.TB_SampTime.Size = New System.Drawing.Size(215, 22)
+        Me.TB_SampTime.Size = New System.Drawing.Size(162, 20)
         Me.TB_SampTime.TabIndex = 17
         Me.TB_SampTime.Text = "100"
         '
         'b_CpuDisconnect
         '
-        Me.b_CpuDisconnect.Location = New System.Drawing.Point(36, 608)
-        Me.b_CpuDisconnect.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.b_CpuDisconnect.Location = New System.Drawing.Point(27, 494)
         Me.b_CpuDisconnect.Name = "b_CpuDisconnect"
-        Me.b_CpuDisconnect.Size = New System.Drawing.Size(329, 28)
+        Me.b_CpuDisconnect.Size = New System.Drawing.Size(247, 23)
         Me.b_CpuDisconnect.TabIndex = 18
         Me.b_CpuDisconnect.Text = "CPU Trennen"
         Me.b_CpuDisconnect.UseVisualStyleBackColor = True
@@ -249,48 +235,43 @@ Partial Class StartFenster
         'L_VarCount
         '
         Me.L_VarCount.AutoSize = True
-        Me.L_VarCount.Location = New System.Drawing.Point(639, 176)
-        Me.L_VarCount.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.L_VarCount.Location = New System.Drawing.Point(479, 143)
         Me.L_VarCount.Name = "L_VarCount"
-        Me.L_VarCount.Size = New System.Drawing.Size(71, 16)
+        Me.L_VarCount.Size = New System.Drawing.Size(62, 13)
         Me.L_VarCount.TabIndex = 19
         Me.L_VarCount.Text = "Anzahl: 0/0"
         '
         'L_Ftp
         '
         Me.L_Ftp.AutoSize = True
-        Me.L_Ftp.Location = New System.Drawing.Point(900, 36)
-        Me.L_Ftp.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.L_Ftp.Location = New System.Drawing.Point(675, 29)
         Me.L_Ftp.Name = "L_Ftp"
-        Me.L_Ftp.Size = New System.Drawing.Size(114, 16)
+        Me.L_Ftp.Size = New System.Drawing.Size(92, 13)
         Me.L_Ftp.TabIndex = 20
         Me.L_Ftp.Text = "FTP-Konfiguration"
         '
         'L_FTP_Dir
         '
         Me.L_FTP_Dir.AutoSize = True
-        Me.L_FTP_Dir.Location = New System.Drawing.Point(769, 81)
-        Me.L_FTP_Dir.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.L_FTP_Dir.Location = New System.Drawing.Point(577, 66)
         Me.L_FTP_Dir.Name = "L_FTP_Dir"
-        Me.L_FTP_Dir.Size = New System.Drawing.Size(133, 16)
+        Me.L_FTP_Dir.Size = New System.Drawing.Size(106, 13)
         Me.L_FTP_Dir.TabIndex = 21
         Me.L_FTP_Dir.Text = "Speicher Verzeichnis"
         '
         'TB_DirPath
         '
-        Me.TB_DirPath.Location = New System.Drawing.Point(919, 78)
-        Me.TB_DirPath.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.TB_DirPath.Location = New System.Drawing.Point(689, 63)
         Me.TB_DirPath.Name = "TB_DirPath"
-        Me.TB_DirPath.Size = New System.Drawing.Size(208, 22)
+        Me.TB_DirPath.Size = New System.Drawing.Size(157, 20)
         Me.TB_DirPath.TabIndex = 22
         Me.TB_DirPath.Text = "C:\Temp\FTPDateien"
         '
         'B_OpenFBD
         '
-        Me.B_OpenFBD.Location = New System.Drawing.Point(1136, 78)
-        Me.B_OpenFBD.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.B_OpenFBD.Location = New System.Drawing.Point(852, 63)
         Me.B_OpenFBD.Name = "B_OpenFBD"
-        Me.B_OpenFBD.Size = New System.Drawing.Size(32, 25)
+        Me.B_OpenFBD.Size = New System.Drawing.Size(24, 20)
         Me.B_OpenFBD.TabIndex = 23
         Me.B_OpenFBD.Text = "..."
         Me.B_OpenFBD.UseVisualStyleBackColor = True
@@ -298,10 +279,9 @@ Partial Class StartFenster
         'L_DownloadModus
         '
         Me.L_DownloadModus.AutoSize = True
-        Me.L_DownloadModus.Location = New System.Drawing.Point(769, 126)
-        Me.L_DownloadModus.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.L_DownloadModus.Location = New System.Drawing.Point(577, 102)
         Me.L_DownloadModus.Name = "L_DownloadModus"
-        Me.L_DownloadModus.Size = New System.Drawing.Size(113, 16)
+        Me.L_DownloadModus.Size = New System.Drawing.Size(90, 13)
         Me.L_DownloadModus.TabIndex = 24
         Me.L_DownloadModus.Text = "Download-Modus"
         '
@@ -310,28 +290,25 @@ Partial Class StartFenster
         Me.CB_DownloadModi.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.CB_DownloadModi.FormattingEnabled = True
         Me.CB_DownloadModi.Items.AddRange(New Object() {"Download bei neuer Datei", "Download nach X Sekunden"})
-        Me.CB_DownloadModi.Location = New System.Drawing.Point(919, 119)
-        Me.CB_DownloadModi.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.CB_DownloadModi.Location = New System.Drawing.Point(689, 97)
         Me.CB_DownloadModi.Name = "CB_DownloadModi"
-        Me.CB_DownloadModi.Size = New System.Drawing.Size(248, 24)
+        Me.CB_DownloadModi.Size = New System.Drawing.Size(187, 21)
         Me.CB_DownloadModi.TabIndex = 25
         '
         'B_FTPStart
         '
-        Me.B_FTPStart.Location = New System.Drawing.Point(773, 196)
-        Me.B_FTPStart.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.B_FTPStart.Location = New System.Drawing.Point(580, 159)
         Me.B_FTPStart.Name = "B_FTPStart"
-        Me.B_FTPStart.Size = New System.Drawing.Size(187, 28)
+        Me.B_FTPStart.Size = New System.Drawing.Size(140, 23)
         Me.B_FTPStart.TabIndex = 26
         Me.B_FTPStart.Text = "FTP-Downloader starten"
         Me.B_FTPStart.UseVisualStyleBackColor = True
         '
         'B_StopFTP
         '
-        Me.B_StopFTP.Location = New System.Drawing.Point(981, 196)
-        Me.B_StopFTP.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.B_StopFTP.Location = New System.Drawing.Point(736, 159)
         Me.B_StopFTP.Name = "B_StopFTP"
-        Me.B_StopFTP.Size = New System.Drawing.Size(187, 28)
+        Me.B_StopFTP.Size = New System.Drawing.Size(140, 23)
         Me.B_StopFTP.TabIndex = 27
         Me.B_StopFTP.Text = "FTP-Downloader stoppen"
         Me.B_StopFTP.UseVisualStyleBackColor = True
@@ -340,48 +317,92 @@ Partial Class StartFenster
         '
         Me.L_DownloadTime.AutoSize = True
         Me.L_DownloadTime.Enabled = False
-        Me.L_DownloadTime.Location = New System.Drawing.Point(769, 167)
-        Me.L_DownloadTime.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.L_DownloadTime.Location = New System.Drawing.Point(577, 136)
         Me.L_DownloadTime.Name = "L_DownloadTime"
-        Me.L_DownloadTime.Size = New System.Drawing.Size(225, 16)
+        Me.L_DownloadTime.Size = New System.Drawing.Size(183, 13)
         Me.L_DownloadTime.TabIndex = 28
         Me.L_DownloadTime.Text = "Sekunden zwischen zwei Downloads"
         '
         'TB_DownloadTime
         '
         Me.TB_DownloadTime.Enabled = False
-        Me.TB_DownloadTime.Location = New System.Drawing.Point(1021, 164)
-        Me.TB_DownloadTime.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.TB_DownloadTime.Location = New System.Drawing.Point(766, 133)
         Me.TB_DownloadTime.Name = "TB_DownloadTime"
-        Me.TB_DownloadTime.Size = New System.Drawing.Size(145, 22)
+        Me.TB_DownloadTime.Size = New System.Drawing.Size(110, 20)
         Me.TB_DownloadTime.TabIndex = 29
         Me.TB_DownloadTime.Text = "1"
         '
         'L_ImportToInflux
         '
         Me.L_ImportToInflux.AutoSize = True
-        Me.L_ImportToInflux.Location = New System.Drawing.Point(846, 292)
-        Me.L_ImportToInflux.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.L_ImportToInflux.Location = New System.Drawing.Point(634, 237)
         Me.L_ImportToInflux.Name = "L_ImportToInflux"
-        Me.L_ImportToInflux.Size = New System.Drawing.Size(226, 16)
+        Me.L_ImportToInflux.Size = New System.Drawing.Size(181, 13)
         Me.L_ImportToInflux.TabIndex = 30
         Me.L_ImportToInflux.Text = "CSV-Dateien in die Datenbank laden"
         '
         'B_startUpload
         '
-        Me.B_startUpload.Location = New System.Drawing.Point(867, 312)
-        Me.B_startUpload.Margin = New System.Windows.Forms.Padding(4)
+        Me.B_startUpload.Enabled = False
+        Me.B_startUpload.Location = New System.Drawing.Point(637, 335)
         Me.B_startUpload.Name = "B_startUpload"
-        Me.B_startUpload.Size = New System.Drawing.Size(187, 28)
+        Me.B_startUpload.Size = New System.Drawing.Size(154, 23)
         Me.B_startUpload.TabIndex = 31
         Me.B_startUpload.Text = "Upload starten"
         Me.B_startUpload.UseVisualStyleBackColor = True
         '
+        'L_CSVFIles
+        '
+        Me.L_CSVFIles.AutoSize = True
+        Me.L_CSVFIles.Enabled = False
+        Me.L_CSVFIles.Location = New System.Drawing.Point(577, 269)
+        Me.L_CSVFIles.Name = "L_CSVFIles"
+        Me.L_CSVFIles.Size = New System.Drawing.Size(71, 13)
+        Me.L_CSVFIles.TabIndex = 32
+        Me.L_CSVFIles.Text = "CSV-Dateien:"
+        '
+        'B_ChooseCsv
+        '
+        Me.B_ChooseCsv.Location = New System.Drawing.Point(658, 264)
+        Me.B_ChooseCsv.Name = "B_ChooseCsv"
+        Me.B_ChooseCsv.Size = New System.Drawing.Size(218, 23)
+        Me.B_ChooseCsv.TabIndex = 33
+        Me.B_ChooseCsv.Text = "CSV-Dateien auswählen"
+        Me.B_ChooseCsv.UseVisualStyleBackColor = True
+        '
+        'L_Bucket
+        '
+        Me.L_Bucket.AutoSize = True
+        Me.L_Bucket.Enabled = False
+        Me.L_Bucket.Location = New System.Drawing.Point(577, 301)
+        Me.L_Bucket.Name = "L_Bucket"
+        Me.L_Bucket.Size = New System.Drawing.Size(75, 13)
+        Me.L_Bucket.TabIndex = 34
+        Me.L_Bucket.Text = "Bucket Name:"
+        '
+        'TB_Bucket
+        '
+        Me.TB_Bucket.Location = New System.Drawing.Point(658, 298)
+        Me.TB_Bucket.Name = "TB_Bucket"
+        Me.TB_Bucket.Size = New System.Drawing.Size(218, 20)
+        Me.TB_Bucket.TabIndex = 35
+        Me.TB_Bucket.Text = "Test"
+        '
+        'OFD_CsvData
+        '
+        Me.OFD_CsvData.DefaultExt = "csv"
+        Me.OFD_CsvData.FileName = "OpenFileDialog1"
+        Me.OFD_CsvData.Multiselect = True
+        '
         'StartFenster
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1192, 672)
+        Me.ClientSize = New System.Drawing.Size(894, 546)
+        Me.Controls.Add(Me.TB_Bucket)
+        Me.Controls.Add(Me.L_Bucket)
+        Me.Controls.Add(Me.B_ChooseCsv)
+        Me.Controls.Add(Me.L_CSVFIles)
         Me.Controls.Add(Me.B_startUpload)
         Me.Controls.Add(Me.L_ImportToInflux)
         Me.Controls.Add(Me.TB_DownloadTime)
@@ -413,7 +434,6 @@ Partial Class StartFenster
         Me.Controls.Add(Me.B_SPSSuche)
         Me.Controls.Add(Me.CB_IPAddressen)
         Me.Controls.Add(Me.L_SPSSuche)
-        Me.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.Name = "StartFenster"
         Me.Text = "SPS-Logger"
         Me.ResumeLayout(False)
@@ -454,4 +474,9 @@ Partial Class StartFenster
     Friend WithEvents FBD_FTPSave As FolderBrowserDialog
     Friend WithEvents L_ImportToInflux As Label
     Friend WithEvents B_startUpload As Button
+    Friend WithEvents L_CSVFIles As Label
+    Friend WithEvents B_ChooseCsv As Button
+    Friend WithEvents L_Bucket As Label
+    Friend WithEvents TB_Bucket As TextBox
+    Friend WithEvents OFD_CsvData As OpenFileDialog
 End Class
