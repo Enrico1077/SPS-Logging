@@ -137,7 +137,8 @@
     'die letzte csv Datei herunterlädt oder eine PVI_variable verbunden, welche den aktuellen CSV-File_Name beihaltet und 
     'bei änderung des File-Names die File heruntergeladen 
     Private Sub B_FTPStart_Click(sender As Object, e As EventArgs) Handles B_FTPStart.Click
-        If FTPC Is Nothing Then FTPC = New FTP_Client(CurConfig.FTP_IPAdress, CurConfig.FTP_UserName, CurConfig.FTP_Password)
+        If CB_IPAddressen.Text Is Nothing Then Exit Sub
+        If FTPC Is Nothing Then FTPC = New FTP_Client(CB_IPAddressen.Text, CurConfig.FTP_UserName, CurConfig.FTP_Password)
         If CB_DownloadModi.SelectedIndex = 0 Then
             PVIC.LookOnFileName(CurConfig.DataRecoderName)
         Else
@@ -177,6 +178,7 @@
         TB_DirPath.Text = FBD_FTPSave.SelectedPath
     End Sub
 
+    'Bei einem Klick auf den Knopf StartUpload werden die Daten welche in den CSV-Datei gespsiechert waren in die InfluxDB geuploaded
     Private Sub B_startUpload_Click(sender As Object, e As EventArgs) Handles B_startUpload.Click
         If OFD_CsvData.FileNames Is Nothing Then Exit Sub
         Dim InfluxC As InfluxClient = New InfluxClient(
@@ -193,6 +195,7 @@
 
     End Sub
 
+    'Bei einem Klick öffnet sich ein FileBrowseDialog in welche die CSV Datei für den Upload ausgewählt werden können 
     Private Sub B_ChooseCsv_Click(sender As Object, e As EventArgs) Handles B_ChooseCsv.Click
         If Not TB_DirPath.Text = "" Then OFD_CsvData.InitialDirectory = TB_DirPath.Text
         OFD_CsvData.ShowDialog()
