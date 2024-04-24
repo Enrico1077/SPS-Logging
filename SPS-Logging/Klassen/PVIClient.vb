@@ -6,6 +6,7 @@ Public Class PVIClient
     Dim StartFenster As StartFenster
     Dim tmpTreeNode As TreeNode
     Dim CurFileNameVar As Variable
+    Dim VarRegOk As Variable
 
     Sub New(SF As Form, CIP As String)
         StartFenster = SF
@@ -112,6 +113,7 @@ Public Class PVIClient
     'weitergegeben
     Private Sub Task_Variables_Uploaded(sender As Object, e As PviEventArgs)
         Dim tmpTask As Task = sender.Parent
+        'If tmpTask.Name = "LoggerTest" Then Stop
         Dim tmpTreeNode As TreeNode = New TreeNode(tmpTask.Name)
         tmpTreeNode.ImageIndex = 0
         tmpTreeNode.Name = tmpTask.Name
@@ -222,14 +224,13 @@ Public Class PVIClient
         LoggerVar.WriteValue()
         LoggerVar.WriteValueAutomatic = True
         Dim startIn1s As Timer = New Timer
-        startIn1s.Interval = 1000
+        startIn1s.Interval = 2000
         startIn1s.Start()
         AddHandler startIn1s.Tick, AddressOf LateLoggerStart
-
-
-
-
+        LookOnLoggerStats(CurConfig.DataRecoderName)
     End Sub
+
+
 
     Private Sub LateLoggerStart(sender As Timer, e As EventArgs)
         Dim LoggerVar As Variable = CurCPU.Variables(CurConfig.DataRecoderName)
@@ -272,16 +273,25 @@ Public Class PVIClient
 
     'Diese Funktion verbindet die Variable welche den aktuellen FileName beinhaltet
     'Und fügt einen Handler bei Wertänderung der Variable hinzu
-    Public Sub LookOnFileName(LoggerName As String)
+    Public Sub LookOnLoggerStats(LoggerName As String)
         Dim LoggerVar As Variable = CurCPU.Variables(LoggerName)
         If Not LoggerVar.DataValid Then Exit Sub
         Dim LoggerOutVar As Variable = LoggerVar.Members.Values(1)          'DataRecorder.Out
         Dim LoggerFileOutVar As Variable = LoggerOutVar.Members.Values(3)   'DataRecorder.Out.AktuellerDateiname
+        Dim LoggerVarOK As Variable = LoggerOutVar.Members.Values(2)    'DataRecorder.Out.VariablenRegistrierungOK
         LoggerFileOutVar.Active = True
         LoggerFileOutVar.Connect()
+        LoggerVarOK.Active = True
+        LoggerVarOK.Connect()
+        AddHandler LoggerVarOK.ValueChanged, AddressOf LogVarOkChange
         AddHandler LoggerFileOutVar.ValueChanged, AddressOf NewFileName
         CurFileNameVar = LoggerFileOutVar
+        VarRegOk = LoggerVarOK
         StartFenster.setCurCsvFile(LoggerFileOutVar.Value)
+    End Sub
+
+    Private Sub LogVarOkChange(sender As Variable, e As PviEventArgs)
+        StartFenster.setVarOk(sender.Value)
     End Sub
 
     'Diese Funktion gibt bei der Änderung des Dateinamens, die Information, dass
@@ -295,6 +305,8 @@ Public Class PVIClient
         Try
             CurFileNameVar.Active = False
             CurFileNameVar.Disconnect()
+            VarRegOk.Active = False
+            VarRegOk.Disconnect()
         Catch ex As system.Exception
             Console.WriteLine("Hier könnte ihr Fehler stehen")
         End Try

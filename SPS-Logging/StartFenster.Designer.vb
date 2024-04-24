@@ -62,6 +62,15 @@ Partial Class StartFenster
         Me.L_Bucket = New System.Windows.Forms.Label()
         Me.TB_Bucket = New System.Windows.Forms.TextBox()
         Me.OFD_CsvData = New System.Windows.Forms.OpenFileDialog()
+        Me.L_LoggerStatus = New System.Windows.Forms.Label()
+        Me.L_noError = New System.Windows.Forms.Label()
+        Me.L_IdentiferCSV = New System.Windows.Forms.Label()
+        Me.L_LogPVIFehler = New System.Windows.Forms.Label()
+        Me.L_LogPVIFile = New System.Windows.Forms.Label()
+        Me.B_LogConfigLoad = New System.Windows.Forms.Button()
+        Me.B_LogConfigSave = New System.Windows.Forms.Button()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.Label2 = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'L_SPSSuche
@@ -137,15 +146,15 @@ Partial Class StartFenster
         'LB_ChoosenObj
         '
         Me.LB_ChoosenObj.FormattingEnabled = True
-        Me.LB_ChoosenObj.Location = New System.Drawing.Point(306, 159)
+        Me.LB_ChoosenObj.Location = New System.Drawing.Point(306, 172)
         Me.LB_ChoosenObj.Name = "LB_ChoosenObj"
-        Me.LB_ChoosenObj.Size = New System.Drawing.Size(247, 329)
+        Me.LB_ChoosenObj.Size = New System.Drawing.Size(247, 238)
         Me.LB_ChoosenObj.TabIndex = 7
         '
         'L_ChosenObj
         '
         Me.L_ChosenObj.AutoSize = True
-        Me.L_ChosenObj.Location = New System.Drawing.Point(303, 143)
+        Me.L_ChosenObj.Location = New System.Drawing.Point(303, 156)
         Me.L_ChosenObj.Name = "L_ChosenObj"
         Me.L_ChosenObj.Size = New System.Drawing.Size(128, 13)
         Me.L_ChosenObj.TabIndex = 8
@@ -153,7 +162,7 @@ Partial Class StartFenster
         '
         'B_LoggerStart
         '
-        Me.B_LoggerStart.Location = New System.Drawing.Point(306, 494)
+        Me.B_LoggerStart.Location = New System.Drawing.Point(306, 416)
         Me.B_LoggerStart.Name = "B_LoggerStart"
         Me.B_LoggerStart.Size = New System.Drawing.Size(123, 23)
         Me.B_LoggerStart.TabIndex = 9
@@ -171,7 +180,7 @@ Partial Class StartFenster
         '
         'B_LoggerStop
         '
-        Me.B_LoggerStop.Location = New System.Drawing.Point(430, 494)
+        Me.B_LoggerStop.Location = New System.Drawing.Point(430, 416)
         Me.B_LoggerStop.Name = "B_LoggerStop"
         Me.B_LoggerStop.Size = New System.Drawing.Size(123, 23)
         Me.B_LoggerStop.TabIndex = 11
@@ -181,16 +190,17 @@ Partial Class StartFenster
         'L_LoggerKonfig
         '
         Me.L_LoggerKonfig.AutoSize = True
-        Me.L_LoggerKonfig.Location = New System.Drawing.Point(373, 29)
+        Me.L_LoggerKonfig.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.L_LoggerKonfig.Location = New System.Drawing.Point(373, 27)
         Me.L_LoggerKonfig.Name = "L_LoggerKonfig"
-        Me.L_LoggerKonfig.Size = New System.Drawing.Size(105, 13)
+        Me.L_LoggerKonfig.Size = New System.Drawing.Size(142, 17)
         Me.L_LoggerKonfig.TabIndex = 12
         Me.L_LoggerKonfig.Text = "Logger-Konfiguration" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
         '
         'L_SampTime
         '
         Me.L_SampTime.AutoSize = True
-        Me.L_SampTime.Location = New System.Drawing.Point(303, 66)
+        Me.L_SampTime.Location = New System.Drawing.Point(303, 92)
         Me.L_SampTime.Name = "L_SampTime"
         Me.L_SampTime.Size = New System.Drawing.Size(82, 13)
         Me.L_SampTime.TabIndex = 14
@@ -199,7 +209,7 @@ Partial Class StartFenster
         'L_RecMode
         '
         Me.L_RecMode.AutoSize = True
-        Me.L_RecMode.Location = New System.Drawing.Point(303, 97)
+        Me.L_RecMode.Location = New System.Drawing.Point(303, 117)
         Me.L_RecMode.Name = "L_RecMode"
         Me.L_RecMode.Size = New System.Drawing.Size(80, 13)
         Me.L_RecMode.TabIndex = 15
@@ -210,14 +220,14 @@ Partial Class StartFenster
         Me.CB_LogMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.CB_LogMode.FormattingEnabled = True
         Me.CB_LogMode.Items.AddRange(New Object() {"Zeitlich Bedingt", "Änderungs Bedingt"})
-        Me.CB_LogMode.Location = New System.Drawing.Point(391, 94)
+        Me.CB_LogMode.Location = New System.Drawing.Point(391, 117)
         Me.CB_LogMode.Name = "CB_LogMode"
         Me.CB_LogMode.Size = New System.Drawing.Size(162, 21)
         Me.CB_LogMode.TabIndex = 16
         '
         'TB_SampTime
         '
-        Me.TB_SampTime.Location = New System.Drawing.Point(391, 63)
+        Me.TB_SampTime.Location = New System.Drawing.Point(391, 87)
         Me.TB_SampTime.Name = "TB_SampTime"
         Me.TB_SampTime.Size = New System.Drawing.Size(162, 20)
         Me.TB_SampTime.TabIndex = 17
@@ -235,7 +245,7 @@ Partial Class StartFenster
         'L_VarCount
         '
         Me.L_VarCount.AutoSize = True
-        Me.L_VarCount.Location = New System.Drawing.Point(479, 143)
+        Me.L_VarCount.Location = New System.Drawing.Point(473, 156)
         Me.L_VarCount.Name = "L_VarCount"
         Me.L_VarCount.Size = New System.Drawing.Size(62, 13)
         Me.L_VarCount.TabIndex = 19
@@ -244,9 +254,10 @@ Partial Class StartFenster
         'L_Ftp
         '
         Me.L_Ftp.AutoSize = True
-        Me.L_Ftp.Location = New System.Drawing.Point(675, 29)
+        Me.L_Ftp.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.L_Ftp.Location = New System.Drawing.Point(668, 29)
         Me.L_Ftp.Name = "L_Ftp"
-        Me.L_Ftp.Size = New System.Drawing.Size(92, 13)
+        Me.L_Ftp.Size = New System.Drawing.Size(123, 17)
         Me.L_Ftp.TabIndex = 20
         Me.L_Ftp.Text = "FTP-Konfiguration"
         '
@@ -335,9 +346,10 @@ Partial Class StartFenster
         'L_ImportToInflux
         '
         Me.L_ImportToInflux.AutoSize = True
-        Me.L_ImportToInflux.Location = New System.Drawing.Point(634, 237)
+        Me.L_ImportToInflux.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.L_ImportToInflux.Location = New System.Drawing.Point(616, 233)
         Me.L_ImportToInflux.Name = "L_ImportToInflux"
-        Me.L_ImportToInflux.Size = New System.Drawing.Size(181, 13)
+        Me.L_ImportToInflux.Size = New System.Drawing.Size(239, 17)
         Me.L_ImportToInflux.TabIndex = 30
         Me.L_ImportToInflux.Text = "CSV-Dateien in die Datenbank laden"
         '
@@ -394,11 +406,103 @@ Partial Class StartFenster
         Me.OFD_CsvData.FileName = "OpenFileDialog1"
         Me.OFD_CsvData.Multiselect = True
         '
+        'L_LoggerStatus
+        '
+        Me.L_LoggerStatus.AutoSize = True
+        Me.L_LoggerStatus.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.L_LoggerStatus.Location = New System.Drawing.Point(373, 453)
+        Me.L_LoggerStatus.Name = "L_LoggerStatus"
+        Me.L_LoggerStatus.Size = New System.Drawing.Size(98, 17)
+        Me.L_LoggerStatus.TabIndex = 36
+        Me.L_LoggerStatus.Text = "Logger-Status" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        '
+        'L_noError
+        '
+        Me.L_noError.AutoSize = True
+        Me.L_noError.Location = New System.Drawing.Point(303, 475)
+        Me.L_noError.Name = "L_noError"
+        Me.L_noError.Size = New System.Drawing.Size(69, 13)
+        Me.L_noError.TabIndex = 37
+        Me.L_noError.Text = "Keine Fehler:"
+        '
+        'L_IdentiferCSV
+        '
+        Me.L_IdentiferCSV.AutoSize = True
+        Me.L_IdentiferCSV.Location = New System.Drawing.Point(303, 500)
+        Me.L_IdentiferCSV.Name = "L_IdentiferCSV"
+        Me.L_IdentiferCSV.Size = New System.Drawing.Size(100, 13)
+        Me.L_IdentiferCSV.TabIndex = 38
+        Me.L_IdentiferCSV.Text = "Aktuelle CSV-Datei:"
+        '
+        'L_LogPVIFehler
+        '
+        Me.L_LogPVIFehler.AutoSize = True
+        Me.L_LogPVIFehler.Location = New System.Drawing.Point(408, 475)
+        Me.L_LogPVIFehler.Name = "L_LogPVIFehler"
+        Me.L_LogPVIFehler.Size = New System.Drawing.Size(10, 13)
+        Me.L_LogPVIFehler.TabIndex = 39
+        Me.L_LogPVIFehler.Text = "-"
+        '
+        'L_LogPVIFile
+        '
+        Me.L_LogPVIFile.AutoSize = True
+        Me.L_LogPVIFile.Location = New System.Drawing.Point(408, 500)
+        Me.L_LogPVIFile.Name = "L_LogPVIFile"
+        Me.L_LogPVIFile.Size = New System.Drawing.Size(10, 13)
+        Me.L_LogPVIFile.TabIndex = 40
+        Me.L_LogPVIFile.Text = "-"
+        '
+        'B_LogConfigLoad
+        '
+        Me.B_LogConfigLoad.Location = New System.Drawing.Point(391, 58)
+        Me.B_LogConfigLoad.Name = "B_LogConfigLoad"
+        Me.B_LogConfigLoad.Size = New System.Drawing.Size(72, 23)
+        Me.B_LogConfigLoad.TabIndex = 41
+        Me.B_LogConfigLoad.Text = "Laden"
+        Me.B_LogConfigLoad.UseVisualStyleBackColor = True
+        '
+        'B_LogConfigSave
+        '
+        Me.B_LogConfigSave.Location = New System.Drawing.Point(481, 58)
+        Me.B_LogConfigSave.Name = "B_LogConfigSave"
+        Me.B_LogConfigSave.Size = New System.Drawing.Size(72, 23)
+        Me.B_LogConfigSave.TabIndex = 42
+        Me.B_LogConfigSave.Text = "Speichern"
+        Me.B_LogConfigSave.UseVisualStyleBackColor = True
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(303, 63)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(72, 13)
+        Me.Label1.TabIndex = 43
+        Me.Label1.Text = "Konfiguration:"
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Location = New System.Drawing.Point(465, 59)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(13, 20)
+        Me.Label2.TabIndex = 44
+        Me.Label2.Text = "/"
+        '
         'StartFenster
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(894, 546)
+        Me.Controls.Add(Me.Label2)
+        Me.Controls.Add(Me.Label1)
+        Me.Controls.Add(Me.B_LogConfigSave)
+        Me.Controls.Add(Me.B_LogConfigLoad)
+        Me.Controls.Add(Me.L_LogPVIFile)
+        Me.Controls.Add(Me.L_LogPVIFehler)
+        Me.Controls.Add(Me.L_IdentiferCSV)
+        Me.Controls.Add(Me.L_noError)
+        Me.Controls.Add(Me.L_LoggerStatus)
         Me.Controls.Add(Me.TB_Bucket)
         Me.Controls.Add(Me.L_Bucket)
         Me.Controls.Add(Me.B_ChooseCsv)
@@ -479,4 +583,13 @@ Partial Class StartFenster
     Friend WithEvents L_Bucket As Label
     Friend WithEvents TB_Bucket As TextBox
     Friend WithEvents OFD_CsvData As OpenFileDialog
+    Friend WithEvents L_LoggerStatus As Label
+    Friend WithEvents L_noError As Label
+    Friend WithEvents L_IdentiferCSV As Label
+    Friend WithEvents L_LogPVIFehler As Label
+    Friend WithEvents L_LogPVIFile As Label
+    Friend WithEvents B_LogConfigLoad As Button
+    Friend WithEvents B_LogConfigSave As Button
+    Friend WithEvents Label1 As Label
+    Friend WithEvents Label2 As Label
 End Class

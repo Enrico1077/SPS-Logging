@@ -1,5 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <Konfiguration>
+  <Anwendungs-Konfigurationen>
+    <IP-Suche-Start-IP>192.168.0.140</IP-Suche-Start-IP>
+    <IP-Suche-End-IP>192.168.0.150</IP-Suche-End-IP>
+  </Anwendungs-Konfigurationen>
   <SPS-EINSTELLUNGEN>
     <DataRecorderVariable>DataRecorder</DataRecorderVariable>
   </SPS-EINSTELLUNGEN>
@@ -9,7 +13,7 @@
     <Password>4711</Password>
   </FTP-Konfigurationen>
   <Influx-Konfiguration>
-    <IP-Address>http://127.0.0.1:8087</IP-Address>
+    <IP-Address>127.0.0.1:8087</IP-Address>
     <Company>123</Company>
     <API-Token>RIdhMT3ZXRFT8Lk1cHYMpwCpASQyva_fOUUf7nDPJGflYnNAnGmxIR78a68j76Kgof8tnJYJGNdRnfI30q4ccw==</API-Token>
   </Influx-Konfiguration>

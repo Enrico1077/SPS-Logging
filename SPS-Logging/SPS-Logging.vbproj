@@ -50,8 +50,9 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BR.AN.PviServices">
-      <HintPath>..\..\..\..\BrAutomation\PVI\V4.3\PVI\Tools\PVITransfer\BR.AN.PviServices.dll</HintPath>
+    <Reference Include="BR.AN.PviServices, Version=1.1.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\BrAutomation\PVI\V4.8\PVI\Tools\PVITransfer\BR.AN.PviServices.dll</HintPath>
     </Reference>
     <Reference Include="CsvHelper, Version=30.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
       <HintPath>..\packages\CsvHelper.30.0.1\lib\net47\CsvHelper.dll</HintPath>
@@ -170,6 +171,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Klassen\FileSystemFunctions.vb" />
     <Compile Include="Klassen\FTP_Client.vb" />
     <Compile Include="Klassen\InfluxUploader.vb" />
     <Compile Include="Klassen\Konfiguration_Handling.vb" />

@@ -6,6 +6,7 @@
     Dim isMaximized As Boolean = False
     Dim FTPTimer As Timer
     Dim CurCsvFile As String
+    Dim FtpDownStarted As Boolean = False
 
 
     Sub New()
@@ -21,8 +22,36 @@
 
 #Region "PublicSetter"
 
+    'Mit dieser Funktion lässt sich von außerhalb der Klasse das LBChoosenObj mit
+    'Items füllen 
+    Sub setLBChoosenObjItems(varItems As String())
+        LB_ChoosenObj.Items.Clear()
+        LB_ChoosenObj.Items.AddRange(varItems)
+        setValCountText(aktNum:=LB_ChoosenObj.Items.Count)
+    End Sub
+
+    'Diese Funktion ist der Setter für das TBSampTime Textfeld
+    Sub setTBSampTime(SampTime As String)
+        TB_SampTime.Text = SampTime
+    End Sub
+
+    'Diese Funktion ist ein Setter für die CBLogMode Combobox
+    'Es muss ein String übergeben, welcher gesettet wird falls
+    'es in der CB ein Item mit diesem String gibt
+    Sub setCBLogMode(Modus As String)
+        If Not CB_LogMode.Items.Contains(Modus) Then Exit Sub
+        CB_LogMode.SelectedIndex = CB_LogMode.FindString(Modus)
+    End Sub
+
+    'Die Funktion ist ein Setter für das L_LogPVIFehler label
+    Sub setVarOk(VarOk As String)
+        L_LogPVIFehler.Text = VarOk
+    End Sub
+
+    'Die Funktion ist ein Setter für das L_LogPVIFile label
     Sub setCurCsvFile(CsvFile As String)
         CurCsvFile = CsvFile
+        L_LogPVIFile.Text = CsvFile
     End Sub
 
     'Diese Funktion zeigt den StatusText im Fenster an
@@ -125,6 +154,8 @@
     'Bei einem Klick auf den Knopf Logger stoppen wird der Logger gestoppt =)
     Private Sub B_LoggerStop_Click(sender As Object, e As EventArgs) Handles B_LoggerStop.Click
         PVIC.StopLogger(CurConfig.DataRecoderName)
+        setCurCsvFile("")
+        setVarOk("-")
     End Sub
 
     'Bei einem Klick auf den Knopf CPU Trennen werden alle PVI-Verweise gelöscht und die TreeView geleert
@@ -140,22 +171,25 @@
         If CB_IPAddressen.Text Is Nothing Then Exit Sub
         If FTPC Is Nothing Then FTPC = New FTP_Client(CB_IPAddressen.Text, CurConfig.FTP_UserName, CurConfig.FTP_Password)
         If CB_DownloadModi.SelectedIndex = 0 Then
-            PVIC.LookOnFileName(CurConfig.DataRecoderName)
+            'PVIC.LookOnFileName(CurConfig.DataRecoderName)
+            FtpDownStarted = True
         Else
-            FTPTimer = New Timer
-            FTPTimer.Interval = CInt(TB_DownloadTime.Text) * 1000
+            FTPTimer = New Timer With {.Interval = CInt(TB_DownloadTime.Text) * 1000}
             AddHandler FTPTimer.Tick, AddressOf DownloadNewstCsvFile
             FTPTimer.Start()
+            FtpDownStarted = True
         End If
     End Sub
 
     'Wird auf den Knopf FTP-Download stoppen gedrückt werden keine weiteren CSV-Dateien heruntergeladen
     Private Sub B_StopFTP_Click(sender As Object, e As EventArgs) Handles B_StopFTP.Click
         If CB_DownloadModi.SelectedIndex = 0 Then
-            PVIC.StopLookingOnFileName()
+            'PVIC.StopLookingOnFileName()
         Else
             FTPTimer.Stop()
         End If
+        FtpDownStarted = False
+        PVIC.StopLookingOnFileName()
 
     End Sub
 
@@ -202,13 +236,24 @@
         If OFD_CsvData.FileNames IsNot Nothing Then B_startUpload.Enabled = True
     End Sub
 
+    'Bei einem Klick auf den LoggerConfig Laden Knopf, wird OpenFileDialog geöffnet und der Nutzer kann auswählen,
+    'welche zuvorgespeicherte LoggerKonfiguration geladen werden soll
+    Private Sub B_LogConfigLoad_Click(sender As Object, e As EventArgs) Handles B_LogConfigLoad.Click
+        LoadLoggerConfig(Me)
+    End Sub
 
+    'Bei einem Klick auf den LoggerConfig Speichern Knopf, wird ein FolderBrowserDialog geöffnet und der Nutzer kann,
+    'auswählen an welcher Stelle seine aktuelle LoggerKonfiguration gespeichert werden soll
+    Private Sub B_LogConfigSave_Click(sender As Object, e As EventArgs) Handles B_LogConfigSave.Click
+        SaveLoggerConfig(LB_ChoosenObj.Items, TB_SampTime.Text, CB_LogMode.Text)
+    End Sub
 
 #End Region
 
+
     'Diese Funktion lässt den FTP-Client die angegebende CSV-Datei herunterladen
     Sub NewCsvFile(csvFile As String)
-        FTPC.DownloadFile(CurCsvFile, TB_DirPath.Text)
+        If FtpDownStarted Then FTPC.DownloadFile(CurCsvFile, TB_DirPath.Text)
         CurCsvFile = csvFile
     End Sub
 

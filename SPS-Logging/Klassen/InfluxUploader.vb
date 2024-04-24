@@ -2,7 +2,6 @@
 Imports InfluxDB.Client
 Imports InfluxDB.Client.Api.Domain
 Imports InfluxDB.Client.Writes
-Imports Newtonsoft.Json.Linq
 
 
 Public Class InfluxClient
