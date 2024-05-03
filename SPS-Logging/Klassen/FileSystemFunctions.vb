@@ -12,9 +12,9 @@ Module FileSystemFunctions
         Dim FileName As String = $"/LoggerKonfig_{Date.Now}.txt".Replace(":", "_")
         Dim FileWriter = My.Computer.FileSystem.OpenTextFileWriter(Path + FileName, False)
         Dim StringVars As String = String.Join(",", (From item In Vars Select value = item.ToString).ToArray())
-        FileWriter.WriteLine($"Auflösung:{SampTime}")
-        FileWriter.WriteLine($"Modus:{LogMode}")
-        FileWriter.WriteLine($"Variablen:{StringVars}")
+        FileWriter.WriteLine($"Auflösung::{SampTime}")
+        FileWriter.WriteLine($"Modus::{LogMode}")
+        FileWriter.WriteLine($"Variablen::{StringVars}")
         FileWriter.Close()
     End Sub
 
@@ -26,7 +26,7 @@ Module FileSystemFunctions
         If FileDia.FileName Is Nothing OrElse FileDia.FileName = "" Then Exit Sub
         Dim MyReader = My.Computer.FileSystem.OpenTextFieldParser(FileDia.FileName)
         MyReader.TextFieldType = FileIO.FieldType.Delimited
-        MyReader.SetDelimiters(":")
+        MyReader.SetDelimiters("::")
 
         While Not MyReader.EndOfData
             Dim CurrentRow = MyReader.ReadFields
