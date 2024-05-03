@@ -74,12 +74,12 @@ Partial Class StartFenster
         Me.L_InfluxUploadModi = New System.Windows.Forms.Label()
         Me.CBInfluxUploadModi = New System.Windows.Forms.ComboBox()
         Me.BStartInflux = New System.Windows.Forms.Button()
-        Me.RB_Right = New SPS_Logging.RoundButton()
-        Me.RB_Left = New SPS_Logging.RoundButton()
         Me.l_LoggerStart = New System.Windows.Forms.Label()
         Me.L_FTPDownloader = New System.Windows.Forms.Label()
         Me.L_ErgFTPStart = New System.Windows.Forms.Label()
         Me.L_ErgLogStart = New System.Windows.Forms.Label()
+        Me.RB_Right = New SPS_Logging.RoundButton()
+        Me.RB_Left = New SPS_Logging.RoundButton()
         Me.SuspendLayout()
         '
         'L_SPSSuche
@@ -317,21 +317,23 @@ Partial Class StartFenster
         '
         'B_FTPStart
         '
-        Me.B_FTPStart.Location = New System.Drawing.Point(625, 152)
+        Me.B_FTPStart.Location = New System.Drawing.Point(950, 25)
         Me.B_FTPStart.Name = "B_FTPStart"
-        Me.B_FTPStart.Size = New System.Drawing.Size(140, 23)
+        Me.B_FTPStart.Size = New System.Drawing.Size(10, 10)
         Me.B_FTPStart.TabIndex = 26
         Me.B_FTPStart.Text = "FTP-Downloader starten"
         Me.B_FTPStart.UseVisualStyleBackColor = True
+        Me.B_FTPStart.Visible = False
         '
         'B_StopFTP
         '
-        Me.B_StopFTP.Location = New System.Drawing.Point(781, 152)
+        Me.B_StopFTP.Location = New System.Drawing.Point(950, 16)
         Me.B_StopFTP.Name = "B_StopFTP"
-        Me.B_StopFTP.Size = New System.Drawing.Size(140, 23)
+        Me.B_StopFTP.Size = New System.Drawing.Size(10, 10)
         Me.B_StopFTP.TabIndex = 27
         Me.B_StopFTP.Text = "FTP-Downloader stoppen"
         Me.B_StopFTP.UseVisualStyleBackColor = True
+        Me.B_StopFTP.Visible = False
         '
         'L_DownloadTime
         '
@@ -527,28 +529,6 @@ Partial Class StartFenster
         Me.BStartInflux.Text = "Influx lokal starten"
         Me.BStartInflux.UseVisualStyleBackColor = True
         '
-        'RB_Right
-        '
-        Me.RB_Right.FlatAppearance.BorderSize = 0
-        Me.RB_Right.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.RB_Right.Image = Global.SPS_Logging.My.Resources.Resources.Right1
-        Me.RB_Right.Location = New System.Drawing.Point(290, 366)
-        Me.RB_Right.Name = "RB_Right"
-        Me.RB_Right.Size = New System.Drawing.Size(40, 40)
-        Me.RB_Right.TabIndex = 49
-        Me.RB_Right.UseVisualStyleBackColor = True
-        '
-        'RB_Left
-        '
-        Me.RB_Left.FlatAppearance.BorderSize = 0
-        Me.RB_Left.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.RB_Left.Image = Global.SPS_Logging.My.Resources.Resources.Left
-        Me.RB_Left.Location = New System.Drawing.Point(290, 328)
-        Me.RB_Left.Name = "RB_Left"
-        Me.RB_Left.Size = New System.Drawing.Size(40, 40)
-        Me.RB_Left.TabIndex = 48
-        Me.RB_Left.UseVisualStyleBackColor = True
-        '
         'l_LoggerStart
         '
         Me.l_LoggerStart.AutoSize = True
@@ -584,6 +564,28 @@ Partial Class StartFenster
         Me.L_ErgLogStart.Size = New System.Drawing.Size(10, 13)
         Me.L_ErgLogStart.TabIndex = 53
         Me.L_ErgLogStart.Text = "-"
+        '
+        'RB_Right
+        '
+        Me.RB_Right.FlatAppearance.BorderSize = 0
+        Me.RB_Right.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.RB_Right.Image = Global.SPS_Logging.My.Resources.Resources.Right1
+        Me.RB_Right.Location = New System.Drawing.Point(290, 366)
+        Me.RB_Right.Name = "RB_Right"
+        Me.RB_Right.Size = New System.Drawing.Size(40, 40)
+        Me.RB_Right.TabIndex = 49
+        Me.RB_Right.UseVisualStyleBackColor = True
+        '
+        'RB_Left
+        '
+        Me.RB_Left.FlatAppearance.BorderSize = 0
+        Me.RB_Left.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.RB_Left.Image = Global.SPS_Logging.My.Resources.Resources.Left
+        Me.RB_Left.Location = New System.Drawing.Point(290, 328)
+        Me.RB_Left.Name = "RB_Left"
+        Me.RB_Left.Size = New System.Drawing.Size(40, 40)
+        Me.RB_Left.TabIndex = 48
+        Me.RB_Left.UseVisualStyleBackColor = True
         '
         'StartFenster
         '

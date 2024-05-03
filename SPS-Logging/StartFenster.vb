@@ -169,12 +169,16 @@
     Private Sub B_LoggerStart_Click(sender As Object, e As EventArgs) Handles B_LoggerStart.Click
         If PVIC Is Nothing Then Exit Sub
         PVIC.StartLogger(CurConfig.DataRecoderName, LB_ChoosenObj.Items, TB_SampTime.Text, CB_LogMode.SelectedIndex)
+        B_FTPStart.PerformClick()
+        L_ErgFTPStart.Text = "True"
     End Sub
 
     'Bei einem Klick auf den Knopf Logger stoppen wird der Logger gestoppt =)
     Private Sub B_LoggerStop_Click(sender As Object, e As EventArgs) Handles B_LoggerStop.Click
         If PVIC Is Nothing Then Exit Sub
         PVIC.StopLogger(CurConfig.DataRecoderName)
+        B_StopFTP.PerformClick()
+        L_ErgFTPStart.Text = "False"
         setCurCsvFile("")
         setVarOk("-")
     End Sub
