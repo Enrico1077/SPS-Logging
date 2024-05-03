@@ -3,7 +3,6 @@
 'Speicherobjekt für die Gesamte Konfiguration
 Public Class ConfigurationData
     Public DataRecoderName As String
-    Public FTP_IPAdress As String
     Public FTP_UserName As String
     Public FTP_Password As String
     Public Influx_Address As String
@@ -32,7 +31,6 @@ Module XMLFunktionen
                                       New XElement("DataRecorderVariable", ConfigData.DataRecoderName)
         )
         Dim FTPConfig As New XElement("FTP-Konfigurationen",
-                                      New XElement("IP-Addresse", ConfigData.FTP_IPAdress),
                                       New XElement("User-Name", ConfigData.FTP_UserName),
                                       New XElement("Password", ConfigData.FTP_Password)
         )
@@ -61,7 +59,6 @@ Module XMLFunktionen
         ConfigClass.DataRecoderName = SpsConfig.Element("DataRecorderVariable").Value
 
         Dim FtpConfig = doc.Root.Element("FTP-Konfigurationen")
-        ConfigClass.FTP_IPAdress = FtpConfig.Element("IP-Addresse").Value
         ConfigClass.FTP_UserName = FtpConfig.Element("User-Name").Value
         ConfigClass.FTP_Password = FtpConfig.Element("Password").Value
 
@@ -80,7 +77,6 @@ Module XMLFunktionen
         ConfigData.SuchStartIP = "192.168.0.140"
         ConfigData.SuchStopIP = "192.168.0.150"
         ConfigData.DataRecoderName = "DataRecorder"
-        ConfigData.FTP_IPAdress = "192.168.0.147"
         ConfigData.FTP_UserName = "ftpuser"
         ConfigData.FTP_Password = "4711"
         ConfigData.Influx_Address = "http://127.0.0.1:8087"

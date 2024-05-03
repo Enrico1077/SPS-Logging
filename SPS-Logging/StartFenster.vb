@@ -215,6 +215,7 @@
         Else
             FTPTimer.Stop()
         End If
+        DownloadNewstCsvFile()
         CB_DownloadModi.Enabled = True
         FtpDownStarted = False
         If PVIC IsNot Nothing Then PVIC.StopLookingOnFileName()
