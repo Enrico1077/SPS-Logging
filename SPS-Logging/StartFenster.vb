@@ -26,6 +26,10 @@
 
 #Region "PublicSetter"
 
+    Sub setLLoggerStart(LogStart As Boolean)
+        L_ErgLogStart.Text = LogStart
+    End Sub
+
     'Mit dieser Funktion lässt sich von außerhalb der Klasse das LBChoosenObj mit
     'Items füllen 
     Sub setLBChoosenObjItems(varItems As String())

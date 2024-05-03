@@ -76,6 +76,10 @@ Partial Class StartFenster
         Me.BStartInflux = New System.Windows.Forms.Button()
         Me.RB_Right = New SPS_Logging.RoundButton()
         Me.RB_Left = New SPS_Logging.RoundButton()
+        Me.l_LoggerStart = New System.Windows.Forms.Label()
+        Me.L_FTPDownloader = New System.Windows.Forms.Label()
+        Me.L_ErgFTPStart = New System.Windows.Forms.Label()
+        Me.L_ErgLogStart = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'L_SPSSuche
@@ -128,7 +132,7 @@ Partial Class StartFenster
         Me.TV_PVIVars.Location = New System.Drawing.Point(27, 159)
         Me.TV_PVIVars.Name = "TV_PVIVars"
         Me.TV_PVIVars.SelectedImageIndex = 0
-        Me.TV_PVIVars.Size = New System.Drawing.Size(247, 329)
+        Me.TV_PVIVars.Size = New System.Drawing.Size(247, 386)
         Me.TV_PVIVars.TabIndex = 5
         '
         'IL_TreeView
@@ -151,7 +155,7 @@ Partial Class StartFenster
         'LB_ChoosenObj
         '
         Me.LB_ChoosenObj.FormattingEnabled = True
-        Me.LB_ChoosenObj.Location = New System.Drawing.Point(351, 159)
+        Me.LB_ChoosenObj.Location = New System.Drawing.Point(343, 298)
         Me.LB_ChoosenObj.Name = "LB_ChoosenObj"
         Me.LB_ChoosenObj.Size = New System.Drawing.Size(247, 251)
         Me.LB_ChoosenObj.TabIndex = 7
@@ -159,7 +163,7 @@ Partial Class StartFenster
         'L_ChosenObj
         '
         Me.L_ChosenObj.AutoSize = True
-        Me.L_ChosenObj.Location = New System.Drawing.Point(348, 143)
+        Me.L_ChosenObj.Location = New System.Drawing.Point(340, 282)
         Me.L_ChosenObj.Name = "L_ChosenObj"
         Me.L_ChosenObj.Size = New System.Drawing.Size(128, 13)
         Me.L_ChosenObj.TabIndex = 8
@@ -167,7 +171,7 @@ Partial Class StartFenster
         '
         'B_LoggerStart
         '
-        Me.B_LoggerStart.Location = New System.Drawing.Point(351, 412)
+        Me.B_LoggerStart.Location = New System.Drawing.Point(343, 551)
         Me.B_LoggerStart.Name = "B_LoggerStart"
         Me.B_LoggerStart.Size = New System.Drawing.Size(123, 23)
         Me.B_LoggerStart.TabIndex = 9
@@ -185,7 +189,7 @@ Partial Class StartFenster
         '
         'B_LoggerStop
         '
-        Me.B_LoggerStop.Location = New System.Drawing.Point(475, 412)
+        Me.B_LoggerStop.Location = New System.Drawing.Point(467, 551)
         Me.B_LoggerStop.Name = "B_LoggerStop"
         Me.B_LoggerStop.Size = New System.Drawing.Size(123, 23)
         Me.B_LoggerStop.TabIndex = 11
@@ -196,7 +200,7 @@ Partial Class StartFenster
         '
         Me.L_LoggerKonfig.AutoSize = True
         Me.L_LoggerKonfig.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.L_LoggerKonfig.Location = New System.Drawing.Point(418, 20)
+        Me.L_LoggerKonfig.Location = New System.Drawing.Point(410, 159)
         Me.L_LoggerKonfig.Name = "L_LoggerKonfig"
         Me.L_LoggerKonfig.Size = New System.Drawing.Size(142, 17)
         Me.L_LoggerKonfig.TabIndex = 12
@@ -205,7 +209,7 @@ Partial Class StartFenster
         'L_SampTime
         '
         Me.L_SampTime.AutoSize = True
-        Me.L_SampTime.Location = New System.Drawing.Point(348, 85)
+        Me.L_SampTime.Location = New System.Drawing.Point(340, 224)
         Me.L_SampTime.Name = "L_SampTime"
         Me.L_SampTime.Size = New System.Drawing.Size(82, 13)
         Me.L_SampTime.TabIndex = 14
@@ -214,7 +218,7 @@ Partial Class StartFenster
         'L_RecMode
         '
         Me.L_RecMode.AutoSize = True
-        Me.L_RecMode.Location = New System.Drawing.Point(348, 110)
+        Me.L_RecMode.Location = New System.Drawing.Point(340, 249)
         Me.L_RecMode.Name = "L_RecMode"
         Me.L_RecMode.Size = New System.Drawing.Size(80, 13)
         Me.L_RecMode.TabIndex = 15
@@ -225,14 +229,14 @@ Partial Class StartFenster
         Me.CB_LogMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.CB_LogMode.FormattingEnabled = True
         Me.CB_LogMode.Items.AddRange(New Object() {"Zeitlich Bedingt", "Änderungs Bedingt"})
-        Me.CB_LogMode.Location = New System.Drawing.Point(436, 110)
+        Me.CB_LogMode.Location = New System.Drawing.Point(428, 249)
         Me.CB_LogMode.Name = "CB_LogMode"
         Me.CB_LogMode.Size = New System.Drawing.Size(162, 21)
         Me.CB_LogMode.TabIndex = 16
         '
         'TB_SampTime
         '
-        Me.TB_SampTime.Location = New System.Drawing.Point(436, 80)
+        Me.TB_SampTime.Location = New System.Drawing.Point(428, 219)
         Me.TB_SampTime.Name = "TB_SampTime"
         Me.TB_SampTime.Size = New System.Drawing.Size(162, 20)
         Me.TB_SampTime.TabIndex = 17
@@ -240,7 +244,7 @@ Partial Class StartFenster
         '
         'b_CpuDisconnect
         '
-        Me.b_CpuDisconnect.Location = New System.Drawing.Point(27, 494)
+        Me.b_CpuDisconnect.Location = New System.Drawing.Point(27, 551)
         Me.b_CpuDisconnect.Name = "b_CpuDisconnect"
         Me.b_CpuDisconnect.Size = New System.Drawing.Size(247, 23)
         Me.b_CpuDisconnect.TabIndex = 18
@@ -250,7 +254,7 @@ Partial Class StartFenster
         'L_VarCount
         '
         Me.L_VarCount.AutoSize = True
-        Me.L_VarCount.Location = New System.Drawing.Point(523, 143)
+        Me.L_VarCount.Location = New System.Drawing.Point(515, 282)
         Me.L_VarCount.Name = "L_VarCount"
         Me.L_VarCount.Size = New System.Drawing.Size(62, 13)
         Me.L_VarCount.TabIndex = 19
@@ -415,7 +419,7 @@ Partial Class StartFenster
         '
         Me.L_LoggerStatus.AutoSize = True
         Me.L_LoggerStatus.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.L_LoggerStatus.Location = New System.Drawing.Point(418, 446)
+        Me.L_LoggerStatus.Location = New System.Drawing.Point(410, 9)
         Me.L_LoggerStatus.Name = "L_LoggerStatus"
         Me.L_LoggerStatus.Size = New System.Drawing.Size(98, 17)
         Me.L_LoggerStatus.TabIndex = 36
@@ -424,7 +428,7 @@ Partial Class StartFenster
         'L_noError
         '
         Me.L_noError.AutoSize = True
-        Me.L_noError.Location = New System.Drawing.Point(348, 468)
+        Me.L_noError.Location = New System.Drawing.Point(340, 95)
         Me.L_noError.Name = "L_noError"
         Me.L_noError.Size = New System.Drawing.Size(69, 13)
         Me.L_noError.TabIndex = 37
@@ -433,7 +437,7 @@ Partial Class StartFenster
         'L_IdentiferCSV
         '
         Me.L_IdentiferCSV.AutoSize = True
-        Me.L_IdentiferCSV.Location = New System.Drawing.Point(348, 493)
+        Me.L_IdentiferCSV.Location = New System.Drawing.Point(340, 120)
         Me.L_IdentiferCSV.Name = "L_IdentiferCSV"
         Me.L_IdentiferCSV.Size = New System.Drawing.Size(100, 13)
         Me.L_IdentiferCSV.TabIndex = 38
@@ -442,7 +446,7 @@ Partial Class StartFenster
         'L_LogPVIFehler
         '
         Me.L_LogPVIFehler.AutoSize = True
-        Me.L_LogPVIFehler.Location = New System.Drawing.Point(453, 468)
+        Me.L_LogPVIFehler.Location = New System.Drawing.Point(505, 95)
         Me.L_LogPVIFehler.Name = "L_LogPVIFehler"
         Me.L_LogPVIFehler.Size = New System.Drawing.Size(10, 13)
         Me.L_LogPVIFehler.TabIndex = 39
@@ -451,7 +455,7 @@ Partial Class StartFenster
         'L_LogPVIFile
         '
         Me.L_LogPVIFile.AutoSize = True
-        Me.L_LogPVIFile.Location = New System.Drawing.Point(453, 493)
+        Me.L_LogPVIFile.Location = New System.Drawing.Point(505, 117)
         Me.L_LogPVIFile.Name = "L_LogPVIFile"
         Me.L_LogPVIFile.Size = New System.Drawing.Size(10, 13)
         Me.L_LogPVIFile.TabIndex = 40
@@ -459,7 +463,7 @@ Partial Class StartFenster
         '
         'B_LogConfigLoad
         '
-        Me.B_LogConfigLoad.Location = New System.Drawing.Point(436, 51)
+        Me.B_LogConfigLoad.Location = New System.Drawing.Point(428, 190)
         Me.B_LogConfigLoad.Name = "B_LogConfigLoad"
         Me.B_LogConfigLoad.Size = New System.Drawing.Size(72, 23)
         Me.B_LogConfigLoad.TabIndex = 41
@@ -468,7 +472,7 @@ Partial Class StartFenster
         '
         'B_LogConfigSave
         '
-        Me.B_LogConfigSave.Location = New System.Drawing.Point(526, 51)
+        Me.B_LogConfigSave.Location = New System.Drawing.Point(518, 190)
         Me.B_LogConfigSave.Name = "B_LogConfigSave"
         Me.B_LogConfigSave.Size = New System.Drawing.Size(72, 23)
         Me.B_LogConfigSave.TabIndex = 42
@@ -478,7 +482,7 @@ Partial Class StartFenster
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(348, 56)
+        Me.Label1.Location = New System.Drawing.Point(340, 195)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(72, 13)
         Me.Label1.TabIndex = 43
@@ -488,7 +492,7 @@ Partial Class StartFenster
         '
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(510, 52)
+        Me.Label2.Location = New System.Drawing.Point(502, 191)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(13, 20)
         Me.Label2.TabIndex = 44
@@ -528,7 +532,7 @@ Partial Class StartFenster
         Me.RB_Right.FlatAppearance.BorderSize = 0
         Me.RB_Right.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.RB_Right.Image = Global.SPS_Logging.My.Resources.Resources.Right1
-        Me.RB_Right.Location = New System.Drawing.Point(293, 276)
+        Me.RB_Right.Location = New System.Drawing.Point(290, 366)
         Me.RB_Right.Name = "RB_Right"
         Me.RB_Right.Size = New System.Drawing.Size(40, 40)
         Me.RB_Right.TabIndex = 49
@@ -539,17 +543,57 @@ Partial Class StartFenster
         Me.RB_Left.FlatAppearance.BorderSize = 0
         Me.RB_Left.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.RB_Left.Image = Global.SPS_Logging.My.Resources.Resources.Left
-        Me.RB_Left.Location = New System.Drawing.Point(293, 238)
+        Me.RB_Left.Location = New System.Drawing.Point(290, 328)
         Me.RB_Left.Name = "RB_Left"
         Me.RB_Left.Size = New System.Drawing.Size(40, 40)
         Me.RB_Left.TabIndex = 48
         Me.RB_Left.UseVisualStyleBackColor = True
         '
+        'l_LoggerStart
+        '
+        Me.l_LoggerStart.AutoSize = True
+        Me.l_LoggerStart.Location = New System.Drawing.Point(340, 42)
+        Me.l_LoggerStart.Name = "l_LoggerStart"
+        Me.l_LoggerStart.Size = New System.Drawing.Size(87, 13)
+        Me.l_LoggerStart.TabIndex = 50
+        Me.l_LoggerStart.Text = "Logger gestartet:"
+        '
+        'L_FTPDownloader
+        '
+        Me.L_FTPDownloader.AutoSize = True
+        Me.L_FTPDownloader.Location = New System.Drawing.Point(340, 68)
+        Me.L_FTPDownloader.Name = "L_FTPDownloader"
+        Me.L_FTPDownloader.Size = New System.Drawing.Size(125, 13)
+        Me.L_FTPDownloader.TabIndex = 51
+        Me.L_FTPDownloader.Text = "FTP-Download gestartet:"
+        '
+        'L_ErgFTPStart
+        '
+        Me.L_ErgFTPStart.AutoSize = True
+        Me.L_ErgFTPStart.Location = New System.Drawing.Point(505, 68)
+        Me.L_ErgFTPStart.Name = "L_ErgFTPStart"
+        Me.L_ErgFTPStart.Size = New System.Drawing.Size(10, 13)
+        Me.L_ErgFTPStart.TabIndex = 52
+        Me.L_ErgFTPStart.Text = "-"
+        '
+        'L_ErgLogStart
+        '
+        Me.L_ErgLogStart.AutoSize = True
+        Me.L_ErgLogStart.Location = New System.Drawing.Point(505, 42)
+        Me.L_ErgLogStart.Name = "L_ErgLogStart"
+        Me.L_ErgLogStart.Size = New System.Drawing.Size(10, 13)
+        Me.L_ErgLogStart.TabIndex = 53
+        Me.L_ErgLogStart.Text = "-"
+        '
         'StartFenster
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(955, 546)
+        Me.ClientSize = New System.Drawing.Size(955, 593)
+        Me.Controls.Add(Me.L_ErgLogStart)
+        Me.Controls.Add(Me.L_ErgFTPStart)
+        Me.Controls.Add(Me.L_FTPDownloader)
+        Me.Controls.Add(Me.l_LoggerStart)
         Me.Controls.Add(Me.RB_Right)
         Me.Controls.Add(Me.RB_Left)
         Me.Controls.Add(Me.BStartInflux)
@@ -658,4 +702,8 @@ Partial Class StartFenster
     Friend WithEvents BStartInflux As Button
     Friend WithEvents RB_Left As RoundButton
     Friend WithEvents RB_Right As RoundButton
+    Friend WithEvents l_LoggerStart As Label
+    Friend WithEvents L_FTPDownloader As Label
+    Friend WithEvents L_ErgFTPStart As Label
+    Friend WithEvents L_ErgLogStart As Label
 End Class

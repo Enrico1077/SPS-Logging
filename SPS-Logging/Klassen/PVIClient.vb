@@ -84,6 +84,7 @@ Public Class PVIClient
         rootNode.ImageIndex = 2
         StartFenster.addTreeNode(rootNode)
         If tmpVariable.Name = Config.DataRecoderName Then
+            LookOnLoggerStats(CurConfig.DataRecoderName)
             StartFenster.setValCountText(MaxNum:=tmpVariable.Value("In.Variable").ArrayData.Length)
             Exit Sub
         End If
@@ -227,8 +228,13 @@ Public Class PVIClient
         LoggerVar.WriteValueAutomatic = False
         LoggerVar.Value("In.AuswahlRecorderMode") = RecMode + 1
         LoggerVar.Value("In.SamplingTime") = SampTime
-        For i As Integer = 0 To ProzzesData.Count - 1
-            LoggerVar.Value($"In.Variable[{i}]") = New Value(ProzzesData(i))
+        For i As Integer = 0 To LoggerVar.Members(0).Members(3).Value.ArrayLength - 1 'ProzzesData.Count - 1
+            If i < ProzzesData.Count Then
+                LoggerVar.Value($"In.Variable[{i}]") = New Value(ProzzesData(i))
+            Else
+                LoggerVar.Value($"In.Variable[{i}]") = New Value("")
+            End If
+
         Next
         LoggerVar.WriteValue()
         LoggerVar.WriteValueAutomatic = True
@@ -236,7 +242,7 @@ Public Class PVIClient
         startIn1s.Interval = 2000
         startIn1s.Start()
         AddHandler startIn1s.Tick, AddressOf LateLoggerStart
-        LookOnLoggerStats(CurConfig.DataRecoderName)
+        '--'
     End Sub
 
     'Funktion stellt das Timer.Tick Event. Wird nach einer gewissen Zeit nach dem Loggerstartklick ausgeführt.
@@ -285,18 +291,26 @@ Public Class PVIClient
     Public Sub LookOnLoggerStats(LoggerName As String)
         Dim LoggerVar As Variable = CurCPU.Variables(LoggerName)
         If Not LoggerVar.DataValid Then Exit Sub
+        Dim LoggerStartet As Variable = LoggerVar.Members.Values(0).Members.Values(2)          'DataRecorder.In.AufzeichnungStart
         Dim LoggerOutVar As Variable = LoggerVar.Members.Values(1)          'DataRecorder.Out
         Dim LoggerFileOutVar As Variable = LoggerOutVar.Members.Values(3)   'DataRecorder.Out.AktuellerDateiname
         Dim LoggerVarOK As Variable = LoggerOutVar.Members.Values(2)    'DataRecorder.Out.VariablenRegistrierungOK
+        LoggerStartet.Active = True
+        LoggerStartet.Connect()
         LoggerFileOutVar.Active = True
         LoggerFileOutVar.Connect()
         LoggerVarOK.Active = True
         LoggerVarOK.Connect()
         AddHandler LoggerVarOK.ValueChanged, AddressOf LogVarOkChange
         AddHandler LoggerFileOutVar.ValueChanged, AddressOf NewFileName
+        AddHandler LoggerStartet.ValueChanged, AddressOf LoggerStartetChanged
         CurFileNameVar = LoggerFileOutVar
         VarRegOk = LoggerVarOK
         StartFenster.setCurCsvFile(LoggerFileOutVar.Value)
+    End Sub
+
+    Private Sub LoggerStartetChanged(sender As Variable, e As PviEventArgs)
+        StartFenster.setLLoggerStart(sender.Value)
     End Sub
 
     Private Sub LogVarOkChange(sender As Variable, e As PviEventArgs)
