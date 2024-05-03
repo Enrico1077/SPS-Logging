@@ -8,6 +8,8 @@
     Dim CurCsvFile As String
     Dim FtpDownStarted As Boolean = False
     Dim InfluxUploadStarted As Boolean = False
+    Dim lastSelTreeNode As TreeNode = Nothing
+    Dim lastSelListBoxItem As Object = Nothing
 
 
     Sub New()
@@ -100,6 +102,17 @@
         End If
     End Sub
 
+    'Diese Funktion deaktiviert je nach Auwahl des UploadModi die unpassenden Knöpfe
+    Private Sub CBInfluxUploadModi_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CBInfluxUploadModi.SelectedIndexChanged
+        If CBInfluxUploadModi.SelectedIndex = 0 Then
+            B_ChooseCsv.Enabled = False
+            B_startUpload.Enabled = True
+        Else
+            B_ChooseCsv.Enabled = True
+            B_startUpload.Enabled = False
+        End If
+    End Sub
+
 #End Region
 
 #Region "UserInput"
@@ -119,17 +132,17 @@
 
     'Wird ein Element in der untersten Ebene in der TreeView angeklickt wird es
     'geeignet Formatiert In der ListBox dargestellt
-    Private Sub TV_PVIVars_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles TV_PVIVars.AfterSelect
-        If e.Node.Nodes.Count > 0 Then Exit Sub
+    Private Sub TV_PVIVars_MouseDoubleClick(sender As TreeView, e As MouseEventArgs) Handles TV_PVIVars.DoubleClick
+        If sender.SelectedNode Is Nothing Then Exit Sub
         Dim CountParts As String() = L_VarCount.Text.Split(New Char() {":", "/"})
         If CInt(CountParts(2)) = CInt(CountParts(1)) Then Exit Sub
-        Dim Name As String = PVIC.TreeNodeToVarName(e.Node)
+        Dim Name As String = PVIC.TreeNodeToVarName(sender.SelectedNode)
         If Not LB_ChoosenObj.Items.Contains(Name) Then LB_ChoosenObj.Items.Add(Name)
         setValCountText(LB_ChoosenObj.Items.Count)
     End Sub
 
     'Wird ein Element in der ListBox angeklickt wird es aus dieser entfernt
-    Private Sub LB_ChoosenObj_SelectedIndexChanged(sender As Object, e As EventArgs) Handles LB_ChoosenObj.SelectedIndexChanged
+    Private Sub LB_ChoosenObj_MouseDoubleClick(sender As Object, e As EventArgs) Handles LB_ChoosenObj.MouseDoubleClick
         LB_ChoosenObj.Items.Remove(LB_ChoosenObj.SelectedItem)
         setValCountText(LB_ChoosenObj.Items.Count)
     End Sub
@@ -262,15 +275,36 @@
         SaveLoggerConfig(LB_ChoosenObj.Items, TB_SampTime.Text, CB_LogMode.Text)
     End Sub
 
-    Private Sub CBInfluxUploadModi_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CBInfluxUploadModi.SelectedIndexChanged
-        If CBInfluxUploadModi.SelectedIndex = 0 Then
-            B_ChooseCsv.Enabled = False
-            B_startUpload.Enabled = True
-        Else
-            B_ChooseCsv.Enabled = True
-            B_startUpload.Enabled = False
-        End If
+
+
+    'Die Funktion speichert bei einem Klick auf ein ListBox-Item das Item als KlassenVariable
+    Private Sub LB_ChoosenObj_SelectedIndexChanged(sender As Object, e As EventArgs) Handles LB_ChoosenObj.SelectedIndexChanged
+        lastSelListBoxItem = LB_ChoosenObj.SelectedItem
     End Sub
+
+    'Diese Funktionspeicher bei einem Klick auf eine TreeNode die Node als KlassenVariable
+    Private Sub TV_PVIVars_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles TV_PVIVars.AfterSelect
+        lastSelTreeNode = TV_PVIVars.SelectedNode
+    End Sub
+
+    'Bei einem Klick auf den Links-Pfeil-Knopf wird das zuletzt ausgewählte Item der ListBox gelöscht
+    Private Sub RB_Left_Click(sender As Object, e As EventArgs) Handles RB_Left.Click
+        If lastSelListBoxItem Is Nothing Then Exit Sub
+        If Not LB_ChoosenObj.Items.Contains(lastSelListBoxItem) Then Exit Sub
+        LB_ChoosenObj.Items.Remove(lastSelListBoxItem)
+        setValCountText(LB_ChoosenObj.Items.Count)
+    End Sub
+
+    'Bei einem Klick auf dem Rechtspfeil wird die zuletzt angelickte TreeNode der ListBox hinzugefügt
+    Private Sub RB_Right_Click(sender As Object, e As EventArgs) Handles RB_Right.Click
+        If lastSelTreeNode Is Nothing Then Exit Sub
+        Dim CountParts As String() = L_VarCount.Text.Split(New Char() {":", "/"})
+        If CInt(CountParts(2)) = CInt(CountParts(1)) Then Exit Sub
+        Dim Name As String = PVIC.TreeNodeToVarName(lastSelTreeNode)
+        If Not LB_ChoosenObj.Items.Contains(Name) Then LB_ChoosenObj.Items.Add(Name)
+        setValCountText(LB_ChoosenObj.Items.Count)
+    End Sub
+
 
 #End Region
 

@@ -172,6 +172,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Klassen\FileSystemFunctions.vb" />
+    <Compile Include="Klassen\FormElements\RoundButton.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Klassen\FTP_Client.vb" />
     <Compile Include="Klassen\InfluxUploader.vb" />
     <Compile Include="Klassen\Konfiguration_Handling.vb" />
@@ -225,7 +228,15 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\Right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Right1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Left.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
