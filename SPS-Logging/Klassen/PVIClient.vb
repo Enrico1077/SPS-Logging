@@ -171,6 +171,14 @@ Public Class PVIClient
             If tmpTreeNode.Nodes(sender.Name) Is Nothing Then Exit Sub
             tmpTreeNode.Nodes(sender.Name).Nodes.Add(childVar.Name, childVar.Name, 1)
         Next
+
+        If sender.Members.Values.Count = 0 AndAlso sender.Value.ArrayLength > 1 Then
+            For i As Integer = sender.Value.ArrayMinIndex To sender.Value.ArrayMaxIndex
+                If tmpTreeNode.Nodes(sender.Name) Is Nothing Then Exit Sub
+                tmpTreeNode.Nodes(sender.Name).Nodes.Add($"[{i}]", $"[{i}]", 1)
+            Next
+        End If
+
         sender.Disconnect()
     End Sub
 
@@ -195,8 +203,9 @@ Public Class PVIClient
             Else
                 outString += $":{NodePuffer(i)}"
             End If
-
         Next
+
+        If outString.Last = "]"c Then outString = outString.Remove(outString.LastIndexOf("."), 1)
 
         Return outString
     End Function
@@ -230,8 +239,8 @@ Public Class PVIClient
         LookOnLoggerStats(CurConfig.DataRecoderName)
     End Sub
 
-
-
+    'Funktion stellt das Timer.Tick Event. Wird nach einer gewissen Zeit nach dem Loggerstartklick ausgeführt.
+    'Bei sofortige ausfürung gingen Variablen verloren
     Private Sub LateLoggerStart(sender As Timer, e As EventArgs)
         Dim LoggerVar As Variable = CurCPU.Variables(CurConfig.DataRecoderName)
         If Not LoggerVar.DataValid Then Exit Sub
@@ -248,7 +257,7 @@ Public Class PVIClient
         If Not LoggerVar.DataValid Then Exit Sub
         LoggerVar.WriteValueAutomatic = False
         LoggerVar.Value("In.AufzeichnungStart") = False
-        LoggerVar.Value("In.AuswahlRecorderMode") = 0
+        'LoggerVar.Value("In.AuswahlRecorderMode") = 0
         LoggerVar.WriteValue()
         LoggerVar.WriteValueAutomatic = True
     End Sub
