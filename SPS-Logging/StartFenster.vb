@@ -7,6 +7,7 @@
     Dim FTPTimer As Timer
     Dim CurCsvFile As String
     Dim FtpDownStarted As Boolean = False
+    Dim InfluxUploadStarted As Boolean = False
 
 
     Sub New()
@@ -15,6 +16,7 @@
         If CB_IPAddressen.Items.Count > 0 Then CB_IPAddressen.SelectedIndex = 0
         If CB_LogMode.Items.Count > 0 Then CB_LogMode.SelectedIndex = 0
         If CB_DownloadModi.Items.Count > 0 Then CB_DownloadModi.SelectedIndex = 0
+        CBInfluxUploadModi.SelectedIndex = 1
         Dim HomeDir = IO.Directory.GetCurrentDirectory
         If Not My.Computer.FileSystem.FileExists(HomeDir + configName) Then saveDefaultXML(HomeDir + configName)
         ReadConfig(HomeDir + configName)
@@ -148,11 +150,13 @@
     'Bei einem Klick auf den Knopf LoggerStart wird der Logger wie gewünscht konfiguriert und 
     'anschließend gestartet
     Private Sub B_LoggerStart_Click(sender As Object, e As EventArgs) Handles B_LoggerStart.Click
+        If PVIC Is Nothing Then Exit Sub
         PVIC.StartLogger(CurConfig.DataRecoderName, LB_ChoosenObj.Items, TB_SampTime.Text, CB_LogMode.SelectedIndex)
     End Sub
 
     'Bei einem Klick auf den Knopf Logger stoppen wird der Logger gestoppt =)
     Private Sub B_LoggerStop_Click(sender As Object, e As EventArgs) Handles B_LoggerStop.Click
+        If PVIC Is Nothing Then Exit Sub
         PVIC.StopLogger(CurConfig.DataRecoderName)
         setCurCsvFile("")
         setVarOk("-")
@@ -160,6 +164,7 @@
 
     'Bei einem Klick auf den Knopf CPU Trennen werden alle PVI-Verweise gelöscht und die TreeView geleert
     Private Sub b_CpuDisconnect_Click(sender As Object, e As EventArgs) Handles b_CpuDisconnect.Click
+        If PVIC Is Nothing Then Exit Sub
         PVIC.DisconnectService()
         TV_PVIVars.Nodes.Clear()
     End Sub
@@ -179,6 +184,7 @@
             FTPTimer.Start()
             FtpDownStarted = True
         End If
+        CB_DownloadModi.Enabled = False
     End Sub
 
     'Wird auf den Knopf FTP-Download stoppen gedrückt werden keine weiteren CSV-Dateien heruntergeladen
@@ -188,8 +194,9 @@
         Else
             FTPTimer.Stop()
         End If
+        CB_DownloadModi.Enabled = True
         FtpDownStarted = False
-        PVIC.StopLookingOnFileName()
+        If PVIC IsNot Nothing Then PVIC.StopLookingOnFileName()
 
     End Sub
 
@@ -221,11 +228,18 @@
                         CurConfig.Influx_Comp,
                         TB_Bucket.Text
         )
-        For Each csvFile In OFD_CsvData.FileNames
-            Dim FullPath = IO.Path.GetFullPath(csvFile)
-            InfluxC.writeCSVToInflux(InfluxC.AnalyseCSV(FullPath))
-        Next
-        Console.WriteLine("data has been uploaded")
+        If CBInfluxUploadModi.SelectedIndex = 0 Then
+            If Not FtpDownStarted Then Exit Sub
+            InfluxUploadStarted = True
+            InfluxC.writeCSVToInflux(InfluxC.AnalyseCSV($"{TB_DirPath.Text}\{CurCsvFile}"))
+        Else
+            For Each csvFile In OFD_CsvData.FileNames
+                Dim FullPath = IO.Path.GetFullPath(csvFile)
+                InfluxC.writeCSVToInflux(InfluxC.AnalyseCSV(FullPath))
+            Next
+            Console.WriteLine("data has been uploaded")
+        End If
+
 
     End Sub
 
@@ -248,12 +262,23 @@
         SaveLoggerConfig(LB_ChoosenObj.Items, TB_SampTime.Text, CB_LogMode.Text)
     End Sub
 
+    Private Sub CBInfluxUploadModi_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CBInfluxUploadModi.SelectedIndexChanged
+        If CBInfluxUploadModi.SelectedIndex = 0 Then
+            B_ChooseCsv.Enabled = False
+            B_startUpload.Enabled = True
+        Else
+            B_ChooseCsv.Enabled = True
+            B_startUpload.Enabled = False
+        End If
+    End Sub
+
 #End Region
 
 
     'Diese Funktion lässt den FTP-Client die angegebende CSV-Datei herunterladen
     Sub NewCsvFile(csvFile As String)
         If FtpDownStarted Then FTPC.DownloadFile(CurCsvFile, TB_DirPath.Text)
+        If InfluxUploadStarted Then B_startUpload.PerformClick()
         CurCsvFile = csvFile
     End Sub
 
@@ -262,6 +287,11 @@
         'ToDo: Es sollte nicht nur die aktuellste Datei runtergeladen werden, sondern 
         '      beim Dateinwechsel auch noch einmal die voraktuellste
         FTPC.DownloadFile(FTPC.FindLatestFile(), TB_DirPath.Text)
+    End Sub
+
+    Private Sub BStartInflux_Click(sender As Object, e As EventArgs) Handles BStartInflux.Click
+        If Not My.Computer.FileSystem.FileExists(CurConfig.lokalInfluxPath) Then Exit Sub
+        Process.Start(CurConfig.lokalInfluxPath, "--http-bind-address 127.0.0.1:8087")
     End Sub
 
 

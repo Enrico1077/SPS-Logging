@@ -13,8 +13,9 @@
     <Password>4711</Password>
   </FTP-Konfigurationen>
   <Influx-Konfiguration>
-    <IP-Address>127.0.0.1:8087</IP-Address>
+    <IP-Address>http://127.0.0.1:8087</IP-Address>
     <Company>123</Company>
     <API-Token>RIdhMT3ZXRFT8Lk1cHYMpwCpASQyva_fOUUf7nDPJGflYnNAnGmxIR78a68j76Kgof8tnJYJGNdRnfI30q4ccw==</API-Token>
+    <Lokaler-Influx-DB-Pfad>C:\Program Files\InfluxData\influxdb\influxd.exe</Lokaler-Influx-DB-Pfad>
   </Influx-Konfiguration>
 </Konfiguration>

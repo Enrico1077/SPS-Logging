@@ -71,6 +71,9 @@ Partial Class StartFenster
         Me.B_LogConfigSave = New System.Windows.Forms.Button()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
+        Me.L_InfluxUploadModi = New System.Windows.Forms.Label()
+        Me.CBInfluxUploadModi = New System.Windows.Forms.ComboBox()
+        Me.BStartInflux = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'L_SPSSuche
@@ -146,15 +149,15 @@ Partial Class StartFenster
         'LB_ChoosenObj
         '
         Me.LB_ChoosenObj.FormattingEnabled = True
-        Me.LB_ChoosenObj.Location = New System.Drawing.Point(306, 172)
+        Me.LB_ChoosenObj.Location = New System.Drawing.Point(306, 166)
         Me.LB_ChoosenObj.Name = "LB_ChoosenObj"
-        Me.LB_ChoosenObj.Size = New System.Drawing.Size(247, 238)
+        Me.LB_ChoosenObj.Size = New System.Drawing.Size(247, 251)
         Me.LB_ChoosenObj.TabIndex = 7
         '
         'L_ChosenObj
         '
         Me.L_ChosenObj.AutoSize = True
-        Me.L_ChosenObj.Location = New System.Drawing.Point(303, 156)
+        Me.L_ChosenObj.Location = New System.Drawing.Point(303, 150)
         Me.L_ChosenObj.Name = "L_ChosenObj"
         Me.L_ChosenObj.Size = New System.Drawing.Size(128, 13)
         Me.L_ChosenObj.TabIndex = 8
@@ -162,7 +165,7 @@ Partial Class StartFenster
         '
         'B_LoggerStart
         '
-        Me.B_LoggerStart.Location = New System.Drawing.Point(306, 416)
+        Me.B_LoggerStart.Location = New System.Drawing.Point(306, 419)
         Me.B_LoggerStart.Name = "B_LoggerStart"
         Me.B_LoggerStart.Size = New System.Drawing.Size(123, 23)
         Me.B_LoggerStart.TabIndex = 9
@@ -180,7 +183,7 @@ Partial Class StartFenster
         '
         'B_LoggerStop
         '
-        Me.B_LoggerStop.Location = New System.Drawing.Point(430, 416)
+        Me.B_LoggerStop.Location = New System.Drawing.Point(430, 419)
         Me.B_LoggerStop.Name = "B_LoggerStop"
         Me.B_LoggerStop.Size = New System.Drawing.Size(123, 23)
         Me.B_LoggerStop.TabIndex = 11
@@ -245,7 +248,7 @@ Partial Class StartFenster
         'L_VarCount
         '
         Me.L_VarCount.AutoSize = True
-        Me.L_VarCount.Location = New System.Drawing.Point(473, 156)
+        Me.L_VarCount.Location = New System.Drawing.Point(478, 150)
         Me.L_VarCount.Name = "L_VarCount"
         Me.L_VarCount.Size = New System.Drawing.Size(62, 13)
         Me.L_VarCount.TabIndex = 19
@@ -356,9 +359,9 @@ Partial Class StartFenster
         'B_startUpload
         '
         Me.B_startUpload.Enabled = False
-        Me.B_startUpload.Location = New System.Drawing.Point(637, 335)
+        Me.B_startUpload.Location = New System.Drawing.Point(736, 354)
         Me.B_startUpload.Name = "B_startUpload"
-        Me.B_startUpload.Size = New System.Drawing.Size(154, 23)
+        Me.B_startUpload.Size = New System.Drawing.Size(140, 23)
         Me.B_startUpload.TabIndex = 31
         Me.B_startUpload.Text = "Upload starten"
         Me.B_startUpload.UseVisualStyleBackColor = True
@@ -367,7 +370,7 @@ Partial Class StartFenster
         '
         Me.L_CSVFIles.AutoSize = True
         Me.L_CSVFIles.Enabled = False
-        Me.L_CSVFIles.Location = New System.Drawing.Point(577, 269)
+        Me.L_CSVFIles.Location = New System.Drawing.Point(577, 293)
         Me.L_CSVFIles.Name = "L_CSVFIles"
         Me.L_CSVFIles.Size = New System.Drawing.Size(71, 13)
         Me.L_CSVFIles.TabIndex = 32
@@ -375,7 +378,7 @@ Partial Class StartFenster
         '
         'B_ChooseCsv
         '
-        Me.B_ChooseCsv.Location = New System.Drawing.Point(658, 264)
+        Me.B_ChooseCsv.Location = New System.Drawing.Point(658, 288)
         Me.B_ChooseCsv.Name = "B_ChooseCsv"
         Me.B_ChooseCsv.Size = New System.Drawing.Size(218, 23)
         Me.B_ChooseCsv.TabIndex = 33
@@ -386,7 +389,7 @@ Partial Class StartFenster
         '
         Me.L_Bucket.AutoSize = True
         Me.L_Bucket.Enabled = False
-        Me.L_Bucket.Location = New System.Drawing.Point(577, 301)
+        Me.L_Bucket.Location = New System.Drawing.Point(577, 320)
         Me.L_Bucket.Name = "L_Bucket"
         Me.L_Bucket.Size = New System.Drawing.Size(75, 13)
         Me.L_Bucket.TabIndex = 34
@@ -394,7 +397,7 @@ Partial Class StartFenster
         '
         'TB_Bucket
         '
-        Me.TB_Bucket.Location = New System.Drawing.Point(658, 298)
+        Me.TB_Bucket.Location = New System.Drawing.Point(658, 317)
         Me.TB_Bucket.Name = "TB_Bucket"
         Me.TB_Bucket.Size = New System.Drawing.Size(218, 20)
         Me.TB_Bucket.TabIndex = 35
@@ -489,11 +492,43 @@ Partial Class StartFenster
         Me.Label2.TabIndex = 44
         Me.Label2.Text = "/"
         '
+        'L_InfluxUploadModi
+        '
+        Me.L_InfluxUploadModi.AutoSize = True
+        Me.L_InfluxUploadModi.Enabled = False
+        Me.L_InfluxUploadModi.Location = New System.Drawing.Point(577, 264)
+        Me.L_InfluxUploadModi.Name = "L_InfluxUploadModi"
+        Me.L_InfluxUploadModi.Size = New System.Drawing.Size(79, 13)
+        Me.L_InfluxUploadModi.TabIndex = 45
+        Me.L_InfluxUploadModi.Text = "Upload Modus:"
+        '
+        'CBInfluxUploadModi
+        '
+        Me.CBInfluxUploadModi.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.CBInfluxUploadModi.FormattingEnabled = True
+        Me.CBInfluxUploadModi.Items.AddRange(New Object() {"Automatisch Upload - FTP synchron ", "CSV-Dateien selber wählen "})
+        Me.CBInfluxUploadModi.Location = New System.Drawing.Point(658, 261)
+        Me.CBInfluxUploadModi.Name = "CBInfluxUploadModi"
+        Me.CBInfluxUploadModi.Size = New System.Drawing.Size(218, 21)
+        Me.CBInfluxUploadModi.TabIndex = 46
+        '
+        'BStartInflux
+        '
+        Me.BStartInflux.Location = New System.Drawing.Point(580, 354)
+        Me.BStartInflux.Name = "BStartInflux"
+        Me.BStartInflux.Size = New System.Drawing.Size(140, 23)
+        Me.BStartInflux.TabIndex = 47
+        Me.BStartInflux.Text = "Influx lokal starten"
+        Me.BStartInflux.UseVisualStyleBackColor = True
+        '
         'StartFenster
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(894, 546)
+        Me.Controls.Add(Me.BStartInflux)
+        Me.Controls.Add(Me.CBInfluxUploadModi)
+        Me.Controls.Add(Me.L_InfluxUploadModi)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.B_LogConfigSave)
@@ -592,4 +627,7 @@ Partial Class StartFenster
     Friend WithEvents B_LogConfigSave As Button
     Friend WithEvents Label1 As Label
     Friend WithEvents Label2 As Label
+    Friend WithEvents L_InfluxUploadModi As Label
+    Friend WithEvents CBInfluxUploadModi As ComboBox
+    Friend WithEvents BStartInflux As Button
 End Class

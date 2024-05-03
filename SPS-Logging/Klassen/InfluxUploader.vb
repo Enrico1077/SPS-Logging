@@ -30,10 +30,11 @@ Public Class InfluxClient
     Public Sub writeCSVToInflux(CsvData As (List(Of String), List(Of String())))
         Dim ColumnNames As List(Of String) = CsvData.Item1
         Dim ColumnValues As List(Of String()) = CsvData.Item2
+        If ColumnValues Is Nothing Or ColumnNames Is Nothing Then Exit Sub
         Dim writeApi = InfluxClient.GetWriteApi()
 
         For i As Integer = 0 To ColumnValues.Count - 1
-            Dim RecTime As Date = Date.ParseExact(ColumnValues(i)(0), "yyyy MM dd HH:mm:ss:fff", CultureInfo.InvariantCulture)
+            Dim RecTime As Date = Date.ParseExact(ColumnValues(i)(0), "yyyy MM dd HH:mm:ss:fff", Nothing)
             For j As Integer = 1 To ColumnNames.Count - 1
                 WritetoInflux(ColumnNames(j), convertToRightBasicType(ColumnValues(i)(j)), RecTime, writeApi)
             Next
@@ -54,6 +55,7 @@ Public Class InfluxClient
     'Diese Funktion zerlegt eine CSV Datei in Listen. Eine Liste mit dem Namen der Spalten und einer Liste, von der 
     'jeder Eintrag eine Reihe an Daten beschreibt
     Public Function AnalyseCSV(Path As String) As (List(Of String), List(Of String()))
+        If Not My.Computer.FileSystem.FileExists(Path) Then Return Nothing
         Dim MyReader = My.Computer.FileSystem.OpenTextFieldParser(Path)
         MyReader.TextFieldType = FileIO.FieldType.Delimited
         MyReader.SetDelimiters(";")

@@ -7,7 +7,7 @@ Module FileSystemFunctions
     Public Sub SaveLoggerConfig(Vars As ListBox.ObjectCollection, SampTime As String, LogMode As String)
         Dim FolderDia As New FolderBrowserDialog
         FolderDia.ShowDialog()
-        If FolderDia.SelectedPath Is Nothing Then Exit Sub
+        If FolderDia.SelectedPath Is Nothing OrElse FolderDia.SelectedPath = "" Then Exit Sub
         Dim Path As String = FolderDia.SelectedPath
         Dim FileName As String = $"/LoggerKonfig_{Date.Now}.txt".Replace(":", "_")
         Dim FileWriter = My.Computer.FileSystem.OpenTextFileWriter(Path + FileName, False)
@@ -23,7 +23,7 @@ Module FileSystemFunctions
     Public Sub LoadLoggerConfig(MainFrame As StartFenster)
         Dim FileDia As New OpenFileDialog
         FileDia.ShowDialog()
-        If FileDia.FileName Is Nothing Then Exit Sub
+        If FileDia.FileName Is Nothing OrElse FileDia.FileName = "" Then Exit Sub
         Dim MyReader = My.Computer.FileSystem.OpenTextFieldParser(FileDia.FileName)
         MyReader.TextFieldType = FileIO.FieldType.Delimited
         MyReader.SetDelimiters(":")

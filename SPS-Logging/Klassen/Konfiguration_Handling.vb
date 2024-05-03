@@ -11,6 +11,7 @@ Public Class ConfigurationData
     Public Influx_API_Tok As String
     Public SuchStartIP As String
     Public SuchStopIP As String
+    Public lokalInfluxPath As String
 
 End Class
 
@@ -38,7 +39,8 @@ Module XMLFunktionen
         Dim InfluxConfig As New XElement("Influx-Konfiguration",
                                       New XElement("IP-Address", ConfigData.Influx_Address),
                                       New XElement("Company", ConfigData.Influx_Comp),
-                                      New XElement("API-Token", ConfigData.Influx_API_Tok)
+                                      New XElement("API-Token", ConfigData.Influx_API_Tok),
+                                      New XElement("Lokaler-Influx-DB-Pfad", ConfigData.lokalInfluxPath)
         )
         root.Add(SystemConfig, SpsConfig, FTPConfig, InfluxConfig)
         Dim doc As New XDocument(New XDeclaration("1.0", "utf-8", "yes"), root)
@@ -67,6 +69,7 @@ Module XMLFunktionen
         ConfigClass.Influx_Address = InfluxConfig.Element("IP-Address").Value
         ConfigClass.Influx_Comp = InfluxConfig.Element("Company").Value
         ConfigClass.Influx_API_Tok = InfluxConfig.Element("API-Token").Value
+        ConfigClass.lokalInfluxPath = InfluxConfig.Element("Lokaler-Influx-DB-Pfad").Value
 
         CurConfig = ConfigClass
         Return ConfigClass
@@ -80,9 +83,10 @@ Module XMLFunktionen
         ConfigData.FTP_IPAdress = "192.168.0.147"
         ConfigData.FTP_UserName = "ftpuser"
         ConfigData.FTP_Password = "4711"
-        ConfigData.Influx_Address = "127.0.0.1:8087"
+        ConfigData.Influx_Address = "http://127.0.0.1:8087"
         ConfigData.Influx_Comp = "..."
         ConfigData.Influx_API_Tok = "..."
+        ConfigData.lokalInfluxPath = "C:\Program Files\InfluxData\influxdb\influxd.exe"
     End Sub
 
     'Diese Funktion Erstellt eine config.xml Datei mit Default-Werten
