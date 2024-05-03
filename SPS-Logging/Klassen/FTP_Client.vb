@@ -41,7 +41,12 @@ Public Class FTP_Client
         Dim Request As FtpWebRequest = CType(WebRequest.Create(ServerName), FtpWebRequest)
         Request.Method = WebRequestMethods.Ftp.ListDirectoryDetails
         Request.Credentials = New NetworkCredential(Username, Password)
-        Dim response As FtpWebResponse = CType(Request.GetResponse(), FtpWebResponse)
+        Dim response As FtpWebResponse
+        Try
+            response = CType(Request.GetResponse(), FtpWebResponse)
+        Catch ex As Exception
+            Return Nothing
+        End Try
         Dim ResponseStream As IO.Stream = response.GetResponseStream()
         Dim reader As IO.StreamReader = New IO.StreamReader(ResponseStream)
         Dim directoryDetails As String = reader.ReadToEnd()

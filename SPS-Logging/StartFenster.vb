@@ -14,7 +14,7 @@
 
     Sub New()
         InitializeComponent()
-        CB_IPAddressen.Items.AddRange(loadSavedIps.toArray)
+        CB_IPAddressen.Items.AddRange(loadSavedIps.ToArray)
         If CB_IPAddressen.Items.Count > 0 Then CB_IPAddressen.SelectedIndex = 0
         If CB_LogMode.Items.Count > 0 Then CB_LogMode.SelectedIndex = 0
         If CB_DownloadModi.Items.Count > 0 Then CB_DownloadModi.SelectedIndex = 0
@@ -26,6 +26,10 @@
 
 #Region "PublicSetter"
 
+    Sub startFtpDownloader()
+        B_FTPStart.PerformClick()
+    End Sub
+
     Sub setLLoggerStart(LogStart As Boolean)
         L_ErgLogStart.Text = LogStart
     End Sub
@@ -33,6 +37,7 @@
     'Mit dieser Funktion lässt sich von außerhalb der Klasse das LBChoosenObj mit
     'Items füllen 
     Sub setLBChoosenObjItems(varItems As String())
+        varItems = varItems.Where(Function(s) Not String.IsNullOrEmpty(s)).ToArray()
         LB_ChoosenObj.Items.Clear()
         LB_ChoosenObj.Items.AddRange(varItems)
         setValCountText(aktNum:=LB_ChoosenObj.Items.Count)
@@ -170,7 +175,7 @@
         If PVIC Is Nothing Then Exit Sub
         PVIC.StartLogger(CurConfig.DataRecoderName, LB_ChoosenObj.Items, TB_SampTime.Text, CB_LogMode.SelectedIndex)
         B_FTPStart.PerformClick()
-        L_ErgFTPStart.Text = "True"
+
     End Sub
 
     'Bei einem Klick auf den Knopf Logger stoppen wird der Logger gestoppt =)
@@ -178,7 +183,6 @@
         If PVIC Is Nothing Then Exit Sub
         PVIC.StopLogger(CurConfig.DataRecoderName)
         B_StopFTP.PerformClick()
-        L_ErgFTPStart.Text = "False"
         setCurCsvFile("")
         setVarOk("-")
     End Sub
@@ -195,6 +199,7 @@
     'bei änderung des File-Names die File heruntergeladen 
     Private Sub B_FTPStart_Click(sender As Object, e As EventArgs) Handles B_FTPStart.Click
         If CB_IPAddressen.Text Is Nothing Then Exit Sub
+        L_ErgFTPStart.Text = "True"
         If FTPC Is Nothing Then FTPC = New FTP_Client(CB_IPAddressen.Text, CurConfig.FTP_UserName, CurConfig.FTP_Password)
         If CB_DownloadModi.SelectedIndex = 0 Then
             'PVIC.LookOnFileName(CurConfig.DataRecoderName)
@@ -216,6 +221,7 @@
             FTPTimer.Stop()
         End If
         DownloadNewstCsvFile()
+        L_ErgFTPStart.Text = "False"
         CB_DownloadModi.Enabled = True
         FtpDownStarted = False
         If PVIC IsNot Nothing Then PVIC.StopLookingOnFileName()

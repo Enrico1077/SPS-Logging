@@ -317,23 +317,21 @@ Partial Class StartFenster
         '
         'B_FTPStart
         '
-        Me.B_FTPStart.Location = New System.Drawing.Point(950, 25)
+        Me.B_FTPStart.Location = New System.Drawing.Point(467, 418)
         Me.B_FTPStart.Name = "B_FTPStart"
         Me.B_FTPStart.Size = New System.Drawing.Size(10, 10)
         Me.B_FTPStart.TabIndex = 26
         Me.B_FTPStart.Text = "FTP-Downloader starten"
         Me.B_FTPStart.UseVisualStyleBackColor = True
-        Me.B_FTPStart.Visible = False
         '
         'B_StopFTP
         '
-        Me.B_StopFTP.Location = New System.Drawing.Point(950, 16)
+        Me.B_StopFTP.Location = New System.Drawing.Point(399, 418)
         Me.B_StopFTP.Name = "B_StopFTP"
         Me.B_StopFTP.Size = New System.Drawing.Size(10, 10)
         Me.B_StopFTP.TabIndex = 27
         Me.B_StopFTP.Text = "FTP-Downloader stoppen"
         Me.B_StopFTP.UseVisualStyleBackColor = True
-        Me.B_StopFTP.Visible = False
         '
         'L_DownloadTime
         '
@@ -592,6 +590,7 @@ Partial Class StartFenster
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(955, 593)
+        Me.Controls.Add(Me.LB_ChoosenObj)
         Me.Controls.Add(Me.L_ErgLogStart)
         Me.Controls.Add(Me.L_ErgFTPStart)
         Me.Controls.Add(Me.L_FTPDownloader)
@@ -637,7 +636,6 @@ Partial Class StartFenster
         Me.Controls.Add(Me.B_Sort)
         Me.Controls.Add(Me.B_LoggerStart)
         Me.Controls.Add(Me.L_ChosenObj)
-        Me.Controls.Add(Me.LB_ChoosenObj)
         Me.Controls.Add(Me.L_TreeView)
         Me.Controls.Add(Me.TV_PVIVars)
         Me.Controls.Add(Me.L_CpuConnected)

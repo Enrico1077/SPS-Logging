@@ -311,6 +311,10 @@ Public Class PVIClient
 
     Private Sub LoggerStartetChanged(sender As Variable, e As PviEventArgs)
         StartFenster.setLLoggerStart(sender.Value)
+        Dim LoggerVar As Variable = CurCPU.Variables(CurConfig.DataRecoderName)
+        Dim LoggerInVarsVar As Variable = LoggerVar.Members.Values(0).Members.Values(3) 'DataRecorder.In.Variable
+        StartFenster.setLBChoosenObjItems(LoggerInVarsVar.Value.ArrayData)
+        If sender.Value.ToIECString = "True" Then StartFenster.startFtpDownloader()
     End Sub
 
     Private Sub LogVarOkChange(sender As Variable, e As PviEventArgs)
