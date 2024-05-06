@@ -228,7 +228,7 @@ Public Class PVIClient
         LoggerVar.WriteValueAutomatic = False
         LoggerVar.Value("In.AuswahlRecorderMode") = RecMode + 1
         LoggerVar.Value("In.SamplingTime") = SampTime
-        For i As Integer = 0 To LoggerVar.Members(0).Members(3).Value.ArrayLength - 1 'ProzzesData.Count - 1
+        For i As Integer = 0 To LoggerVar.Members("Out").Members("Variable").Value.ArrayLength - 1 'ProzzesData.Count - 1
             If i < ProzzesData.Count Then
                 LoggerVar.Value($"In.Variable[{i}]") = New Value(ProzzesData(i))
             Else
@@ -291,10 +291,10 @@ Public Class PVIClient
     Public Sub LookOnLoggerStats(LoggerName As String)
         Dim LoggerVar As Variable = CurCPU.Variables(LoggerName)
         If Not LoggerVar.DataValid Then Exit Sub
-        Dim LoggerStartet As Variable = LoggerVar.Members.Values(0).Members.Values(2)          'DataRecorder.In.AufzeichnungStart
-        Dim LoggerOutVar As Variable = LoggerVar.Members.Values(1)          'DataRecorder.Out
-        Dim LoggerFileOutVar As Variable = LoggerOutVar.Members.Values(3)   'DataRecorder.Out.AktuellerDateiname
-        Dim LoggerVarOK As Variable = LoggerOutVar.Members.Values(2)    'DataRecorder.Out.VariablenRegistrierungOK
+        Dim LoggerStartet As Variable = LoggerVar.Members("In").Members("AufzeichnungStart")            'DataRecorder.In.AufzeichnungStart
+        Dim LoggerOutVar As Variable = LoggerVar.Members("Out")                                         'DataRecorder.Out
+        Dim LoggerFileOutVar As Variable = LoggerOutVar.Members("AktuellerDateiname")                               'DataRecorder.Out.AktuellerDateiname
+        Dim LoggerVarOK As Variable = LoggerOutVar.Members("VariablenRegistierungOk")                                   'DataRecorder.Out.VariablenRegistrierungOK
         LoggerStartet.Active = True
         LoggerStartet.Connect()
         LoggerFileOutVar.Active = True
@@ -312,7 +312,7 @@ Public Class PVIClient
     Private Sub LoggerStartetChanged(sender As Variable, e As PviEventArgs)
         StartFenster.setLLoggerStart(sender.Value)
         Dim LoggerVar As Variable = CurCPU.Variables(CurConfig.DataRecoderName)
-        Dim LoggerInVarsVar As Variable = LoggerVar.Members.Values(0).Members.Values(3) 'DataRecorder.In.Variable
+        Dim LoggerInVarsVar As Variable = LoggerVar.Members("In").Members("Variable") 'DataRecorder.In.Variable
         StartFenster.setLBChoosenObjItems(LoggerInVarsVar.Value.ArrayData)
         If sender.Value.ToIECString = "True" Then StartFenster.startFtpDownloader()
     End Sub
