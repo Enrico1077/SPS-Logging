@@ -228,7 +228,7 @@ Public Class PVIClient
         LoggerVar.WriteValueAutomatic = False
         LoggerVar.Value("In.AuswahlRecorderMode") = RecMode + 1
         LoggerVar.Value("In.SamplingTime") = SampTime
-        For i As Integer = 0 To LoggerVar.Members("Out").Members("Variable").Value.ArrayLength - 1 'ProzzesData.Count - 1
+        For i As Integer = 0 To LoggerVar.Members("In").Members("Variable").Value.ArrayLength - 1 'ProzzesData.Count - 1
             If i < ProzzesData.Count Then
                 LoggerVar.Value($"In.Variable[{i}]") = New Value(ProzzesData(i))
             Else
