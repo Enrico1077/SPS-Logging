@@ -80,7 +80,7 @@ Module XMLFunktionen
         ConfigData.FTP_UserName = "ftpuser"
         ConfigData.FTP_Password = "4711"
         ConfigData.Influx_Address = "http://127.0.0.1:8087"
-        ConfigData.Influx_Comp = "..."
+        ConfigData.Influx_Comp = "123"
         ConfigData.Influx_API_Tok = "..."
         ConfigData.lokalInfluxPath = "C:\Program Files\InfluxData\influxdb\influxd.exe"
     End Sub

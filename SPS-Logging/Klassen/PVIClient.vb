@@ -139,9 +139,10 @@ Public Class PVIClient
     Private Sub Task_Variables_Uploaded(sender As Object, e As PviEventArgs)
         Dim tmpTask As Task = sender.Parent
         'If tmpTask.Name = "LoggerTest" Then Stop
-        Dim tmpTreeNode As TreeNode = New TreeNode(tmpTask.Name)
-        tmpTreeNode.ImageIndex = 0
-        tmpTreeNode.Name = tmpTask.Name
+        Dim tmpTreeNode As New TreeNode(tmpTask.Name) With {
+            .ImageIndex = 0,
+            .Name = tmpTask.Name
+        }
         For Each Var As DictionaryEntry In tmpTask.Variables
             Dim tmpVar As Variable = tmpTask.Variables(Var.Key)
             tmpTreeNode.Nodes.Add(tmpVar.Name, tmpVar.Name, 1)
@@ -333,6 +334,9 @@ Public Class PVIClient
         StartFenster.setCurCsvFile(LoggerFileOutVar.Value)
     End Sub
 
+    'Diese Funktion wird aufgerufen wenn der Wert von DataRecoder.In.AufzeichnungStart sich ändert und gibt den Wert
+    'von AufzeichnungStart und Variable an das Startfenster weiter
+    'Sollte der Logger aktiv sein, wird der FtpDownloader gestartet
     Private Sub LoggerStartetChanged(sender As Variable, e As PviEventArgs)
         StartFenster.setLLoggerStart(sender.Value)
         Dim LoggerVar As Variable = CurCPU.Variables(CurConfig.DataRecoderName)
@@ -340,6 +344,7 @@ Public Class PVIClient
         StartFenster.setLBChoosenObjItems(LoggerInVarsVar.Value.ArrayData)
         If sender.Value.ToIECString = "True" Then StartFenster.startFtpDownloader()
     End Sub
+
 
     Private Sub LogVarOkChange(sender As Variable, e As PviEventArgs)
         StartFenster.setVarOk(sender.Value)

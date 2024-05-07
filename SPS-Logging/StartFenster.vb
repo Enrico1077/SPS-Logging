@@ -26,14 +26,17 @@
 
 #Region "PublicSetter"
 
+    'Mit dieser Funktion kann der Ftp-Downloader von außerhalb der Klasse gestartet werden 
     Sub startFtpDownloader()
         B_FTPStart.PerformClick()
     End Sub
 
+    'Mit dieser Funktion lässt sich von außerhalb dieser Klasse die Textbox DirPath setzen
     Sub setFTPSpeicherPfad(Pfad As String)
         TB_DirPath.Text = Pfad
     End Sub
 
+    'Mit dieser Funktion lässt sich von außerhalb der Klasse das Label L_ErgLogStart setzten 
     Sub setLLoggerStart(LogStart As Boolean)
         L_ErgLogStart.Text = LogStart
     End Sub
