@@ -30,6 +30,10 @@
         B_FTPStart.PerformClick()
     End Sub
 
+    Sub setFTPSpeicherPfad(Pfad As String)
+        TB_DirPath.Text = Pfad
+    End Sub
+
     Sub setLLoggerStart(LogStart As Boolean)
         L_ErgLogStart.Text = LogStart
     End Sub
@@ -287,7 +291,7 @@
     'Bei einem Klick auf den LoggerConfig Speichern Knopf, wird ein FolderBrowserDialog geöffnet und der Nutzer kann,
     'auswählen an welcher Stelle seine aktuelle LoggerKonfiguration gespeichert werden soll
     Private Sub B_LogConfigSave_Click(sender As Object, e As EventArgs) Handles B_LogConfigSave.Click
-        SaveLoggerConfig(LB_ChoosenObj.Items, TB_SampTime.Text, CB_LogMode.Text)
+        SaveLoggerConfig(LB_ChoosenObj.Items, TB_SampTime.Text, CB_LogMode.Text, TB_DirPath.Text)
     End Sub
 
 

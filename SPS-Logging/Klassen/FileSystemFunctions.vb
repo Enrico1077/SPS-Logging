@@ -4,7 +4,7 @@ Module FileSystemFunctions
 
     'Diese Funktion öffnet ein FolderBrowserDialog und speichert die übergebenen LoggerKonfigurationen 
     'in einer Datei am gewählten Pfad. Der Name der Datei ist "LoggerKonfig_{Timestamp}.txt" 
-    Public Sub SaveLoggerConfig(Vars As ListBox.ObjectCollection, SampTime As String, LogMode As String)
+    Public Sub SaveLoggerConfig(Vars As ListBox.ObjectCollection, SampTime As String, LogMode As String, SpeicherPfad As String)
         Dim FolderDia As New FolderBrowserDialog
         FolderDia.ShowDialog()
         If FolderDia.SelectedPath Is Nothing OrElse FolderDia.SelectedPath = "" Then Exit Sub
@@ -15,6 +15,7 @@ Module FileSystemFunctions
         FileWriter.WriteLine($"Auflösung::{SampTime}")
         FileWriter.WriteLine($"Modus::{LogMode}")
         FileWriter.WriteLine($"Variablen::{StringVars}")
+        FileWriter.WriteLine($"Speicherpfad::{SpeicherPfad}")
         FileWriter.Close()
     End Sub
 
@@ -34,6 +35,7 @@ Module FileSystemFunctions
             If CurrentRow(0) = "Auflösung" Then MainFrame.setTBSampTime(CurrentRow(1))
             If CurrentRow(0) = "Modus" Then MainFrame.setCBLogMode(CurrentRow(1))
             If CurrentRow(0) = "Variablen" Then MainFrame.setLBChoosenObjItems(CurrentRow(1).Split(","))
+            If CurrentRow(0) = "Speicherpfad" Then MainFrame.setFTPSpeicherPfad(CurrentRow(1))
         End While
         MyReader.Close()
 
