@@ -11,6 +11,25 @@ Public Class PVIClient
     Sub New(SF As Form, CIP As String)
         StartFenster = SF
         CpuIP = CIP
+        Dim PviManTimer As New Timer() With {.Interval = (6 / 5) * 10 ^ 6, .Enabled = True}
+        RestartPvi(PviManTimer, Nothing)
+        AddHandler PviManTimer.Tick, AddressOf RestartPvi
+    End Sub
+
+    'Beim Start der Anwendung und dann im 20 Minuten Schritten wir geprüft ob der PviManager bereits länger als 100 Minuten 
+    'auf einem nicht B&R-IPC läuft. Falls ja wird der PviManager neugestartet
+    Private Sub RestartPvi(sender As Timer, e As EventArgs)
+        Dim PviLic As New BR.AN.BRLicenseInfo
+        If Not PviLic.BRIPCState.ToString = "INVALID" Then sender.Stop() : Exit Sub
+        Dim pviManProcesses As Process() = Process.GetProcessesByName("PviMan")
+        Dim pviManProcess As Process = pviManProcesses.FirstOrDefault()
+        If pviManProcess Is Nothing Then Exit Sub
+        Dim startTime As Date = pviManProcess.StartTime
+        Dim age As TimeSpan = Date.Now - startTime
+        If age.TotalMinutes < 100 Then Exit Sub
+        pviManProcess.Kill()
+        pviManProcess.WaitForExit()
+        Process.Start("PviMan")
     End Sub
 
     'Diese Funktion löscht alle Verweise welche durch diese Anwendung in der
@@ -85,7 +104,12 @@ Public Class PVIClient
         StartFenster.addTreeNode(rootNode)
         If tmpVariable.Name = Config.DataRecoderName Then
             LookOnLoggerStats(CurConfig.DataRecoderName)
-            StartFenster.setValCountText(MaxNum:=tmpVariable.Value("In.Variable").ArrayData.Length)
+            Try
+                StartFenster.setValCountText(MaxNum:=tmpVariable.Value("In.Variable").ArrayData.Length)
+            Catch ex As System.Exception
+                Console.WriteLine("Fehler: " + ex.ToString)
+            End Try
+
             Exit Sub
         End If
         RemoveHandler tmpVariable.ValueChanged, AddressOf Cpu_Variable_Connected
