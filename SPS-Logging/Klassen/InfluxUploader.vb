@@ -35,6 +35,7 @@ Public Class InfluxClient
 
         For i As Integer = 0 To ColumnValues.Count - 1
             Dim RecTime As Date = Date.ParseExact(ColumnValues(i)(0), "yyyy MM dd HH:mm:ss:fff", Nothing)
+            RecTime = RecTime.AddHours(-2) ' Fusch: Die Zeitzone muss noch richtig angepasst werden.
             For j As Integer = 1 To ColumnNames.Count - 1
                 WritetoInflux(ColumnNames(j), convertToRightBasicType(ColumnValues(i)(j)), RecTime, writeApi)
             Next
@@ -62,7 +63,6 @@ Public Class InfluxClient
         Dim LineCounter As Integer = 0
         Dim columnNames As New List(Of String)
         Dim DataArray As New List(Of String())
-
         Dim currentRow As String()
         While Not MyReader.EndOfData
             LineCounter += 1

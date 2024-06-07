@@ -136,7 +136,7 @@
     'Wenn der Such-Knopf gedrückt wird wird ein fester Ip-Bereich angepinngt und
     'die Netzwerkpartner dargestellt
     Private Sub B_SPSSuche_Click(sender As Object, e As EventArgs) Handles B_SPSSuche.Click
-        CB_IPAddressen.Items.AddRange(searchForPLCs("192.168.0.140", "192.168.0.150").ToArray)
+        CB_IPAddressen.Items.AddRange(searchForPLCs(CurConfig.SuchStartIP, CurConfig.SuchStopIP).ToArray)
         If CB_IPAddressen.Items.Count > 1 Then CB_IPAddressen.SelectedIndex = 0
     End Sub
 
@@ -182,7 +182,6 @@
         If PVIC Is Nothing Then Exit Sub
         PVIC.StartLogger(CurConfig.DataRecoderName, LB_ChoosenObj.Items, TB_SampTime.Text, CB_LogMode.SelectedIndex)
         B_FTPStart.PerformClick()
-
     End Sub
 
     'Bei einem Klick auf den Knopf Logger stoppen wird der Logger gestoppt =)
@@ -257,7 +256,7 @@
     'Bei einem Klick auf den Knopf StartUpload werden die Daten welche in den CSV-Datei gespsiechert waren in die InfluxDB geuploaded
     Private Sub B_startUpload_Click(sender As Object, e As EventArgs) Handles B_startUpload.Click
         If OFD_CsvData.FileNames Is Nothing Then Exit Sub
-        Dim InfluxC As InfluxClient = New InfluxClient(
+        Dim InfluxC As New InfluxClient(
                         CurConfig.Influx_API_Tok,
                         CurConfig.Influx_Address,
                         CurConfig.Influx_Comp,
@@ -273,8 +272,9 @@
                 InfluxC.writeCSVToInflux(InfluxC.AnalyseCSV(FullPath))
             Next
             Console.WriteLine("data has been uploaded")
+            MessageBox.Show("Upload war erfolgreich")
         End If
-
+        B_startUpload.Enabled = False
 
     End Sub
 
@@ -333,7 +333,13 @@
 
     'Diese Funktion lässt den FTP-Client die angegebende CSV-Datei herunterladen
     Sub NewCsvFile(csvFile As String)
-        If FtpDownStarted Then FTPC.DownloadFile(CurCsvFile, TB_DirPath.Text)
+        If FtpDownStarted Then
+            Try
+                FTPC.DownloadFile(CurCsvFile, TB_DirPath.Text)
+            Catch ex As Exception
+                Console.WriteLine(ex.Message)
+            End Try
+        End If
         If InfluxUploadStarted Then B_startUpload.PerformClick()
         CurCsvFile = csvFile
     End Sub

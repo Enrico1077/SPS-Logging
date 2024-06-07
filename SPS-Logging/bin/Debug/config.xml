@@ -1,14 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <Konfiguration>
   <Anwendungs-Konfigurationen>
-    <IP-Suche-Start-IP>192.168.0.140</IP-Suche-Start-IP>
-    <IP-Suche-End-IP>192.168.0.150</IP-Suche-End-IP>
+    <IP-Suche-Start-IP>126.255.255.254</IP-Suche-Start-IP>
+    <IP-Suche-End-IP>127.0.0.1</IP-Suche-End-IP>
   </Anwendungs-Konfigurationen>
   <SPS-EINSTELLUNGEN>
     <DataRecorderVariable>DataRecorder</DataRecorderVariable>
   </SPS-EINSTELLUNGEN>
   <FTP-Konfigurationen>
-    <IP-Addresse>192.168.0.147</IP-Addresse>
     <User-Name>ftpuser</User-Name>
     <Password>4711</Password>
   </FTP-Konfigurationen>

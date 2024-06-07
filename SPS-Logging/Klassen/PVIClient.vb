@@ -70,7 +70,8 @@ Public Class PVIClient
     'Wenn die CPU erfolgreich verbunden wurde wird dies im Startfenster angezeigt.
     'Auch werden alle Tasks und Variablen der CPU auf in die Anwendung hochgeladen
     Private Sub cpu_connected(sender As Object, e As PviEventArgs)
-        StartFenster.setLCpuConnectedText($"{CurCPU.HardwareInfo} is connected")  'Nochmal mit echter SPS testen
+        If CurCPU Is Nothing Then Exit Sub
+        StartFenster.setLCpuConnectedText($"{CurCPU.Name} is connected")  'Nochmal mit echter SPS testen
         AddHandler CurCPU.Tasks.Uploaded, AddressOf Cpu_Tasks_Uploaded
         AddHandler CurCPU.Variables.Uploaded, AddressOf Cpu_Variables_Uploaded
         CurCPU.Variables.Upload()
@@ -92,9 +93,10 @@ Public Class PVIClient
     Private Sub Cpu_Variable_Connected(sender As Object, e As PviEventArgs)
         Dim Config As ConfigurationData = ReadConfig(IO.Directory.GetCurrentDirectory + ConfigName)
         Dim tmpVariable As Variable = sender
-        Dim rootNode = New TreeNode(tmpVariable.Name)
-        rootNode.Name = tmpVariable.Name
-        rootNode.ImageIndex = 2
+        Dim rootNode As New TreeNode(tmpVariable.Name) With {
+            .Name = tmpVariable.Name,
+            .ImageIndex = 2
+        }
         If tmpVariable.Members IsNot Nothing Then
             For Each child As Variable In tmpVariable.Members.Values
                 rootNode.Nodes.Add(child.Name, child.Name, 2)

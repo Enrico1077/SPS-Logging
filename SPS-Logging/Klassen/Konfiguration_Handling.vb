@@ -1,6 +1,4 @@
-﻿Imports System.Xml.Linq
-
-'Speicherobjekt für die Gesamte Konfiguration
+﻿'Speicherobjekt für die Gesamte Konfiguration
 Public Class ConfigurationData
     Public DataRecoderName As String
     Public FTP_UserName As String

@@ -38,7 +38,6 @@ Module FileSystemFunctions
             If CurrentRow(0) = "Speicherpfad" Then MainFrame.setFTPSpeicherPfad(CurrentRow(1))
         End While
         MyReader.Close()
-
     End Sub
 
 
